@@ -9,7 +9,7 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
 } from 'react-native';
-import {colors, Fonts} from '../../utils';
+import {colors, Fonts} from 'utils';
 
 interface InputProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -31,10 +31,11 @@ const Input = ({
         <Text style={styles.prefix}>+62</Text>
         <TextInput
           placeholder={placeholder}
-          maxLength={11}
+          maxLength={12}
           style={styles.input}
           onChangeText={onChangeText}
           onChange={onChange}
+          keyboardType="number-pad"
         />
       </View>
     </View>

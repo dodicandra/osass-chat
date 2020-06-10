@@ -5,11 +5,15 @@ import {colors, Fonts} from 'utils';
 interface ButtonProps {
   title: string;
   onPress?: () => void;
+  top?: number;
+  bottom?: number;
 }
 
-const Button = ({title, onPress}: ButtonProps) => {
+const Button = ({title, onPress, top, bottom}: ButtonProps) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, {marginTop: top, marginBottom: bottom}]}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
