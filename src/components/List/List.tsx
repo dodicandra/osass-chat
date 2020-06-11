@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
 } from 'react-native';
-import {Profile} from 'components';
 import {speaker} from 'assets';
 import {Fonts, colors} from 'utils';
+import Profile from '../Profile/Profile';
 
 interface InputProps {
   title?: string;
@@ -21,8 +21,12 @@ const List: React.FC<InputProps> = ({title, desc, imgUrl}) => {
     <View style={styles.container}>
       <Profile source={imgUrl} />
       <TouchableOpacity style={styles.containerText}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.desc}>{desc}</Text>
+        <Text numberOfLines={1} style={styles.title}>
+          {title}
+        </Text>
+        <Text numberOfLines={1} style={styles.desc}>
+          {desc}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -30,7 +34,7 @@ const List: React.FC<InputProps> = ({title, desc, imgUrl}) => {
 
 List.defaultProps = {
   title: 'Dodi candra',
-  desc: 'Haloo..',
+  desc: 'Haloo selamat malam bisa bicara dengan dodi candra',
   imgUrl: speaker,
 };
 
@@ -47,12 +51,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: Fonts.Monstserrat.M,
     color: colors.text.black,
+    maxWidth: 300,
   },
   desc: {
     fontSize: 19,
     fontFamily: Fonts.Monstserrat.R,
     color: colors.text.greey,
     marginBottom: 20,
+    maxWidth: 200,
   },
   containerText: {
     marginLeft: 13,

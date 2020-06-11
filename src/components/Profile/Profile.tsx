@@ -15,6 +15,7 @@ interface ProfileProps {
   top?: number;
   bottom?: number;
   onPress?(val: any): void;
+  size?: number;
 }
 
 const Profile: React.FC<ProfileProps> = ({
@@ -24,6 +25,7 @@ const Profile: React.FC<ProfileProps> = ({
   top,
   bottom,
   onPress,
+  size,
 }) => {
   return (
     <TouchableOpacity
@@ -35,11 +37,21 @@ const Profile: React.FC<ProfileProps> = ({
           marginRight: right,
           marginTop: top,
           marginBottom: bottom,
+          height: size,
+          width: size,
         },
       ]}>
-      <Image defaultSource={speaker} source={source} style={styles.img} />
+      <Image
+        defaultSource={speaker}
+        source={source}
+        style={[styles.img, {height: size, width: size}]}
+      />
     </TouchableOpacity>
   );
+};
+
+Profile.defaultProps = {
+  size: 64,
 };
 
 export default Profile;
@@ -49,10 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     overflow: 'hidden',
     borderColor: colors.border.input,
-    borderWidth: 2,
+    borderWidth: 1,
     backgroundColor: colors.background.white,
-    height: 64,
-    width: 64,
   },
-  img: {height: 64, width: 64, resizeMode: 'contain'},
+  img: {resizeMode: 'contain'},
 });

@@ -1,20 +1,48 @@
 /* eslint-disable react-native/no-inline-styles */
 import {speaker} from 'assets';
-import {Profile} from 'components';
+import Profile from '../Profile/Profile';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import Icons from 'react-native-vector-icons/Entypo';
-import {colors} from 'utils';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ImageSourcePropType,
+  Text,
+} from 'react-native';
+import Icons from 'react-native-vector-icons/Ionicons';
+import {colors, Fonts} from 'utils';
 
-export const Header = () => {
+interface HeaderProps {
+  imgProfile?: ImageSourcePropType;
+  icon?: 'ios-arrow-back' | 'ios-menu';
+  title?: string;
+}
+
+export const Header: React.FC<HeaderProps> = ({imgProfile, icon, title}) => {
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity style={{marginLeft: 20}}>
-        <Icons name="menu" size={60} color={colors.background.white} />
+        <Icons
+          name={icon === 'ios-menu' ? 'ios-menu' : 'ios-arrow-back'}
+          size={60}
+          color={colors.background.white}
+        />
       </TouchableOpacity>
-      <Profile right={20} source={speaker} />
+      <Text
+        textBreakStrategy="highQuality"
+        numberOfLines={1}
+        style={styles.title}>
+        {title}
+      </Text>
+      <Profile right={20} source={imgProfile} />
     </View>
   );
+};
+
+Header.defaultProps = {
+  imgProfile: speaker,
+  icon: 'ios-menu',
+  title: '',
 };
 
 const styles = StyleSheet.create({
@@ -26,5 +54,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  title: {
+    fontSize: 30,
+    fontFamily: Fonts.Monstserrat.R,
+    width: 260,
+    marginLeft: 10,
   },
 });
