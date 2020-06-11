@@ -7,11 +7,15 @@ import {
   Text,
   TextInput,
   TextInputChangeEventData,
+  TextInputKeyPressEventData,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import {colors, Fonts} from 'utils';
+
+type Event = NativeSyntheticEvent<TextInputChangeEventData>;
+type EventKey = NativeSyntheticEvent<TextInputKeyPressEventData>;
 
 export const VerifikasiCode = () => {
   const ref = useRef<TextInput>(null);
@@ -22,10 +26,7 @@ export const VerifikasiCode = () => {
 
   const [phone, setPhone] = useState('');
 
-  const onChangeInput = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>,
-    id: string,
-  ) => {
+  const onChangeInput = (e: Event, id: string) => {
     const teks: string = e.nativeEvent.text;
     if (teks.length > 0) {
       switch (id) {
@@ -53,8 +54,18 @@ export const VerifikasiCode = () => {
     ref2.current?.clear();
     ref3.current?.clear();
     ref4.current?.clear();
+    ref.current?.focus();
     setPhone('');
   };
+  const onKeyPress = (e: EventKey) => {
+    const backSpace = e.nativeEvent.key;
+    if (backSpace === 'Backspace') {
+      clearInput();
+      ref.current?.focus();
+      setPhone('');
+    }
+  };
+
   console.log(phone);
 
   return (
@@ -68,21 +79,28 @@ export const VerifikasiCode = () => {
             onChange={(e: any) => onChangeInput(e, '1')}
           />
           <InputCode
+            onKeyPress={onKeyPress}
             onChangeText={onChange}
             ref={ref1}
             onChange={(e: any) => onChangeInput(e, '2')}
           />
           <InputCode
+            onKeyPress={onKeyPress}
             onChangeText={onChange}
             ref={ref2}
             onChange={(e: any) => onChangeInput(e, '3')}
           />
           <InputCode
+            onKeyPress={onKeyPress}
             onChangeText={onChange}
             ref={ref3}
             onChange={(e: any) => onChangeInput(e, '4')}
           />
-          <InputCode onChangeText={onChange} ref={ref4} />
+          <InputCode
+            onKeyPress={onKeyPress}
+            onChangeText={onChange}
+            ref={ref4}
+          />
         </View>
         <TouchableOpacity onPress={clearInput}>
           <Text style={styles.clear}>Bersihkan Semua</Text>

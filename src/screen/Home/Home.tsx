@@ -6,10 +6,20 @@ import {colors} from 'utils';
 export const Home = () => {
   return (
     <View style={styles.container}>
-      <Header />
+      <Header title="Ossas" />
       <ScrollView
+        contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         style={styles.bodyContainer}>
+        <List />
+        <List />
+        <List />
+        <List />
+        <List />
+        <List />
+        <List />
+        <List />
+        <List />
         <List />
         <List />
         <List />
@@ -26,6 +36,12 @@ const styles = StyleSheet.create({
   bodyContainer: {
     flex: 1,
     zIndex: -1,
-    marginHorizontal: 15,
+    marginHorizontal: 8,
+    marginTop: -10,
+    backgroundColor: colors.background.white,
+  },
+  contentContainer: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 });

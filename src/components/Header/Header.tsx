@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({imgProfile, icon, title}) => {
       <TouchableOpacity style={{marginLeft: 20}}>
         <Icons
           name={icon === 'ios-menu' ? 'ios-menu' : 'ios-arrow-back'}
-          size={60}
+          size={40}
           color={colors.background.white}
         />
       </TouchableOpacity>

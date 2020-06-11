@@ -6,7 +6,7 @@ import {Chats, Home} from 'screen';
 const App = () => {
   return (
     <>
-      <Chats />
+      <Home />
     </>
   );
 };

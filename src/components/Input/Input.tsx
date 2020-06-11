@@ -1,21 +1,20 @@
 import React from 'react';
 import {
+  StyleProp,
   StyleSheet,
+  Text,
   TextInput,
   View,
-  Text,
-  StyleProp,
   ViewStyle,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
 } from 'react-native';
 import {colors, Fonts} from 'utils';
+import {OnChange} from './type';
 
 interface InputProps {
   containerStyle?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?(text: string): void;
-  onChange?: (event: NativeSyntheticEvent<TextInputChangeEventData>) => void;
+  onChange?: OnChange;
 }
 
 const Input = ({

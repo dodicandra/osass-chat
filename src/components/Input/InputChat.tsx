@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Monstserrat.R,
     fontSize: 16,
     letterSpacing: 1.4,
-    padding: 10,
+    padding: 5,
   },
   send: {
     width: 52,

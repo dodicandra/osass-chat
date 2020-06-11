@@ -1,36 +1,18 @@
 import React from 'react';
-import {
-  NativeSyntheticEvent,
-  StyleSheet,
-  TextInput,
-  TextInputChangeEventData,
-  View,
-  TextInputKeyPressEventData,
-} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {colors, Fonts} from 'utils';
+import {OnChange, OnKeyPress, RefInput} from './type';
 
 interface InputProps {
   onChangeText?(e: any): void;
   autoFocus?: boolean;
-  onChange?:
-    | ((e: NativeSyntheticEvent<TextInputChangeEventData>) => void | undefined)
-    | any;
+  onChange?: OnChange;
   value?: string;
-  onKeyPress?:
-    | ((e: NativeSyntheticEvent<TextInputKeyPressEventData>) => void)
-    | undefined;
+  onKeyPress?: OnKeyPress;
 }
 
 const InputCode = React.forwardRef(
-  (
-    {onChangeText, value, onChange, onKeyPress}: InputProps,
-    ref:
-      | string
-      | ((instance: TextInput | null) => void)
-      | React.RefObject<TextInput>
-      | null
-      | undefined,
-  ) => {
+  ({onChangeText, value, onChange, onKeyPress}: InputProps, ref: RefInput) => {
     return (
       <View style={styles.containerRoot}>
         <View style={styles.container}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {colors, Fonts} from 'utils';
-import {Profile} from 'components';
+import Profile from '../Profile/Profile';
 import {speaker} from 'assets';
 
 interface BubleChatProps {

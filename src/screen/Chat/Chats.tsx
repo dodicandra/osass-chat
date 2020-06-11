@@ -8,7 +8,19 @@ export const Chats = () => {
   return (
     <View style={styles.container}>
       <Header title="dodi candra" icon="ios-arrow-back" imgProfile={speaker} />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
+      <ScrollView
+        scrollEventThrottle={16}
+        contentContainerStyle={styles.contentContainerStyle}
+        showsVerticalScrollIndicator={false}
+        style={styles.scroll}>
+        <BubleChat />
+        <BubleChat sender />
+        <BubleChat />
+        <BubleChat sender />
+        <BubleChat />
+        <BubleChat sender />
+        <BubleChat />
+        <BubleChat sender />
         <BubleChat />
         <BubleChat sender />
         <BubleChat />
@@ -24,5 +36,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.white,
   },
-  scroll: {flex: 1, marginHorizontal: 13, marginTop: 9},
+  scroll: {
+    flex: 1,
+    marginHorizontal: 10,
+    marginTop: -10,
+    zIndex: -99,
+  },
+  contentContainerStyle: {
+    paddingVertical: 10,
+    paddingTop: 20,
+  },
 });

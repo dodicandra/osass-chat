@@ -1,15 +1,11 @@
 import {speaker} from 'assets';
 import React from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from 'utils';
+import {ImgType} from './type';
 
 interface ProfileProps {
-  source?: ImageSourcePropType;
+  source?: ImgType;
   left?: number;
   right?: number;
   top?: number;
