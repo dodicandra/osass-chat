@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {colors, Fonts} from 'utils';
 
-const VerifikasiCode = () => {
+export const VerifikasiCode = () => {
   const ref = useRef<TextInput>(null);
   const ref1 = useRef<TextInput>(null);
   const ref2 = useRef<TextInput>(null);
@@ -92,8 +92,6 @@ const VerifikasiCode = () => {
     </TouchableWithoutFeedback>
   );
 };
-
-export default VerifikasiCode;
 
 const styles = StyleSheet.create({
   container: {

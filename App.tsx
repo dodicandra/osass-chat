@@ -1,13 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Login from 'screen/Login';
-import VerifikasiCode from 'screen/VerifikasiCode';
+import {VerifikasiCode, Home} from 'screen';
 
 const App = () => {
   return (
     <>
-      <VerifikasiCode />
+      <Home />
     </>
   );
 };

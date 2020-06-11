@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {colors, Fonts} from 'utils';
 
-const Login = () => {
+export const Login = () => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -56,5 +56,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default Login;

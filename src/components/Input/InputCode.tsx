@@ -10,7 +10,7 @@ import {
 import {colors, Fonts} from 'utils';
 
 interface InputProps {
-  onChangeText?: (e: any) => void;
+  onChangeText?(e: any): void;
   autoFocus?: boolean;
   onChange?:
     | ((e: NativeSyntheticEvent<TextInputChangeEventData>) => void | undefined)

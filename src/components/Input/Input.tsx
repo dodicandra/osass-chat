@@ -14,7 +14,7 @@ import {colors, Fonts} from 'utils';
 interface InputProps {
   containerStyle?: StyleProp<ViewStyle>;
   placeholder?: string;
-  onChangeText?: (text: string) => void;
+  onChangeText?(text: string): void;
   onChange?: (event: NativeSyntheticEvent<TextInputChangeEventData>) => void;
 }
 

@@ -4,7 +4,7 @@ import {colors, Fonts} from 'utils';
 
 interface ButtonProps {
   title: string;
-  onPress?: () => void;
+  onPress?(): void;
   top?: number;
   bottom?: number;
 }
