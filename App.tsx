@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {UserNameVerifikasi} from 'screen';
+import {UserNameVerifikasi, Login} from 'screen';
 
 const App = () => {
   return (
     <>
-      <UserNameVerifikasi />
+      <Login />
     </>
   );
 };

@@ -3,12 +3,13 @@ import {Button, Input} from 'components';
 import React, {useEffect, useRef} from 'react';
 import {
   Keyboard,
+  Platform,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Animated, {Easing, multiply, timing} from 'react-native-reanimated';
-import {colors} from 'utils';
+import Animated, {multiply} from 'react-native-reanimated';
+import {colors, tm1} from 'utils';
 
 const IMG_HEIGHT = 220;
 const IMG_WIDTH = 274;
@@ -19,41 +20,27 @@ export const UserNameVerifikasi = () => {
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
   useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', KeyboardShow);
-    Keyboard.addListener('keyboardDidHide', KeyboardHide);
+    let os = Platform.OS === 'android' ? 'Did' : 'Will';
+
+    Keyboard.addListener(`keyboard${os}Show`, KeyboardShow);
+    Keyboard.addListener(`keyboard${os}Hide`, KeyboardHide);
 
     return () => {
-      Keyboard.removeListener('keyboardDidShow', () => {});
-      Keyboard.removeListener('keyboardDidHide', () => {});
+      Keyboard.removeListener(`keyboard${os}Show`, () => {});
+      Keyboard.removeListener(`keyboard${os}Hide`, () => {});
     };
-  });
+  }, []);
 
   const KeyboardShow = () => {
     multiply(
-      timing(height, {
-        toValue: IMG_HEIGHT / 2,
-        duration: DURATION,
-        easing: Easing.inOut(Easing.ease),
-      }).start(),
-      timing(width, {
-        toValue: IMG_WIDTH / 2,
-        duration: DURATION,
-        easing: Easing.inOut(Easing.ease),
-      }).start(),
+      tm1(height, IMG_HEIGHT / 2, DURATION),
+      tm1(width, IMG_WIDTH / 2, DURATION),
     );
   };
   const KeyboardHide = () => {
     multiply(
-      timing(height, {
-        toValue: IMG_HEIGHT,
-        duration: DURATION,
-        easing: Easing.inOut(Easing.ease),
-      }).start(),
-      timing(width, {
-        toValue: IMG_WIDTH,
-        duration: DURATION,
-        easing: Easing.inOut(Easing.ease),
-      }).start(),
+      tm1(height, IMG_HEIGHT, DURATION),
+      tm1(width, IMG_WIDTH, DURATION),
     );
   };
 
@@ -66,7 +53,6 @@ export const UserNameVerifikasi = () => {
         />
         <Input
           phoneCode={false}
-          placeholder="user.."
           title="Username"
           containerStyle={styles.input}
           keyboardType="default"
@@ -86,8 +72,6 @@ const styles = StyleSheet.create({
   },
   img: {
     resizeMode: 'contain',
-    // height: 220,
-    // width: 274,
     marginTop: 20,
   },
   input: {width: '80%', marginBottom: 50, marginTop: 30},
