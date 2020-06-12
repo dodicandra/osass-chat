@@ -26,6 +26,7 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={!onPress}
       style={[
         styles.container,
         {
@@ -48,6 +49,7 @@ const Profile: React.FC<ProfileProps> = ({
 
 Profile.defaultProps = {
   size: 64,
+  source: speaker,
 };
 
 export default Profile;

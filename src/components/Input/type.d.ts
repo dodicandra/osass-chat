@@ -17,3 +17,19 @@ type RefInput =
   | React.RefObject<TextInput>
   | null
   | undefined;
+
+type KybType =
+  | 'number-pad'
+  | 'default'
+  | 'email-address'
+  | 'numeric'
+  | 'phone-pad'
+  | 'decimal-pad'
+  | 'visible-password'
+  | 'ascii-capable'
+  | 'numbers-and-punctuation'
+  | 'url'
+  | 'name-phone-pad'
+  | 'twitter'
+  | 'web-search'
+  | undefined;
