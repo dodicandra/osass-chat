@@ -7,8 +7,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import Icons from 'react-native-vector-icons/FontAwesome5';
-import {colors, Fonts} from 'utils';
+import {colors, Fonts, Icons} from 'utils';
 
 export const UserProfile = () => {
   return (
@@ -18,12 +17,14 @@ export const UserProfile = () => {
           <Profile left={17} size={95} />
           <Text style={styles.title}>Dodi candra</Text>
         </View>
-        <TouchableOpacity
-          importantForAccessibility="yes"
-          style={styles.btnIcon}>
-          <Icons name="camera-retro" size={40} color={colors.text.greey} />
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity importantForAccessibility="yes" style={styles.btnIcon}>
+        <Icons.FontAwesome5
+          name="camera-retro"
+          size={40}
+          color={colors.text.greey}
+        />
+      </TouchableOpacity>
       <View style={{flex: 1, paddingTop: 50}}>
         <Text style={styles.textAkun}>Akun</Text>
         <Input
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.background.yellow,
     position: 'absolute',
-    bottom: -30,
+    top: 160,
     right: 20,
     elevation: 6,
   },

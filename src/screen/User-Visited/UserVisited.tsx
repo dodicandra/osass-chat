@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Alert,
 } from 'react-native';
-import Icons from 'react-native-vector-icons/MaterialIcons';
-import {colors, Fonts} from 'utils';
+import {colors, Fonts, Icons} from 'utils';
 import {speaker} from 'assets';
 
 export const UserVisited = () => {
@@ -20,12 +20,10 @@ export const UserVisited = () => {
         resizeMode="contain"
         style={styles.profileContainer}>
         <Text style={styles.userTitle}>dodi candra</Text>
-        <TouchableOpacity
-          importantForAccessibility="yes"
-          style={styles.btnIcon}>
-          <Icons name="chat" size={40} color={colors.text.greey} />
-        </TouchableOpacity>
       </ImageBackground>
+      <TouchableOpacity importantForAccessibility="yes" style={styles.btnIcon}>
+        <Icons.Entypo name="chat" size={40} color={colors.text.greey} />
+      </TouchableOpacity>
       <View style={{flex: 1, paddingTop: 50}}>
         <Text style={styles.textAkun}>Info</Text>
         <Input
@@ -38,6 +36,7 @@ export const UserVisited = () => {
           name="Dodi candra"
           borderWidth={0}
           numberOfLines={1}
+          onPresText={() => Alert.alert('Haloo')}
         />
         <Input
           title="Bio"
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 73 / 2,
     position: 'absolute',
-    bottom: -30,
+    top: 233,
     right: 20,
     elevation: 6,
   },

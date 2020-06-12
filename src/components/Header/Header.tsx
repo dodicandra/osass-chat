@@ -9,8 +9,7 @@ import {
   ImageSourcePropType,
   Text,
 } from 'react-native';
-import Icons from 'react-native-vector-icons/Ionicons';
-import {colors, Fonts} from 'utils';
+import {colors, Fonts, Icons} from 'utils';
 
 interface HeaderProps {
   imgProfile?: ImageSourcePropType;
@@ -22,7 +21,7 @@ export const Header: React.FC<HeaderProps> = ({imgProfile, icon, title}) => {
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity style={{marginLeft: 20}}>
-        <Icons
+        <Icons.Ionicons
           name={icon === 'ios-menu' ? 'ios-menu' : 'ios-arrow-back'}
           size={40}
           color={colors.background.white}

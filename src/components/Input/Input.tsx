@@ -27,6 +27,7 @@ interface InputProps {
   onlyText?: boolean;
   name?: string;
   numberOfLines?: number;
+  onPresText?(any: any): any;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -46,6 +47,7 @@ const Input: React.FC<InputProps> = ({
   onlyText,
   name,
   numberOfLines,
+  onPresText,
 }) => {
   return (
     <View style={containerStyle}>
@@ -57,7 +59,10 @@ const Input: React.FC<InputProps> = ({
         ]}>
         {phoneCode && <Text style={styles.prefix}>+62</Text>}
         {onlyText ? (
-          <Text numberOfLines={numberOfLines} style={styles.text}>
+          <Text
+            onPress={onPresText}
+            numberOfLines={numberOfLines}
+            style={styles.text}>
             {name}
           </Text>
         ) : (

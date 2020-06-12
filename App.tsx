@@ -1,12 +1,17 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, StatusBar} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {UserNameVerifikasi, Login} from 'screen';
+import {UserNameVerifikasi, Login, UserProfile, UserVisited} from 'screen';
+import {colors} from 'utils';
 
 const App = () => {
   return (
     <>
-      <Login />
+      <StatusBar
+        backgroundColor={colors.background.yellow}
+        barStyle="dark-content"
+      />
+      <UserVisited />
     </>
   );
 };
