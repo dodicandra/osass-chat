@@ -18,7 +18,7 @@ module.exports = {
         ],
         alias: {
           screens: './src/screens',
-          rooter: './src/navigation',
+          router: './src/router',
           components: './src/components',
           utils: './src/utils',
         },

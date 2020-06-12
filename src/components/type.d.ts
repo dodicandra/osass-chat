@@ -1,9 +1,17 @@
+import {ImageSourcePropType, ImageURISource} from 'react-native';
 import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   TextInputKeyPressEventData,
 } from 'react-native';
 import {TextInput} from 'react-native';
+
+type ImgType =
+  | number
+  | ImageURISource
+  | ImageURISource[]
+  | undefined
+  | ImageSourcePropType;
 
 type OnChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
 
@@ -33,3 +41,5 @@ type KybType =
   | 'twitter'
   | 'web-search'
   | undefined;
+
+type TestType = number;

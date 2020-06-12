@@ -1,5 +1,5 @@
-export * from './Login/Login';
 export * from './Verifikasi/VerifikasiCode';
+export * from './Register/Register';
 export * from './Home/Home';
 export * from './Chat/Chats';
 export * from './User-Profile/UserProfile';

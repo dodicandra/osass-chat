@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {colors, Fonts} from 'utils';
-import {OnChange, KybType} from './type';
+import {OnChange, KybType} from 'components/type';
 
 interface InputProps {
   containerStyle?: StyleProp<ViewStyle>;

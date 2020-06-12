@@ -1,18 +1,19 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, StatusBar} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {UserNameVerifikasi, Login, UserProfile, UserVisited} from 'screen';
+import {Auth} from 'router';
 import {colors} from 'utils';
 
 const App = () => {
   return (
-    <>
+    <NavigationContainer>
       <StatusBar
         backgroundColor={colors.background.yellow}
         barStyle="dark-content"
       />
-      <UserVisited />
-    </>
+      <Auth />
+    </NavigationContainer>
   );
 };
 

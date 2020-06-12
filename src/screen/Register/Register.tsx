@@ -1,8 +1,8 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import {IconLogin} from 'assets';
 import {Button, Input} from 'components';
 import React, {useEffect, useRef} from 'react';
 import {
-  Alert,
   Keyboard,
   Platform,
   StyleSheet,
@@ -17,7 +17,11 @@ const IMG_HEIGHT = 250;
 const IMG_WIDTH = 250;
 const DURATION = 300;
 
-export const Login = () => {
+type StackProps = StackScreenProps<Stack, 'Register'>;
+
+interface RegisterProps extends StackProps {}
+
+export const Register: React.FC<RegisterProps> = ({navigation}) => {
   const height = useRef(new Animated.Value(IMG_HEIGHT)).current;
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
@@ -66,7 +70,10 @@ export const Login = () => {
               containerStyle={styles.input}
               placeholder="8xx..."
             />
-            <Button onPress={() => Alert.alert('Halloo')} title="submit" />
+            <Button
+              onPress={() => navigation.navigate('VerifikasiCode')}
+              title="submit"
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

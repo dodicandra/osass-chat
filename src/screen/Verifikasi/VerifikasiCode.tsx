@@ -1,3 +1,4 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import {Button, InputCode} from 'components';
 import React, {useRef, useState} from 'react';
 import {
@@ -17,13 +18,18 @@ import {colors, Fonts} from 'utils';
 type Event = NativeSyntheticEvent<TextInputChangeEventData>;
 type EventKey = NativeSyntheticEvent<TextInputKeyPressEventData>;
 
-export const VerifikasiCode = () => {
+type StackProp = StackScreenProps<Stack, 'UserNameVerifikasi'>;
+
+interface VeriProps extends StackProp {}
+
+export const VerifikasiCode: React.FC<VeriProps> = ({navigation}) => {
   const ref = useRef<TextInput>(null);
   const ref1 = useRef<TextInput>(null);
   const ref2 = useRef<TextInput>(null);
   const ref3 = useRef<TextInput>(null);
   const ref4 = useRef<TextInput>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [phone, setPhone] = useState('');
 
   const onChangeInput = (e: Event, id: string) => {
@@ -66,8 +72,6 @@ export const VerifikasiCode = () => {
     }
   };
 
-  console.log(phone);
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -105,7 +109,11 @@ export const VerifikasiCode = () => {
         <TouchableOpacity onPress={clearInput}>
           <Text style={styles.clear}>Bersihkan Semua</Text>
         </TouchableOpacity>
-        <Button top={40} title="Verifikasi" />
+        <Button
+          onPress={() => navigation.navigate('UserNameVerifikasi')}
+          top={40}
+          title="Verifikasi"
+        />
       </View>
     </TouchableWithoutFeedback>
   );
