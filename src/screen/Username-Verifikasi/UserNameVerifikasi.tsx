@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {UserVer} from 'assets';
 import {Button, Input} from 'components';
 import React, {useEffect, useRef} from 'react';
@@ -7,6 +8,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
+  KeyboardEventName,
 } from 'react-native';
 import Animated, {multiply} from 'react-native-reanimated';
 import {colors, tm1} from 'utils';
@@ -20,14 +22,19 @@ export const UserNameVerifikasi = () => {
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
   useEffect(() => {
-    let os = Platform.OS === 'android' ? 'Did' : 'Will';
+    let Show: KeyboardEventName;
+    let Hide: KeyboardEventName;
 
-    Keyboard.addListener(`keyboard${os}Show`, KeyboardShow);
-    Keyboard.addListener(`keyboard${os}Hide`, KeyboardHide);
+    Hide = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
+
+    Show = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
+
+    Keyboard.addListener(Show, KeyboardShow);
+    Keyboard.addListener(Hide, KeyboardHide);
 
     return () => {
-      Keyboard.removeListener(`keyboard${os}Show`, () => {});
-      Keyboard.removeListener(`keyboard${os}Hide`, () => {});
+      Keyboard.removeListener(Show, () => {});
+      Keyboard.removeListener(Hide, () => {});
     };
   }, []);
 

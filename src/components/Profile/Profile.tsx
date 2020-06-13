@@ -5,7 +5,7 @@ import {colors} from 'utils';
 import {ImgType} from 'components/type';
 
 interface ProfileProps {
-  source?: ImgType;
+  source?: ImgType | any;
   left?: number;
   right?: number;
   top?: number;

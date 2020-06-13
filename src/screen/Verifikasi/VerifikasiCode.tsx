@@ -18,7 +18,7 @@ import {colors, Fonts} from 'utils';
 type Event = NativeSyntheticEvent<TextInputChangeEventData>;
 type EventKey = NativeSyntheticEvent<TextInputKeyPressEventData>;
 
-type StackProp = StackScreenProps<Stack, 'UserNameVerifikasi'>;
+type StackProp = StackScreenProps<StackAuth, 'VerifikasiCode'>;
 
 interface VeriProps extends StackProp {}
 

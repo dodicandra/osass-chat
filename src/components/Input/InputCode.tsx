@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {colors, Fonts} from 'utils';
-import {OnChange, OnKeyPress, RefInput} from './type';
+import {OnChange, OnKeyPress, RefInput} from 'components/type';
 
 interface InputProps {
   onChangeText?(e: any): void;

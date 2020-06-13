@@ -4,7 +4,7 @@ export const tm1 = (
   val: Animated.Value<number>,
   toValue: number,
   duration: number,
-): void => {
+): any => {
   timing(val, {
     toValue: toValue,
     duration: duration,
