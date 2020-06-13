@@ -1,20 +1,45 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors, Fonts} from 'utils';
 
 interface ButtonProps {
   title: string;
-  onPress?(): void;
+  onPress?: () => void;
   top?: number;
   bottom?: number;
+  disabled?: boolean;
 }
 
-const Button = ({title, onPress, top, bottom}: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  onPress,
+  top,
+  bottom,
+  disabled,
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.container, {marginTop: top, marginBottom: bottom}]}>
-      <Text style={styles.text}>{title}</Text>
+      disabled={disabled}
+      style={[
+        styles.container,
+        {
+          marginTop: top,
+          marginBottom: bottom,
+          backgroundColor: disabled
+            ? colors.background.yellow
+            : colors.background.greey,
+          elevation: 4,
+        },
+      ]}>
+      <Text
+        style={[
+          styles.text,
+          {color: disabled ? colors.background.greey : colors.text.yellow},
+        ]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -23,7 +48,6 @@ export default Button;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.background.greey,
     width: 246,
     height: 50,
     justifyContent: 'center',
@@ -32,7 +56,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 36,
-    color: colors.text.yellow,
     fontFamily: Fonts.Monstserrat.B,
   },
 });

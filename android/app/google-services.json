@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "286436641611-vik4chts3ook1js4hu3j5ofomcc1thts.apps.googleusercontent.com",
+          "client_id": "286436641611-n7dqv5h04bt6ujnk1bfjame62h3qhrvr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ossas",
             "certificate_hash": "2886ee6f29ca5999a38ccd61380ac3a3fd5d49f4"
+          }
+        },
+        {
+          "client_id": "286436641611-mikbgelunh054i16g1ckpb4smnf7if0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ossas",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {

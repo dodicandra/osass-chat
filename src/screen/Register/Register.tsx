@@ -1,108 +1,117 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+import {firebase} from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 import {StackScreenProps} from '@react-navigation/stack';
-import {IconLogin} from 'assets';
+import {RegisterIntro} from 'assets';
 import {Button, Input} from 'components';
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {
+  ImageBackground,
   Keyboard,
-  Platform,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
-  KeyboardEventName,
 } from 'react-native';
-import Animated, {multiply} from 'react-native-reanimated';
-import {colors, Fonts, tm1} from 'utils';
-
-const IMG_HEIGHT = 250;
-const IMG_WIDTH = 250;
-const DURATION = 300;
+import {colors, Fonts, useForm} from 'utils';
 
 type StackProps = StackScreenProps<StackAuth, 'Register'>;
+interface FromData {
+  email: string;
+  username: string;
+  password: string;
+}
 
 interface RegisterProps extends StackProps {}
 
-export const Register: React.FC<RegisterProps> = ({navigation}) => {
-  const height = useRef(new Animated.Value(IMG_HEIGHT)).current;
-  const width = useRef(new Animated.Value(IMG_WIDTH)).current;
+export const Register: React.FC<RegisterProps> = () => {
+  const [form, handleChange] = useForm({
+    email: '',
+    username: '',
+    password: '',
+  });
 
-  useEffect(() => {
-    let Show: KeyboardEventName;
-    let Hide: KeyboardEventName;
+  const disabled =
+    form.email.length > 0 &&
+    form.username.length > 0 &&
+    form.password.length > 0;
 
-    Hide = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
-
-    Show = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
-
-    Keyboard.addListener(Show, KeyboardShow);
-    Keyboard.addListener(Hide, KeyboardHide);
-
-    return () => {
-      Keyboard.removeListener(Show, () => {});
-      Keyboard.removeListener(Hide, () => {});
-    };
-  }, []);
-
-  const KeyboardShow = () => {
-    multiply(
-      tm1(height, IMG_HEIGHT / 2, DURATION),
-      tm1(width, IMG_WIDTH / 2, DURATION),
-    );
-  };
-  const KeyboardHide = () => {
-    multiply(
-      tm1(height, IMG_HEIGHT, DURATION),
-      tm1(width, IMG_WIDTH, DURATION),
-    );
+  const handleSubmit = async () => {
+    console.log(form);
+    try {
+      const register = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(
+          form.email.trim(),
+          form.password.trim(),
+        );
+      if (register.user) {
+        console.log(register.user);
+        const dbref = await database().ref();
+        const respon = await dbref
+          .child(`user/${register.user.uid}`)
+          .set({name: form.username});
+        console.log(respon);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.flex1}>
-          <View style={styles.containerText}>
-            <Text style={styles.text}>
-              Selamat datang di Ossas! Temapt bercakap dengan siapapun!..
-            </Text>
-          </View>
-          <View style={styles.containerInput}>
-            <Animated.Image
-              resizeMode="contain"
-              style={[styles.Image, {height, width}]}
-              source={IconLogin}
-            />
-            <Input
-              maxLength={12}
-              containerStyle={styles.input}
-              placeholder="8xx..."
-            />
-            <Button
-              onPress={() => navigation.navigate('VerifikasiCode')}
-              title="submit"
-            />
-          </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ImageBackground
+        resizeMode="contain"
+        style={styles.container}
+        source={RegisterIntro}>
+        <Text style={styles.text}>Yuuk Mendaftar di Ossas.</Text>
+        <Input
+          keyboardType="default"
+          containerStyle={styles.input}
+          phoneCode={false}
+          title="Email"
+          onChangeText={(val) => handleChange('email', val)}
+        />
+        <Input
+          keyboardType="default"
+          containerStyle={styles.input}
+          phoneCode={false}
+          title="Username"
+          onChangeText={(val) => handleChange('username', val)}
+        />
+        <Input
+          containerStyle={styles.input}
+          phoneCode={false}
+          title="Password"
+          secureTextEntry
+          keyboardType="default"
+          onChangeText={(val) => handleChange('password', val)}
+        />
+        <View style={styles.btnWraper}>
+          <Button
+            disabled={!disabled}
+            onPress={handleSubmit}
+            title="register"
+          />
         </View>
-      </TouchableWithoutFeedback>
-    </View>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: colors.background.yellow,
+    justifyContent: 'center',
   },
-  Image: {alignSelf: 'center'},
-  containerText: {width: 274, marginTop: 20, marginLeft: 20},
-  input: {width: '90%', marginBottom: 30},
-  text: {fontSize: 18, fontFamily: Fonts.Monstserrat.M},
-  containerInput: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+  text: {
+    fontSize: 20,
+    fontFamily: Fonts.Monstserrat.M,
+    position: 'absolute',
+    top: 34,
+    left: 30,
   },
-  flex1: {
-    flex: 1,
-  },
+  input: {marginHorizontal: 20, marginVertical: 5},
+  btnWraper: {alignSelf: 'center', marginTop: 30, marginVertical: 5},
 });

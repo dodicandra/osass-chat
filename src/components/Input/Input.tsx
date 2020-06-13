@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -6,8 +6,9 @@ import {
   TextInput,
   View,
   ViewStyle,
+  TouchableOpacity,
 } from 'react-native';
-import {colors, Fonts} from 'utils';
+import {colors, Fonts, Icons} from 'utils';
 import {OnChange, KybType} from 'components/type';
 
 interface InputProps {
@@ -28,6 +29,7 @@ interface InputProps {
   name?: string;
   numberOfLines?: number;
   onPresText?(any: any): any;
+  secureTextEntry?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -48,7 +50,10 @@ const Input: React.FC<InputProps> = ({
   name,
   numberOfLines,
   onPresText,
+  secureTextEntry,
 }) => {
+  const [active, setActive] = useState(true);
+
   return (
     <View style={containerStyle}>
       {titlePosition === 'top' && <Text style={styles.title}>{title}</Text>}
@@ -66,17 +71,30 @@ const Input: React.FC<InputProps> = ({
             {name}
           </Text>
         ) : (
-          <TextInput
-            placeholder={placeholder}
-            maxLength={maxLength}
-            style={styles.input}
-            onChangeText={onChangeText}
-            onChange={onChange}
-            keyboardType={keyboardType}
-            editable={editable}
-            value={value}
-            numberOfLines={1}
-          />
+          <>
+            <TextInput
+              placeholder={placeholder}
+              maxLength={maxLength}
+              style={styles.input}
+              onChangeText={onChangeText}
+              onChange={onChange}
+              keyboardType={keyboardType}
+              editable={editable}
+              value={value}
+              numberOfLines={1}
+              secureTextEntry={secureTextEntry && active}
+            />
+            {secureTextEntry && (
+              <TouchableOpacity
+                onPress={() => setActive(!active)}
+                style={{marginRight: 15}}>
+                <Icons.Entypo
+                  name={!active ? 'eye' : 'eye-with-line'}
+                  size={30}
+                />
+              </TouchableOpacity>
+            )}
+          </>
         )}
       </View>
       {titlePosition === 'bottom' && <Text style={styles.title}>{title}</Text>}

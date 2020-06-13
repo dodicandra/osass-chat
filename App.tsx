@@ -1,17 +1,12 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Auth} from 'router';
-import {colors} from 'utils';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <StatusBar
-        backgroundColor={colors.background.yellow}
-        barStyle="dark-content"
-      />
       <Auth />
     </NavigationContainer>
   );
