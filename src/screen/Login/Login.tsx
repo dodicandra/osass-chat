@@ -2,7 +2,7 @@ import {firebase} from '@react-native-firebase/auth';
 import {StackScreenProps} from '@react-navigation/stack';
 import {IconLogin} from 'assets';
 import {Button, Input} from 'components';
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {
   Keyboard,
   SafeAreaView,
@@ -14,7 +14,7 @@ import {
   View,
 } from 'react-native';
 import Animated, {multiply} from 'react-native-reanimated';
-import {colors, Fonts, tm1, useKeyBoard} from 'utils';
+import {colors, Fonts, tm1, useForm, useKeyBoard} from 'utils';
 
 const IMG_HEIGHT = 230;
 const IMG_WIDTH = 230;
@@ -28,7 +28,8 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
   const height = useRef(new Animated.Value(IMG_HEIGHT)).current;
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
-  const [user, setUser] = useState({email: '', password: ''});
+  const [user, setUser] = useForm({email: '', password: ''});
+
   const disabled = user.email.length > 0 && user.password.length > 0;
 
   const KeyboardShow = () => {
@@ -81,8 +82,8 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
             />
             <Input
               containerStyle={styles.input}
-              onChangeText={(value) => setUser({...user, ['email']: value})}
-              title={'Email'}
+              onChangeText={(value) => setUser('email', value)}
+              title="Email"
               phoneCode={false}
               keyboardType="default"
             />
@@ -90,8 +91,8 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
               keyboardType="default"
               phoneCode={false}
               containerStyle={styles.input}
-              onChangeText={(value) => setUser({...user, ['password']: value})}
-              title={'Password'}
+              onChangeText={(value) => setUser('password', value)}
+              title="Password"
               secureTextEntry
             />
             <View style={{marginTop: 20}}>

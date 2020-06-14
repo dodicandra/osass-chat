@@ -22,12 +22,12 @@ export const useKeyBoard = (
   }, []);
 };
 
-export function useForm(initialState = {}) {
-  const [state, setState] = useState(initialState);
+export function useForm<State>(initialState: State) {
+  const [state, setState] = useState<State>(initialState);
 
-  const handleChange: any = (val: string, key: string) => {
-    setState({...state, [val]: key});
+  const handleChange = <T extends keyof State>(key: T, val: string): any => {
+    setState({...state, [key]: val});
   };
 
-  return [state, handleChange];
+  return [state, handleChange] as const;
 }

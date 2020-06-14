@@ -15,11 +15,6 @@ import {
 import {colors, Fonts, useForm} from 'utils';
 
 type StackProps = StackScreenProps<StackAuth, 'Register'>;
-interface FromData {
-  email: string;
-  username: string;
-  password: string;
-}
 
 interface RegisterProps extends StackProps {}
 
