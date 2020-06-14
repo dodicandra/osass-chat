@@ -10,7 +10,7 @@ interface ProfileProps {
   right?: number;
   top?: number;
   bottom?: number;
-  onPress?(val: any): void;
+  onPress?: (val: any) => void;
   size?: number;
 }
 

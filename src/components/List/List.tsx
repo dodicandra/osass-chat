@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ImageSourcePropType,
+  GestureResponderEvent,
 } from 'react-native';
 import {speaker} from 'assets';
 import {Fonts, colors} from 'utils';
@@ -14,13 +15,21 @@ interface InputProps {
   title?: string;
   desc?: string;
   imgUrl?: ImageSourcePropType;
+  profilePress?: ((event: GestureResponderEvent) => void) | undefined;
+  titlePress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
-const List: React.FC<InputProps> = ({title, desc, imgUrl}) => {
+const List: React.FC<InputProps> = ({
+  title,
+  desc,
+  imgUrl,
+  profilePress,
+  titlePress,
+}) => {
   return (
     <View style={styles.container}>
-      <Profile source={imgUrl} />
-      <TouchableOpacity style={styles.containerText}>
+      <Profile onPress={profilePress} source={imgUrl} />
+      <TouchableOpacity onPress={titlePress} style={styles.containerText}>
         <Text numberOfLines={1} style={styles.title}>
           {title}
         </Text>

@@ -1,9 +1,4 @@
-import {UiActionType} from './types';
-
-export interface UiInterface {
-  loading: boolean;
-  error: string | undefined;
-}
+import {UiActionType, UiInterface} from './types';
 
 const initalState: UiInterface = {
   loading: false,
@@ -33,6 +28,6 @@ export function UiReducer(
     case 'CLEAR_ERROR':
       return state;
     default:
-      throw Error();
+      return state;
   }
 }

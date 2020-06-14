@@ -1,7 +1,9 @@
-export const SET_LOADING = 'SET_LOADING';
-export const STOP_LOADING = 'STOP_LOADING';
-export const SET_ERROR = 'SET_ERROR';
-export const CLEAR_ERROR = 'CLEAR_ERROR';
+import {SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR} from 'store/constan';
+
+export interface UiInterface {
+  loading: boolean;
+  error: string | undefined;
+}
 
 interface SetLoadingType {
   type: typeof SET_LOADING;

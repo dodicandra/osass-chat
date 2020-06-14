@@ -1,4 +1,3 @@
-import {firebase} from '@react-native-firebase/auth';
 import {StackScreenProps} from '@react-navigation/stack';
 import {IconLogin} from 'assets';
 import {Button, Input} from 'components';
@@ -14,6 +13,8 @@ import {
   View,
 } from 'react-native';
 import Animated, {multiply} from 'react-native-reanimated';
+import {useDispatch} from 'react-redux';
+import {signInService} from 'services';
 import {colors, Fonts, tm1, useForm, useKeyBoard} from 'utils';
 
 const IMG_HEIGHT = 230;
@@ -28,9 +29,11 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
   const height = useRef(new Animated.Value(IMG_HEIGHT)).current;
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
-  const [user, setUser] = useForm({email: '', password: ''});
+  const dispatch = useDispatch();
 
-  const disabled = user.email.length > 0 && user.password.length > 0;
+  const [form, setForm] = useForm({email: '', password: ''});
+
+  const disabled = form.email.length > 0 && form.password.length > 0;
 
   const KeyboardShow = () => {
     multiply(
@@ -49,16 +52,9 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
 
   const signIn = async () => {
     try {
-      if (user.email.trim() === '' && user.password.trim() === '') return;
+      if (form.email.trim() === '' && form.password.trim() === '') return;
 
-      const auth = await firebase
-        .auth()
-        .signInWithEmailAndPassword(user.email?.trim(), user.password?.trim());
-
-      if (auth?.user) {
-        return;
-        // navigation.replace('Register', {});
-      }
+      dispatch(signInService(form));
     } catch (err) {
       console.log(err);
     }
@@ -82,7 +78,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
             />
             <Input
               containerStyle={styles.input}
-              onChangeText={(value) => setUser('email', value)}
+              onChangeText={(value) => setForm('email', value)}
               title="Email"
               phoneCode={false}
               keyboardType="default"
@@ -91,7 +87,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
               keyboardType="default"
               phoneCode={false}
               containerStyle={styles.input}
-              onChangeText={(value) => setUser('password', value)}
+              onChangeText={(value) => setForm('password', value)}
               title="Password"
               secureTextEntry
             />

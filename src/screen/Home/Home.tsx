@@ -1,24 +1,22 @@
 import {Header, List} from 'components';
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View, Alert} from 'react-native';
 import {colors} from 'utils';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const Home = () => {
+type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
+
+interface HomeProps extends MainStackApp {}
+
+export const Home: React.FC<HomeProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Header title="Ossas" />
+      <Header onPress={() => Alert.alert('Halooo')} title="Ossas" />
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         style={styles.bodyContainer}>
-        <List />
-        <List />
-        <List />
-        <List />
-        <List />
-        <List />
-        <List />
-        <List />
+        <List profilePress={() => navigation.navigate('UserProfile')} />
         <List />
         <List />
         <List />

@@ -6,5 +6,16 @@ import {Header} from './Header/Header';
 import Profile from './Profile/Profile';
 import List from './List/List';
 import BubleChat from './Chat/BubleChat';
+import Loading from './Loading/Loading';
 
-export {Input, Button, InputCode, Header, Profile, List, InputChat, BubleChat};
+export {
+  Input,
+  Button,
+  InputCode,
+  Header,
+  Profile,
+  List,
+  InputChat,
+  BubleChat,
+  Loading,
+};

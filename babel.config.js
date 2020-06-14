@@ -11,6 +11,7 @@ module.exports = {
           '.ios.tsx',
           '.android.tsx',
           '.ts',
+          '.d.ts',
           '.tsx',
           '.jsx',
           '.js',

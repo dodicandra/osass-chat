@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {EffectCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
+import {getToLocal} from './asycnStorage';
+import {store, setToken} from 'store';
+
+const dispatch = store.dispatch;
 
 export const useKeyBoard = (
   callbackShow: EffectCallback,
@@ -31,3 +35,16 @@ export function useForm<State>(initialState: State) {
 
   return [state, handleChange] as const;
 }
+
+export const useAuth = () => {
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = await getToLocal('token');
+        dispatch(setToken(token));
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+};

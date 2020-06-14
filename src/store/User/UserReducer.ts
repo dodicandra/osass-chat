@@ -33,6 +33,6 @@ export function UserReducer(
         token: action.payload,
       };
     default:
-      throw Error();
+      return state;
   }
 }

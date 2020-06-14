@@ -1,17 +1,5 @@
 import {UserActionType, UserInterface} from './types';
 
-// export const setUserAction = (): ThunkAction<
-//   void,
-//   RootState,
-//   unknown,
-//   Action<string>
-// > => async (dispatch) => {
-//   try {
-//     dispatch({type: ''});
-//     console.log('haloo');
-//   } catch (err) {}
-// };
-
 export const setUser = (
   {name, email, phone}: UserInterface,
   token: string,

@@ -1,26 +1,33 @@
 /* eslint-disable react-native/no-inline-styles */
 import {speaker} from 'assets';
-import Profile from '../Profile/Profile';
 import React from 'react';
 import {
+  ImageSourcePropType,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
-  ImageSourcePropType,
-  Text,
+  GestureResponderEvent,
 } from 'react-native';
 import {colors, Fonts, Icons} from 'utils';
+import Profile from '../Profile/Profile';
 
 interface HeaderProps {
   imgProfile?: ImageSourcePropType;
   icon?: 'ios-arrow-back' | 'ios-menu';
   title?: string;
+  onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
-export const Header: React.FC<HeaderProps> = ({imgProfile, icon, title}) => {
+export const Header: React.FC<HeaderProps> = ({
+  imgProfile,
+  icon,
+  title,
+  onPress,
+}) => {
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity style={{marginLeft: 20}}>
+      <TouchableOpacity onPress={onPress} style={{marginLeft: 20}}>
         <Icons.Ionicons
           name={icon === 'ios-menu' ? 'ios-menu' : 'ios-arrow-back'}
           size={40}

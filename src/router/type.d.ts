@@ -4,3 +4,8 @@ type StackAuth<T = object> = {
   MainApp: T | undefined;
   Register: T | undefined;
 };
+
+type StackMainApp<T = object> = {
+  Home: T | undefined;
+  UserProfile: T | undefined;
+};
