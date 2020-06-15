@@ -16,12 +16,12 @@ const MainApp = () => {
     (async () => {
       try {
         const token = await getToLocal('token');
-        dispatch(setToken(token));
+        await dispatch(setToken(token));
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [User.token, dispatch]);
+  }, [dispatch]);
 
   return (
     <NavigationContainer>

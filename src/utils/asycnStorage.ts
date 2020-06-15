@@ -1,6 +1,6 @@
 import AsycnStorage from '@react-native-community/async-storage';
 
-export const setToLocal = async (key: string, val: string) => {
+export const setToLocal = async (key: string, val?: string) => {
   try {
     const value = JSON.stringify(val);
     await AsycnStorage.setItem(key, value);

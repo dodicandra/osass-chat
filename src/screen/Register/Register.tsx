@@ -1,5 +1,3 @@
-import {firebase} from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RegisterIntro} from 'assets';
 import {Button, Input} from 'components';
@@ -12,6 +10,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import {registerService} from 'services';
 import {colors, Fonts, useForm} from 'utils';
 
 type StackProps = StackScreenProps<StackAuth, 'Register'>;
@@ -19,6 +19,8 @@ type StackProps = StackScreenProps<StackAuth, 'Register'>;
 interface RegisterProps extends StackProps {}
 
 export const Register: React.FC<RegisterProps> = () => {
+  const dispatch = useDispatch();
+
   const [form, handleChange] = useForm({
     email: '',
     username: '',
@@ -31,22 +33,8 @@ export const Register: React.FC<RegisterProps> = () => {
     form.password.length > 0;
 
   const handleSubmit = async () => {
-    console.log(form);
     try {
-      const register = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(
-          form.email.trim(),
-          form.password.trim(),
-        );
-      if (register.user) {
-        console.log(register.user);
-        const dbref = await database().ref();
-        const respon = await dbref
-          .child(`user/${register.user.uid}`)
-          .set({name: form.username});
-        console.log(respon);
-      }
+      await dispatch(registerService(form));
     } catch (err) {
       console.log(err);
     }

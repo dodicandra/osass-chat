@@ -14,7 +14,7 @@ export interface UserState {
 interface SetUserType {
   type: typeof SET_USER;
   payload: UserInterface;
-  token: string;
+  token?: string;
 }
 
 interface ClearUserType {
@@ -24,12 +24,11 @@ interface ClearUserType {
 
 interface SetTokeType {
   type: typeof SET_TOKEN;
-  payload: string;
+  payload?: string;
 }
 
 interface ClearTokenType {
   type: typeof CLEAR_TOKEN;
-  payload?: string;
 }
 
 export type UserActionType =

@@ -1,17 +1,26 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import {Header, List} from 'components';
 import React from 'react';
-import {ScrollView, StyleSheet, View, Alert} from 'react-native';
-import {colors} from 'utils';
-import {StackScreenProps} from '@react-navigation/stack';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {clearToken} from 'store';
+import {colors, removeLocal} from 'utils';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 
 interface HomeProps extends MainStackApp {}
 
 export const Home: React.FC<HomeProps> = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  const logOut = async () => {
+    await removeLocal('token');
+    dispatch(clearToken());
+  };
+
   return (
     <View style={styles.container}>
-      <Header onPress={() => Alert.alert('Halooo')} title="Ossas" />
+      <Header onPress={logOut} title="Ossas" />
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}

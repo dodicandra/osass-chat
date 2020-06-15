@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {firebase as auth} from '@react-native-firebase/auth';
 import {UserVer} from 'assets';
 import {Button, Input} from 'components';
 import React, {useRef} from 'react';
 import {
   Keyboard,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
   View,
-  Text,
 } from 'react-native';
 import Animated, {multiply} from 'react-native-reanimated';
-import {colors, tm1, useKeyBoard, Fonts} from 'utils';
+import {colors, Fonts, tm1, useForm, useKeyBoard} from 'utils';
 
 const IMG_HEIGHT = 220;
 const IMG_WIDTH = 274;
@@ -19,6 +20,8 @@ const DURATION = 300;
 export const UserNameVerifikasi = () => {
   const height = useRef(new Animated.Value(IMG_HEIGHT)).current;
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
+
+  const [form, onChange] = useForm({name: ''});
 
   const KeyboardShow = () => {
     multiply(
@@ -35,6 +38,18 @@ export const UserNameVerifikasi = () => {
 
   useKeyBoard(KeyboardShow, KeyboardHide);
 
+  const changeDisplayName = async () => {
+    const user = await auth.auth().currentUser;
+
+    const token = await user?.getIdTokenResult(true).then((t) => t);
+
+    const curenUser = user
+      ?.updateProfile({displayName: form.name})
+      .then((res) => res);
+
+    Promise.all([user, token, curenUser]).then((res) => console.log(res));
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -48,8 +63,10 @@ export const UserNameVerifikasi = () => {
           title="Username"
           containerStyle={styles.input}
           keyboardType="default"
+          value={form.name}
+          onChangeText={(val) => onChange('name', val)}
         />
-        <Button title="Lanjut" />
+        <Button onPress={changeDisplayName} title="Lanjut" />
       </View>
     </TouchableWithoutFeedback>
   );

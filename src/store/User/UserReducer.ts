@@ -14,7 +14,6 @@ export function UserReducer(
       return {
         ...state,
         user: action.payload,
-        token: action.token,
       };
     case 'CLEAR_USER':
       return {
@@ -30,7 +29,7 @@ export function UserReducer(
     case 'CLEAR_TOKEN':
       return {
         ...state,
-        token: action.payload,
+        token: null,
       };
     default:
       return state;

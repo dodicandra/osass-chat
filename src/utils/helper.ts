@@ -26,10 +26,12 @@ export const useKeyBoard = (
   }, []);
 };
 
-export function useForm<State>(initialState: State) {
+export function useForm<State extends Record<string, object | string>>(
+  initialState: State,
+) {
   const [state, setState] = useState<State>(initialState);
 
-  const handleChange = <T extends keyof State>(key: T, val: string): any => {
+  const handleChange = (key: keyof State, val: string): any => {
     setState({...state, [key]: val});
   };
 

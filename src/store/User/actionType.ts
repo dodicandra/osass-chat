@@ -1,19 +1,19 @@
 import {UserActionType, UserInterface} from './types';
 
-export const setUser = (
-  {name, email, phone}: UserInterface,
-  token: string,
-): UserActionType => ({
+export const setUser = ({
+  name,
+  email,
+  phone,
+}: UserInterface): UserActionType => ({
   type: 'SET_USER',
   payload: {name, email, phone},
-  token,
 });
 
 export const clearUser = (): UserActionType => ({
   type: 'CLEAR_USER',
 });
 
-export const setToken = (token: string): UserActionType => ({
+export const setToken = (token?: string): UserActionType => ({
   type: 'SET_TOKEN',
   payload: token,
 });
