@@ -1,14 +1,21 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import {speaker} from 'assets';
-import {Header, InputChat, BubleChat} from 'components';
-import React, {useState} from 'react';
+import {BubleChat, Header, InputChat} from 'components';
+import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {colors} from 'utils';
-import {StackScreenProps} from '@react-navigation/stack';
 
 type ChatProps = StackScreenProps<StackMainApp, 'Chat'>;
 
 export const Chats: React.FC<ChatProps> = ({navigation}) => {
+  const scrollRef = useRef<ScrollView>(null);
   const [state, setState] = useState('');
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      scrollRef.current!.scrollToEnd();
+    });
+  }, [navigation]);
 
   const disabled = state.length > 0;
   return (
@@ -20,6 +27,7 @@ export const Chats: React.FC<ChatProps> = ({navigation}) => {
         imgProfile={speaker}
       />
       <ScrollView
+        ref={scrollRef}
         scrollEventThrottle={16}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}

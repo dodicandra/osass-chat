@@ -1,24 +1,70 @@
-import {Profile, Input} from 'components';
-import React from 'react';
+import {Input, Profile} from 'components';
+import React, {useState} from 'react';
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
 } from 'react-native';
+import ImagePick from 'react-native-image-picker';
+import {uploadImageUser} from 'services';
 import {colors, Fonts, Icons} from 'utils';
 
+export interface ImageTypes {
+  uri?: string;
+  filename?: string;
+  path?: string;
+}
+
 export const UserProfile = () => {
+  const [image, setImage] = useState<ImageTypes>({
+    uri: '',
+    filename: '',
+    path: '',
+  });
+
+  const upload = async () => {
+    ImagePick.launchImageLibrary(
+      {quality: 1, mediaType: 'photo'},
+      async (res) => {
+        if (!res.didCancel) {
+          const src: ImageTypes = {
+            uri: res.uri,
+            filename: res.fileName,
+            path: res.path,
+          };
+          setImage(src);
+        }
+      },
+    );
+  };
+
+  const uploadFoto = async () => {
+    try {
+      await uploadImageUser({uri: image.uri, filename: image.filename});
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.profileContainer}>
         <View style={styles.wraper}>
-          <Profile left={17} size={95} />
+          <Profile
+            onPress={uploadFoto}
+            source={{uri: image.uri ? image.uri : null}}
+            left={17}
+            size={95}
+          />
           <Text style={styles.title}>Dodi candra</Text>
         </View>
       </View>
-      <TouchableOpacity importantForAccessibility="yes" style={styles.btnIcon}>
+      <TouchableOpacity
+        onPress={upload}
+        importantForAccessibility="yes"
+        style={styles.btnIcon}>
         <Icons.FontAwesome5
           name="camera-retro"
           size={40}
