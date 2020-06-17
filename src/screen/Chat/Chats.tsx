@@ -1,6 +1,6 @@
 import {speaker} from 'assets';
 import {Header, InputChat, BubleChat} from 'components';
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {colors} from 'utils';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -8,6 +8,9 @@ import {StackScreenProps} from '@react-navigation/stack';
 type ChatProps = StackScreenProps<StackMainApp, 'Chat'>;
 
 export const Chats: React.FC<ChatProps> = ({navigation}) => {
+  const [state, setState] = useState('');
+
+  const disabled = state.length > 0;
   return (
     <View style={styles.container}>
       <Header
@@ -34,7 +37,11 @@ export const Chats: React.FC<ChatProps> = ({navigation}) => {
         <BubleChat />
         <BubleChat content="http://google.com" sender />
       </ScrollView>
-      <InputChat disabled />
+      <InputChat
+        disabled={!disabled}
+        onChangeText={(val) => setState(val)}
+        value={state}
+      />
     </View>
   );
 };

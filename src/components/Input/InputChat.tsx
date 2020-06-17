@@ -37,8 +37,8 @@ const InputChat: React.FC<InputChatProps> = ({
         ]}>
         <Icons
           name="send"
-          size={33}
-          color={disabled ? colors.background.white : colors.text.black}
+          size={25}
+          color={disabled ? colors.background.white : colors.text.greey}
         />
       </TouchableOpacity>
     </View>
@@ -57,24 +57,30 @@ const styles = StyleSheet.create({
     maxHeight: 100,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
     marginBottom: 20,
     marginTop: 7,
   },
   input: {
     borderWidth: 1,
-    width: 317,
+    minWidth: 270,
+    maxWidth: 270,
+    minHeight: 50,
     borderRadius: 10,
     borderColor: colors.border.input,
     fontFamily: Fonts.Monstserrat.R,
     fontSize: 16,
     letterSpacing: 1.4,
     padding: 5,
+    textDecorationLine: 'none',
   },
   send: {
-    width: 52,
-    height: 52,
-    borderRadius: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 50 / 2,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 2,
+    paddingRight: 3,
   },
 });

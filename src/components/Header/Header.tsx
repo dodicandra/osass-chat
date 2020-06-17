@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontFamily: Fonts.Monstserrat.R,
-    width: 260,
+    width: 230,
     marginLeft: 10,
   },
 });

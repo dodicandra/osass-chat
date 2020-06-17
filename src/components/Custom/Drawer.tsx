@@ -7,7 +7,7 @@ import {
   DrawerNavigationHelpers,
   DrawerDescriptorMap,
 } from '@react-navigation/drawer/lib/typescript/src/types';
-import {Button} from 'components';
+import Button from '../Button/Button';
 import {removeLocal} from 'utils';
 import {useDispatch} from 'react-redux';
 import {clearToken} from 'store';

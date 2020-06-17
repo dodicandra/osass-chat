@@ -38,7 +38,8 @@ const BubleChat: React.FC<BubleChatProps> = ({sender, content}) => {
 
 BubleChat.defaultProps = {
   sender: false,
-  content: 'haloo selamat menikmati chattingmu..',
+  content:
+    'haloo selamat menikmati chattingmu.. saya disini akan menemanimu sampai kamu nagantuk',
 };
 
 export default BubleChat;
