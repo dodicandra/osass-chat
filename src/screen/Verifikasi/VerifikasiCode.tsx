@@ -18,7 +18,7 @@ import {colors, Fonts} from 'utils';
 type Event = NativeSyntheticEvent<TextInputChangeEventData>;
 type EventKey = NativeSyntheticEvent<TextInputKeyPressEventData>;
 
-type StackProp = StackScreenProps<StackAuth, 'VerifikasiCode'>;
+type StackProp = StackScreenProps<StackAuth>;
 
 interface VeriProps extends StackProp {}
 
@@ -37,13 +37,13 @@ export const VerifikasiCode: React.FC<VeriProps> = ({navigation}) => {
     if (teks.length > 0) {
       switch (id) {
         case '1':
-          return ref1.current?.focus();
+          return ref1.current!.focus();
         case '2':
-          return ref2.current?.focus();
+          return ref2.current!.focus();
         case '3':
-          return ref3.current?.focus();
+          return ref3.current!.focus();
         case '4':
-          return ref4.current?.focus();
+          return ref4.current!.focus();
         default:
           return;
       }
@@ -55,19 +55,19 @@ export const VerifikasiCode: React.FC<VeriProps> = ({navigation}) => {
   };
 
   const clearInput = () => {
-    ref.current?.clear();
-    ref1.current?.clear();
-    ref2.current?.clear();
-    ref3.current?.clear();
-    ref4.current?.clear();
-    ref.current?.focus();
+    ref.current!.clear();
+    ref1.current!.clear();
+    ref2.current!.clear();
+    ref3.current!.clear();
+    ref4.current!.clear();
+    ref.current!.focus();
     setPhone('');
   };
   const onKeyPress = (e: EventKey) => {
     const backSpace = e.nativeEvent.key;
     if (backSpace === 'Backspace') {
       clearInput();
-      ref.current?.focus();
+      ref.current!.focus();
       setPhone('');
     }
   };

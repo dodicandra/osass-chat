@@ -8,4 +8,11 @@ type StackAuth<T = object> = {
 type StackMainApp<T = object> = {
   Home: T | undefined;
   UserProfile: T | undefined;
+  UserVisited: T | undefined;
+  Chat: T | undefined;
+};
+
+type DrawerStack<T = object> = {
+  Root: T | undefined;
+  UserProfile: T | undefined;
 };

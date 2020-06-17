@@ -2,7 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {Login, Register, UserNameVerifikasi} from 'screen';
 
-const {Navigator, Screen} = createStackNavigator();
+const {Navigator, Screen} = createStackNavigator<StackAuth>();
 
 export const Auth = () => {
   return (

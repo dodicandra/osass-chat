@@ -89,7 +89,7 @@ const Input: React.FC<InputProps> = ({
                 onPress={() => setActive(!active)}
                 style={{marginRight: 15}}>
                 <Icons.Entypo
-                  name={!active ? 'eye' : 'eye-with-line'}
+                  name={active ? 'eye' : 'eye-with-line'}
                   size={30}
                 />
               </TouchableOpacity>

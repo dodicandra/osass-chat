@@ -1,31 +1,27 @@
+import {DrawerScreenProps} from '@react-navigation/drawer';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Header, List} from 'components';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {clearToken} from 'store';
-import {colors, removeLocal} from 'utils';
+import {colors} from 'utils';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
+type Drawer = DrawerScreenProps<DrawerStack>;
 
-interface HomeProps extends MainStackApp {}
+type HomeProps = MainStackApp & Drawer;
 
 export const Home: React.FC<HomeProps> = ({navigation}) => {
-  const dispatch = useDispatch();
-
-  const logOut = async () => {
-    await removeLocal('token');
-    dispatch(clearToken());
-  };
-
   return (
     <View style={styles.container}>
-      <Header onPress={logOut} title="Ossas" />
+      <Header onPress={() => navigation.openDrawer()} title="Ossas" />
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         style={styles.bodyContainer}>
-        <List profilePress={() => navigation.navigate('UserProfile')} />
+        <List
+          profilePress={() => navigation.navigate('UserVisited')}
+          titlePress={() => navigation.navigate('Chat')}
+        />
         <List />
         <List />
         <List />

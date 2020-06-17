@@ -11,8 +11,11 @@ import {
 } from 'react-native';
 import {colors, Fonts, Icons} from 'utils';
 import {speaker} from 'assets';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const UserVisited = () => {
+type UserProps = StackScreenProps<StackMainApp, 'Home'>;
+
+export const UserVisited: React.FC<UserProps> = ({navigation}) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <ImageBackground
@@ -21,7 +24,10 @@ export const UserVisited = () => {
         style={styles.profileContainer}>
         <Text style={styles.userTitle}>dodi candra</Text>
       </ImageBackground>
-      <TouchableOpacity importantForAccessibility="yes" style={styles.btnIcon}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Chat')}
+        importantForAccessibility="yes"
+        style={styles.btnIcon}>
         <Icons.Entypo name="chat" size={40} color={colors.text.greey} />
       </TouchableOpacity>
       <View style={{flex: 1, paddingTop: 50}}>

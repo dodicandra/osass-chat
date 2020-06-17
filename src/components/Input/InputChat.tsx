@@ -5,9 +5,15 @@ import {colors, Fonts} from 'utils';
 
 interface InputChatProps {
   disabled?: boolean;
+  onChangeText?: ((text: string) => void) | undefined;
+  value?: string;
 }
 
-const InputChat: React.FC<InputChatProps> = ({disabled}) => {
+const InputChat: React.FC<InputChatProps> = ({
+  disabled,
+  onChangeText,
+  value,
+}) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -16,6 +22,8 @@ const InputChat: React.FC<InputChatProps> = ({disabled}) => {
         style={styles.input}
         multiline
         placeholder="Type Hire.."
+        onChangeText={onChangeText}
+        value={value}
       />
       <TouchableOpacity
         disabled={disabled}

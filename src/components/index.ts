@@ -7,6 +7,8 @@ import Profile from './Profile/Profile';
 import List from './List/List';
 import BubleChat from './Chat/BubleChat';
 import Loading from './Loading/Loading';
+import Splash from './Splash/Splash';
+import DrawerCustom from './Custom/Drawer';
 
 export {
   Input,
@@ -18,4 +20,6 @@ export {
   InputChat,
   BubleChat,
   Loading,
+  Splash,
+  DrawerCustom,
 };

@@ -3,11 +3,19 @@ import {Header, InputChat, BubleChat} from 'components';
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {colors} from 'utils';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const Chats = () => {
+type ChatProps = StackScreenProps<StackMainApp, 'Chat'>;
+
+export const Chats: React.FC<ChatProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Header title="dodi candra" icon="ios-arrow-back" imgProfile={speaker} />
+      <Header
+        onPress={() => navigation.goBack()}
+        title="dodi candra"
+        icon="ios-arrow-back"
+        imgProfile={speaker}
+      />
       <ScrollView
         scrollEventThrottle={16}
         contentContainerStyle={styles.contentContainerStyle}
@@ -26,7 +34,7 @@ export const Chats = () => {
         <BubleChat />
         <BubleChat content="http://google.com" sender />
       </ScrollView>
-      <InputChat />
+      <InputChat disabled />
     </View>
   );
 };

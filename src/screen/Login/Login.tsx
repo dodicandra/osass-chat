@@ -8,7 +8,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -92,12 +91,14 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
               secureTextEntry
             />
             <View style={{marginTop: 20}}>
-              <Button disabled={!disabled} onPress={signIn} title="submit" />
+              <Button disabled={!disabled} onPress={signIn} title="log-in" />
             </View>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.register}>Belum Punya Akun? Daftar disini</Text>
-          </TouchableOpacity>
+          <Text
+            onPress={() => navigation.navigate('Register')}
+            style={styles.register}>
+            Belum Punya Akun? Daftar disini
+          </Text>
         </ScrollView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -127,5 +128,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Monstserrat.R,
     marginTop: 75,
     textAlign: 'center',
+    paddingVertical: 5,
   },
 });
