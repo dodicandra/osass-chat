@@ -9,6 +9,7 @@ import BubleChat from './Chat/BubleChat';
 import Loading from './Loading/Loading';
 import Splash from './Splash/Splash';
 import DrawerCustom from './Custom/Drawer';
+import ModalCustome from './Modal/CustomeModal';
 
 export {
   Input,
@@ -22,4 +23,5 @@ export {
   Loading,
   Splash,
   DrawerCustom,
+  ModalCustome,
 };

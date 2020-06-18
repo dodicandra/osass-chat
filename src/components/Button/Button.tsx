@@ -4,7 +4,7 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors, Fonts} from 'utils';
 
 interface ButtonProps {
-  title: string;
+  title: string | undefined;
   onPress?: () => void;
   top?: number;
   bottom?: number;

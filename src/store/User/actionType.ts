@@ -23,7 +23,19 @@ export const clearToken = (): UserActionType => ({
   type: 'CLEAR_TOKEN',
 });
 
-export const updateUserAction = (url: string): UserActionType => ({
+export const updateUserImg = (url: string): UserActionType => ({
   type: 'UPDATE_USER_DATA',
   payload: {imgUrl: url},
+});
+
+export const updateUserNameAction = (data: string): UserActionType => ({
+  type: 'UPDATE_USER_DATA',
+  payload: {name: data},
+});
+
+export const updateBioAction = (
+  data: string | undefined | null,
+): UserActionType => ({
+  type: 'UPDATE_USER_DATA',
+  payload: {bio: data},
 });

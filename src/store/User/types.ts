@@ -11,6 +11,7 @@ export interface UserInterface {
   email?: string | undefined | null;
   phone?: string | undefined | null;
   imgUrl?: string | undefined | null;
+  bio?: string | undefined | null;
 }
 
 export interface UserState {

@@ -1,11 +1,23 @@
 import {firebase as auth} from '@react-native-firebase/auth';
-import {firebase as db} from '@react-native-firebase/database';
+import {
+  firebase as db,
+  FirebaseDatabaseTypes,
+} from '@react-native-firebase/database';
 import {firebase as storage} from '@react-native-firebase/storage';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import RNblob from 'rn-fetch-blob';
 import {ImageTypes} from 'screen';
-import {RootState, setUser, updateUserAction} from 'store';
+import {
+  RootState,
+  setLoading,
+  setUser,
+  stopLoading,
+  updateBioAction,
+  updateUserImg,
+  updateUserNameAction,
+  UserInterface,
+} from 'store';
 
 export const uploadImageUser = (
   data: ImageTypes,
@@ -26,11 +38,57 @@ export const uploadImageUser = (
     await fileRef.putFile(`${path}`);
     const imgUrl = await fileRef.getDownloadURL();
 
-    await dbRef.child(`user/${user?.uid}`).update({imgUrl});
-    dispatch(updateUserAction(imgUrl));
+    await user?.updateProfile({photoURL: imgUrl});
 
+    await dbRef.child(`user/${user?.uid}`).update({imgUrl});
+    dispatch(updateUserImg(imgUrl));
+    console.log(user);
     return imgUrl;
   } catch (err) {
+    console.log(err.message);
+    throw err;
+  }
+};
+
+export const updateUserName = (
+  data: string,
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch,
+) => {
+  try {
+    dispatch(setLoading());
+    const user = auth.auth().currentUser;
+    const dbref = db.database().ref();
+    await user?.updateProfile({displayName: data});
+    await dbref.child(`user/${user?.uid}`).update({name: data});
+    dispatch(updateUserNameAction(data));
+    dispatch(stopLoading());
+  } catch (err) {
+    console.log(err.message);
+    dispatch(stopLoading());
+    throw err;
+  }
+};
+
+export const updateBio = (
+  data: string,
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch,
+) => {
+  try {
+    dispatch(setLoading());
+    const user = auth.auth().currentUser;
+    const dbref = db.database().ref();
+
+    await dbref.child(`user/${user?.uid}`).update({
+      bio: data,
+    });
+
+    dispatch(updateBioAction(data));
+
+    dispatch(stopLoading());
+  } catch (err) {
+    dispatch(stopLoading());
     console.log(err.message);
     throw err;
   }
@@ -50,6 +108,33 @@ export const getUserDataAction = (): ThunkAction<
         imgUrl: user?.photoURL,
         name: user?.displayName,
       }),
+    );
+  } catch (err) {
+    console.log(err.message);
+    throw err;
+  }
+};
+
+// GET
+
+export const getUserBio = (): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  Action<string>
+> => async (dispatch) => {
+  try {
+    const user = auth.auth().currentUser;
+    const dbref = db.database().ref(`user/${user?.uid}`);
+
+    await dbref.once(
+      'value',
+      (snapshot: FirebaseDatabaseTypes.DataSnapshot) => {
+        const data: UserInterface = snapshot.val();
+
+        console.log(data.bio);
+        dispatch(updateBioAction(data.bio));
+      },
     );
   } catch (err) {
     console.log(err);

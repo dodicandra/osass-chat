@@ -1,5 +1,6 @@
-import {Input, Profile} from 'components';
-import React, {useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {Input, ModalCustome, Profile} from 'components';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -8,10 +9,10 @@ import {
   View,
 } from 'react-native';
 import ImagePick from 'react-native-image-picker';
-import {uploadImageUser} from 'services';
-import {colors, Fonts, Icons} from 'utils';
 import {useDispatch, useSelector} from 'react-redux';
+import {getUserBio, updateBio, updateUserName, uploadImageUser} from 'services';
 import {RootState} from 'store';
+import {colors, Fonts, Icons, useForm} from 'utils';
 
 export interface ImageTypes {
   uri?: string;
@@ -21,17 +22,30 @@ export interface ImageTypes {
 
 export const UserProfile = () => {
   const User = useSelector((state: RootState) => state.User);
+  const UI = useSelector((state: RootState) => state.UI);
   const dispatch = useDispatch();
 
+  const [form, onChange] = useForm({name: '', bio: ''});
+  const [visibleName, setVisibleName] = useState(false);
+  const [visibleBio, setVisibleBio] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<ImageTypes>({
     uri: '',
     filename: '',
     path: '',
   });
 
+  useEffect(() => {
+    dispatch(getUserBio());
+  }, []);
+
   const upload = async () => {
     ImagePick.launchImageLibrary(
-      {quality: 1, mediaType: 'photo', allowsEditing: true},
+      {
+        quality: 1,
+        mediaType: 'photo',
+        allowsEditing: true,
+      },
       async (res) => {
         if (!res.didCancel) {
           const src: ImageTypes = {
@@ -47,6 +61,7 @@ export const UserProfile = () => {
 
   const uploadFoto = async () => {
     try {
+      setLoading(true);
       await dispatch(
         uploadImageUser({
           uri: image.uri,
@@ -55,19 +70,33 @@ export const UserProfile = () => {
       );
 
       setImage({...image, uri: ''});
+      setLoading(false);
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  console.log(image.uri);
+  const updateName = async () => {
+    await dispatch(updateUserName(form.name));
+    setVisibleName(false);
+  };
+
+  const updatebio = async () => {
+    await dispatch(updateBio(form.bio));
+    setVisibleBio(false);
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.profileContainer}>
         <View style={styles.wraper}>
-          <Profile source={{uri: User.user?.imgUrl}} left={17} size={95} />
-          <Text style={styles.title}>Dodi candra</Text>
+          <Profile
+            loading={loading}
+            source={{uri: image.uri ? image.uri : User.user?.imgUrl}}
+            left={17}
+            size={95}
+          />
+          <Text style={styles.title}>{User.user?.name}</Text>
         </View>
         {image.uri!.length > 0 ? (
           <TouchableOpacity onPress={uploadFoto} style={styles.upload}>
@@ -94,9 +123,10 @@ export const UserProfile = () => {
           containerStyle={styles.username}
           phoneCode={false}
           onlyText
-          name="Dodi candra"
+          name={User.user!.name}
           borderWidth={0}
           numberOfLines={1}
+          onPresText={() => setVisibleName(true)}
         />
         <Input
           title="Bio"
@@ -107,7 +137,26 @@ export const UserProfile = () => {
           borderWidth={0}
           editable={false}
           onlyText
-          name="Aku ingin menjadi sesuatu yang..."
+          name={User.user?.bio}
+          onPresText={() => setVisibleBio(true)}
+        />
+        <ModalCustome
+          onType={(val) => onChange('name', val)}
+          visible={visibleName}
+          onSubmit={updateName}
+          overlayPress={() => setVisibleName(false)}
+          value={form.name}
+          title="edit name"
+          disabled={UI.loading}
+        />
+        <ModalCustome
+          onType={(val) => onChange('bio', val)}
+          visible={visibleBio}
+          onSubmit={updatebio}
+          overlayPress={() => setVisibleBio(false)}
+          value={form.bio}
+          title="edit bio"
+          disabled={UI.loading}
         />
       </View>
     </ScrollView>

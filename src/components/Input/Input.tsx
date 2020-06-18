@@ -26,7 +26,7 @@ interface InputProps {
   editable?: boolean;
   value?: string;
   onlyText?: boolean;
-  name?: string;
+  name?: string | null;
   numberOfLines?: number;
   onPresText?(any: any): any;
   secureTextEntry?: boolean;

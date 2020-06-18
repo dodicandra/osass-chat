@@ -12,6 +12,7 @@ import Button from '../Button/Button';
 import {removeLocal} from 'utils';
 import {useDispatch} from 'react-redux';
 import {clearToken} from 'store';
+import {firebase as auth} from '@react-native-firebase/auth';
 
 type Navigators = DrawerNavigationHelpers & DrawerScreenProps<DrawerStack>;
 
@@ -26,6 +27,7 @@ const Drawer: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   const logOut = async () => {
+    auth.auth().signOut;
     await removeLocal('token');
     props.navigation.closeDrawer();
     dispatch(clearToken());
