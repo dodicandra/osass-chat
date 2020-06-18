@@ -10,6 +10,8 @@ import {
 import ImagePick from 'react-native-image-picker';
 import {uploadImageUser} from 'services';
 import {colors, Fonts, Icons} from 'utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from 'store';
 
 export interface ImageTypes {
   uri?: string;
@@ -18,6 +20,9 @@ export interface ImageTypes {
 }
 
 export const UserProfile = () => {
+  const User = useSelector((state: RootState) => state.User);
+  const dispatch = useDispatch();
+
   const [image, setImage] = useState<ImageTypes>({
     uri: '',
     filename: '',
@@ -26,7 +31,7 @@ export const UserProfile = () => {
 
   const upload = async () => {
     ImagePick.launchImageLibrary(
-      {quality: 1, mediaType: 'photo'},
+      {quality: 1, mediaType: 'photo', allowsEditing: true},
       async (res) => {
         if (!res.didCancel) {
           const src: ImageTypes = {
@@ -42,24 +47,33 @@ export const UserProfile = () => {
 
   const uploadFoto = async () => {
     try {
-      await uploadImageUser({uri: image.uri, filename: image.filename});
+      await dispatch(
+        uploadImageUser({
+          uri: image.uri,
+          filename: image.filename,
+        }),
+      );
+
+      setImage({...image, uri: ''});
     } catch (err) {
       console.log(err.message);
     }
   };
 
+  console.log(image.uri);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.profileContainer}>
         <View style={styles.wraper}>
-          <Profile
-            onPress={uploadFoto}
-            source={{uri: image.uri ? image.uri : null}}
-            left={17}
-            size={95}
-          />
+          <Profile source={{uri: User.user?.imgUrl}} left={17} size={95} />
           <Text style={styles.title}>Dodi candra</Text>
         </View>
+        {image.uri!.length > 0 ? (
+          <TouchableOpacity onPress={uploadFoto} style={styles.upload}>
+            <Text style={styles.textUpload}>Upload</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
       <TouchableOpacity
         onPress={upload}
@@ -147,5 +161,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomColor: colors.border.input,
     borderBottomWidth: 2,
+  },
+  upload: {
+    position: 'absolute',
+    bottom: 20,
+    left: 35,
+    backgroundColor: colors.background.greey,
+    width: 60,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3,
+  },
+  textUpload: {
+    fontFamily: Fonts.Monstserrat.M,
+    color: colors.background.white,
   },
 });

@@ -3,7 +3,7 @@ import {Loading, Splash} from 'components';
 import React, {useEffect, useState} from 'react';
 import {Modal, StatusBar} from 'react-native';
 import {Provider, useDispatch, useSelector} from 'react-redux';
-import {Auth, MainRouter, DrawerScreen} from 'router';
+import {Auth, DrawerScreen} from 'router';
 import {RootState, setToken, store} from 'store';
 import {colors, getToLocal} from 'utils';
 

@@ -6,23 +6,28 @@ import {DrawerNavigationState} from '@react-navigation/native';
 import {
   DrawerNavigationHelpers,
   DrawerDescriptorMap,
+  DrawerScreenProps,
 } from '@react-navigation/drawer/lib/typescript/src/types';
 import Button from '../Button/Button';
 import {removeLocal} from 'utils';
 import {useDispatch} from 'react-redux';
 import {clearToken} from 'store';
 
-type Props = Omit<DrawerContentOptions, 'contentContainerStyle' | 'style'> & {
-  state: DrawerNavigationState;
-  navigation: DrawerNavigationHelpers;
-  descriptors: DrawerDescriptorMap;
-};
+type Navigators = DrawerNavigationHelpers & DrawerScreenProps<DrawerStack>;
+
+type Props = Omit<DrawerContentOptions, 'contentContainerStyle' | 'style'> &
+  Navigators & {
+    state: DrawerNavigationState;
+    navigation: DrawerNavigationHelpers;
+    descriptors: DrawerDescriptorMap;
+  };
 
 const Drawer: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   const logOut = async () => {
     await removeLocal('token');
+    props.navigation.closeDrawer();
     dispatch(clearToken());
   };
 

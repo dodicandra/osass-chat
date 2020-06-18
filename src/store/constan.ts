@@ -8,3 +8,6 @@ export const SET_LOADING = 'SET_LOADING';
 export const STOP_LOADING = 'STOP_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+
+export const ADD_USER_DATA = '@ADD_USER_DATA';
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
