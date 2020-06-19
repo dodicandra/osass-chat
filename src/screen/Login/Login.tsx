@@ -51,7 +51,9 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
 
   const signIn = async () => {
     try {
-      if (form.email.trim() === '' && form.password.trim() === '') return;
+      if (form.email.trim() === '' && form.password.trim() === '') {
+        return;
+      }
 
       dispatch(signInService(form));
     } catch (err) {
