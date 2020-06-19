@@ -25,6 +25,7 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
   const [datafilter, setDatafilter] = useState(Users);
   const [dataBackup, setDataBackup] = useState(datafilter);
   const dispatch = useDispatch();
+  console.log('==>user', datafilter);
 
   const filter = (e: EventInput) => {
     e.preventDefault();

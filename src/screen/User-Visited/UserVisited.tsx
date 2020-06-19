@@ -2,7 +2,6 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {Input} from 'components';
 import React from 'react';
 import {
-  Alert,
   ImageBackground,
   ScrollView,
   StyleSheet,
@@ -18,15 +17,13 @@ type UserProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'UserVisited'>;
 export const UserVisited: React.FC<UserProps> = ({navigation, route}) => {
   const data = route.params;
 
-  console.log(data);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <ImageBackground
         source={{uri: data?.imgUrl}}
         resizeMode="contain"
         style={styles.profileContainer}>
-        <Text style={styles.userTitle}>dodi candra</Text>
+        <Text style={styles.userTitle}>{data?.name}</Text>
       </ImageBackground>
       <TouchableOpacity
         onPress={() => navigation.navigate('Chat', data)}
@@ -46,7 +43,6 @@ export const UserVisited: React.FC<UserProps> = ({navigation, route}) => {
           name={data?.name}
           borderWidth={0}
           numberOfLines={1}
-          onPresText={() => Alert.alert('Haloo')}
         />
         <Input
           title="Bio"

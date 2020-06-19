@@ -1,5 +1,11 @@
 import React from 'react';
-import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  GestureResponderEvent,
+} from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import {colors, Fonts} from 'utils';
 
@@ -7,12 +13,14 @@ interface InputChatProps {
   disabled?: boolean;
   onChangeText?: ((text: string) => void) | undefined;
   value?: string;
+  onSubmit?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
 const InputChat: React.FC<InputChatProps> = ({
   disabled,
   onChangeText,
   value,
+  onSubmit,
 }) => {
   return (
     <View style={styles.container}>
@@ -27,6 +35,7 @@ const InputChat: React.FC<InputChatProps> = ({
       />
       <TouchableOpacity
         disabled={disabled}
+        onPress={onSubmit}
         style={[
           styles.send,
           {
