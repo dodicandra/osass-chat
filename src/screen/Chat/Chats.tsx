@@ -1,13 +1,15 @@
 import {StackScreenProps} from '@react-navigation/stack';
-import {speaker} from 'assets';
 import {BubleChat, Header, InputChat} from 'components';
 import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import {UsersDataTypes} from 'store';
 import {colors} from 'utils';
 
-type ChatProps = StackScreenProps<StackMainApp, 'Chat'>;
+type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
 
-export const Chats: React.FC<ChatProps> = ({navigation}) => {
+export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
+  const param = route.params;
+
   const scrollRef = useRef<ScrollView>(null);
   const [state, setState] = useState('');
 
@@ -22,9 +24,9 @@ export const Chats: React.FC<ChatProps> = ({navigation}) => {
     <View style={styles.container}>
       <Header
         onPress={() => navigation.goBack()}
-        title="dodi candra"
+        title={param?.name}
         icon="ios-arrow-back"
-        imgProfile={speaker}
+        imgProfile={{uri: param?.imgUrl}}
       />
       <ScrollView
         ref={scrollRef}
@@ -32,18 +34,22 @@ export const Chats: React.FC<ChatProps> = ({navigation}) => {
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
         style={styles.scroll}>
-        <BubleChat />
-        <BubleChat sender />
-        <BubleChat />
-        <BubleChat sender />
-        <BubleChat />
-        <BubleChat sender />
-        <BubleChat />
-        <BubleChat sender />
-        <BubleChat />
-        <BubleChat sender />
-        <BubleChat />
-        <BubleChat content="http://google.com" sender />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} />
+        <BubleChat
+          imgLeft={{uri: param?.imgUrl}}
+          content="http://google.com"
+          sender
+        />
       </ScrollView>
       <InputChat
         disabled={!disabled}

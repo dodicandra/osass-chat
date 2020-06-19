@@ -17,6 +17,8 @@ import {
   updateUserImg,
   updateUserNameAction,
   UserInterface,
+  searchUsers,
+  UsersDataTypes,
 } from 'store';
 
 export const uploadImageUser = (
@@ -138,5 +140,30 @@ export const getUserBio = (): ThunkAction<
     );
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getAllUsers = (): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  Action<string>
+> => async (dispatch) => {
+  try {
+    const dbref = db.database().ref('user');
+
+    dbref.once('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
+      const data = snap.val();
+      const allUsers: string[] = [];
+      Object.keys(data).map((val) => {
+        allUsers.push({
+          id: val,
+          ...data[val],
+        });
+      });
+      dispatch(searchUsers(allUsers as UsersDataTypes[]));
+    });
+  } catch (err) {
+    console.log(err.message);
   }
 };

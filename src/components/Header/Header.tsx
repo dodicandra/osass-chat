@@ -13,9 +13,9 @@ import {colors, Fonts, Icons} from 'utils';
 import Profile from '../Profile/Profile';
 
 interface HeaderProps {
-  imgProfile?: ImageSourcePropType | any;
+  imgProfile?: ImageSourcePropType;
   icon?: 'ios-arrow-back' | 'ios-menu';
-  title?: string;
+  title?: string | undefined | null;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 

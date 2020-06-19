@@ -1,27 +1,18 @@
-import {DrawerItemList, DrawerContentOptions} from '@react-navigation/drawer';
+import {firebase as auth} from '@react-native-firebase/auth';
+import {
+  DrawerContentComponentProps,
+  DrawerItemList,
+} from '@react-navigation/drawer';
+import {DrawerActions} from '@react-navigation/native';
 import {UserVer} from 'assets';
 import React from 'react';
 import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
-import {DrawerNavigationState} from '@react-navigation/native';
-import {
-  DrawerNavigationHelpers,
-  DrawerDescriptorMap,
-  DrawerScreenProps,
-} from '@react-navigation/drawer/lib/typescript/src/types';
-import Button from '../Button/Button';
-import {removeLocal} from 'utils';
 import {useDispatch} from 'react-redux';
 import {clearToken} from 'store';
-import {firebase as auth} from '@react-native-firebase/auth';
+import {removeLocal} from 'utils';
+import Button from '../Button/Button';
 
-type Navigators = DrawerNavigationHelpers & DrawerScreenProps<DrawerStack>;
-
-type Props = Omit<DrawerContentOptions, 'contentContainerStyle' | 'style'> &
-  Navigators & {
-    state: DrawerNavigationState;
-    navigation: DrawerNavigationHelpers;
-    descriptors: DrawerDescriptorMap;
-  };
+type Props = DrawerContentComponentProps;
 
 const Drawer: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
@@ -29,7 +20,7 @@ const Drawer: React.FC<Props> = (props) => {
   const logOut = async () => {
     auth.auth().signOut;
     await removeLocal('token');
-    props.navigation.closeDrawer();
+    props.navigation.dispatch(DrawerActions.closeDrawer());
     dispatch(clearToken());
   };
 

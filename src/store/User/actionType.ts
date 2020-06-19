@@ -1,4 +1,4 @@
-import {UserActionType, UserInterface} from './types';
+import {UserActionType, UserInterface, UsersDataTypes} from './types';
 
 export const setUser = ({
   name,
@@ -8,6 +8,16 @@ export const setUser = ({
 }: UserInterface): UserActionType => ({
   type: 'SET_USER',
   payload: {name, email, phone, imgUrl},
+});
+
+export const searchUsers = (data: UsersDataTypes[]): UserActionType => ({
+  type: 'SET_USERS',
+  payload: data,
+});
+
+export const filterUsers = (data: UsersDataTypes[]): UserActionType => ({
+  type: 'SEARCH_USER',
+  payload: data,
 });
 
 export const clearUser = (): UserActionType => ({

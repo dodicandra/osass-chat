@@ -1,18 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import {colors, Fonts} from 'utils';
 import Profile from '../Profile/Profile';
-import {speaker} from 'assets';
 
 interface BubleChatProps {
   sender?: boolean;
   content?: string;
+  imgLeft?: ImageSourcePropType;
 }
 
-const BubleChat: React.FC<BubleChatProps> = ({sender, content}) => {
+const BubleChat: React.FC<BubleChatProps> = ({sender, content, imgLeft}) => {
   return !sender ? (
     <View style={styles.wraper}>
-      <Profile source={speaker} right={10} size={40} />
+      <Profile source={imgLeft} right={10} size={40} />
       <View>
         <View style={styles.container}>
           <Text lineBreakMode="head" selectable style={styles.content}>

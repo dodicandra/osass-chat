@@ -4,53 +4,42 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TextInputProps,
+  TouchableOpacity,
   View,
   ViewStyle,
-  TouchableOpacity,
 } from 'react-native';
 import {colors, Fonts, Icons} from 'utils';
-import {OnChange, KybType} from 'components/type';
 
-interface InputProps {
+interface InputProps extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>;
-  placeholder?: string;
-  onChangeText?(text: string): void;
-  onChange?: OnChange;
   phoneCode?: boolean;
   title?: string;
-  keyboardType?: KybType;
   titlePosition?: 'top' | 'bottom';
   borderColor?: string;
   borderWidth?: number;
-  maxLength?: number;
-  editable?: boolean;
-  value?: string;
   onlyText?: boolean;
   name?: string | null;
   numberOfLines?: number;
   onPresText?(any: any): any;
   secureTextEntry?: boolean;
+  fontSize?: number;
 }
 
 const Input: React.FC<InputProps> = ({
   containerStyle,
-  placeholder,
-  onChange,
-  onChangeText,
   phoneCode,
   title,
-  keyboardType,
   titlePosition,
   borderColor,
   borderWidth,
-  maxLength,
-  editable,
-  value,
   onlyText,
   name,
   numberOfLines,
   onPresText,
   secureTextEntry,
+  fontSize,
+  ...props
 }) => {
   const [active, setActive] = useState(true);
 
@@ -73,16 +62,10 @@ const Input: React.FC<InputProps> = ({
         ) : (
           <>
             <TextInput
-              placeholder={placeholder}
-              maxLength={maxLength}
-              style={styles.input}
-              onChangeText={onChangeText}
-              onChange={onChange}
-              keyboardType={keyboardType}
-              editable={editable}
-              value={value}
+              style={[styles.input, {fontSize}]}
               numberOfLines={1}
               secureTextEntry={secureTextEntry && active}
+              {...props}
             />
             {secureTextEntry && (
               <TouchableOpacity
@@ -109,6 +92,7 @@ Input.defaultProps = {
   phoneCode: true,
   borderColor: colors.border.input,
   borderWidth: 2,
+  fontSize: 30,
 };
 
 export default Input;
@@ -121,7 +105,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    fontSize: 30,
     flex: 1,
     fontFamily: Fonts.Monstserrat.M,
     maxWidth: 350,

@@ -1,31 +1,35 @@
+import {StackScreenProps} from '@react-navigation/stack';
 import {Input} from 'components';
 import React from 'react';
 import {
+  Alert,
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ImageBackground,
-  Alert,
 } from 'react-native';
+import {UsersDataTypes} from 'store';
 import {colors, Fonts, Icons} from 'utils';
-import {speaker} from 'assets';
-import {StackScreenProps} from '@react-navigation/stack';
 
-type UserProps = StackScreenProps<StackMainApp, 'Home'>;
+type UserProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'UserVisited'>;
 
-export const UserVisited: React.FC<UserProps> = ({navigation}) => {
+export const UserVisited: React.FC<UserProps> = ({navigation, route}) => {
+  const data = route.params;
+
+  console.log(data);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <ImageBackground
-        source={speaker}
+        source={{uri: data?.imgUrl}}
         resizeMode="contain"
         style={styles.profileContainer}>
         <Text style={styles.userTitle}>dodi candra</Text>
       </ImageBackground>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Chat')}
+        onPress={() => navigation.navigate('Chat', data)}
         importantForAccessibility="yes"
         style={styles.btnIcon}>
         <Icons.Entypo name="chat" size={40} color={colors.text.greey} />
@@ -39,7 +43,7 @@ export const UserVisited: React.FC<UserProps> = ({navigation}) => {
           containerStyle={styles.username}
           phoneCode={false}
           onlyText
-          name="Dodi candra"
+          name={data?.name}
           borderWidth={0}
           numberOfLines={1}
           onPresText={() => Alert.alert('Haloo')}
@@ -53,7 +57,7 @@ export const UserVisited: React.FC<UserProps> = ({navigation}) => {
           borderWidth={0}
           editable={false}
           onlyText
-          name="Aku ingin menjadi sesuatu yang..."
+          name={data?.bio}
         />
       </View>
     </ScrollView>

@@ -1,7 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {Home, UserProfile, UserVisited, Chats} from 'screen';
+import {Home, UserProfile, UserVisited, Chats, AllUser} from 'screen';
 import {DrawerCustom} from 'components';
 import {Icons, colors, Fonts} from 'utils';
 import {View, Text, StyleSheet} from 'react-native';
@@ -9,7 +9,7 @@ import {View, Text, StyleSheet} from 'react-native';
 interface ListDrawerProps {
   color: string;
   title: string;
-  icons: string;
+  iconType: 'account-search-outline' | 'edit' | 'home';
 }
 
 const {Navigator, Screen} = createStackNavigator<StackMainApp>();
@@ -31,7 +31,7 @@ export const DrawerScreen = () => (
       options={{
         drawerLabel: 'Home',
         drawerIcon: ({color}) => (
-          <ListDrawer icons="home" color={color} title="Home" />
+          <ListDrawer iconType="home" color={color} title="Home" />
         ),
         swipeEnabled: false,
       }}
@@ -42,10 +42,24 @@ export const DrawerScreen = () => (
       options={{
         drawerLabel: '',
         drawerIcon: ({color}) => (
-          <ListDrawer icons="edit" color={color} title="Edit Profile" />
+          <ListDrawer iconType="edit" color={color} title="Edit Profile" />
         ),
       }}
       component={UserProfile}
+    />
+    <Drawer.Screen
+      name="AllUsers"
+      options={{
+        drawerLabel: '',
+        drawerIcon: ({color}) => (
+          <ListDrawer
+            iconType="account-search-outline"
+            color={color}
+            title="Cari Teman"
+          />
+        ),
+      }}
+      component={AllUser}
     />
   </Drawer.Navigator>
 );
@@ -61,10 +75,20 @@ export const MainRouter = () => {
   );
 };
 
-const ListDrawer: React.FC<ListDrawerProps> = ({color, title, icons}) => {
+const ListDrawer: React.FC<ListDrawerProps> = ({color, title, iconType}) => {
   return (
     <View style={style.container}>
-      <Icons.AntDesign name={icons} size={25} color={color} />
+      {iconType === 'edit' ? (
+        <Icons.AntDesign name="edit" size={25} color={color} />
+      ) : iconType === 'home' ? (
+        <Icons.AntDesign name="home" size={25} color={color} />
+      ) : (
+        <Icons.MaterialCommunityIcons
+          name="account-search-outline"
+          size={25}
+          color={color}
+        />
+      )}
       <View style={style.wraper}>
         <Text style={[style.text, {color}]}>{title}</Text>
         <View style={[style.gap, {borderBottomColor: color}]} />

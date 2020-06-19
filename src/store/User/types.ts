@@ -1,9 +1,11 @@
 import {
-  SET_USER,
+  CLEAR_TOKEN,
   CLEAR_USER,
   SET_TOKEN,
-  CLEAR_TOKEN,
+  SET_USER,
+  SET_USERS,
   UPDATE_USER_DATA,
+  SEARCH_USER,
 } from 'store/constan';
 
 export interface UserInterface {
@@ -14,14 +16,33 @@ export interface UserInterface {
   bio?: string | undefined | null;
 }
 
+export interface UsersDataTypes {
+  name?: string | undefined | null;
+  email?: string | undefined | null;
+  bio?: string | undefined | null;
+  id?: string | undefined;
+  imgUrl?: string;
+}
+
 export interface UserState {
   user: UserInterface | null;
   token: null | undefined | string;
+  users: UsersDataTypes[];
 }
 
 export interface UpdateUser {
   type: typeof UPDATE_USER_DATA;
   payload: UserInterface;
+}
+
+interface setUsersTypes {
+  type: typeof SET_USERS;
+  payload: UsersDataTypes[];
+}
+
+interface SearchUserTypes {
+  type: typeof SEARCH_USER;
+  payload: UsersDataTypes[];
 }
 
 interface SetUserType {
@@ -49,4 +70,6 @@ export type UserActionType =
   | ClearUserType
   | SetTokeType
   | ClearTokenType
-  | UpdateUser;
+  | UpdateUser
+  | setUsersTypes
+  | SearchUserTypes;

@@ -11,3 +11,6 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 export const ADD_USER_DATA = '@ADD_USER_DATA';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
+
+export const SEARCH_USER = 'SEARCH_USER';
+export const SET_USERS = 'SET_USERS';

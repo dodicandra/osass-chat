@@ -2,6 +2,7 @@ import {UserActionType, UserState} from './types';
 
 const initialState: UserState = {
   user: null,
+  users: [],
   token: null,
 };
 
@@ -14,6 +15,16 @@ export function UserReducer(
       return {
         ...state,
         user: action.payload,
+      };
+    case 'SET_USERS':
+      return {
+        ...state,
+        users: [...action.payload],
+      };
+    case 'SEARCH_USER':
+      return {
+        ...state,
+        users: [...action.payload],
       };
     case 'UPDATE_USER_DATA':
       return {

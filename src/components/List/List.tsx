@@ -12,9 +12,9 @@ import {Fonts, colors} from 'utils';
 import Profile from '../Profile/Profile';
 
 interface InputProps {
-  title?: string;
+  title?: string | null | undefined;
   desc?: string;
-  imgUrl?: ImageSourcePropType;
+  imgUrl?: ImageSourcePropType | undefined | any;
   profilePress?: ((event: GestureResponderEvent) => void) | undefined;
   titlePress?: ((event: GestureResponderEvent) => void) | undefined;
 }

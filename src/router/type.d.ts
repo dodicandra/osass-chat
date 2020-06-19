@@ -12,7 +12,8 @@ type StackMainApp<T = object> = {
   Chat: T | undefined;
 };
 
-type DrawerStack<T = object> = {
+type DrawerStack<T = object> = StackMainApp & {
   Root: T | undefined;
   UserProfile: T | undefined;
+  AllUsers: T | undefined;
 };
