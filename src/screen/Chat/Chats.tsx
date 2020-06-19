@@ -45,11 +45,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
         <BubleChat imgLeft={{uri: param?.imgUrl}} />
         <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
         <BubleChat imgLeft={{uri: param?.imgUrl}} />
-        <BubleChat
-          imgLeft={{uri: param?.imgUrl}}
-          content="http://google.com"
-          sender
-        />
+        <BubleChat imgLeft={{uri: param?.imgUrl}} sender />
       </ScrollView>
       <InputChat
         disabled={!disabled}

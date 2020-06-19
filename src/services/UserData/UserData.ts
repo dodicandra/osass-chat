@@ -109,6 +109,7 @@ export const getUserDataAction = (): ThunkAction<
         email: user?.displayName,
         imgUrl: user?.photoURL,
         name: user?.displayName,
+        uid: user?.uid,
       }),
     );
   } catch (err) {

@@ -5,9 +5,10 @@ export const setUser = ({
   email,
   phone,
   imgUrl,
+  uid,
 }: UserInterface): UserActionType => ({
   type: 'SET_USER',
-  payload: {name, email, phone, imgUrl},
+  payload: {name, email, phone, imgUrl, uid},
 });
 
 export const searchUsers = (data: UsersDataTypes[]): UserActionType => ({

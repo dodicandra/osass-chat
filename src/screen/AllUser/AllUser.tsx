@@ -2,8 +2,8 @@ import {DrawerScreenProps} from '@react-navigation/drawer';
 import {Input, List} from 'components';
 import React, {useEffect, useState} from 'react';
 import {
+  FlatList,
   NativeSyntheticEvent,
-  ScrollView,
   StyleSheet,
   TextInputChangeEventData,
   View,
@@ -19,18 +19,20 @@ type EventInput = NativeSyntheticEvent<TextInputChangeEventData>;
 interface Props extends Navigation {}
 
 export const AllUser: React.FC<Props> = ({navigation}) => {
-  const User = useSelector((state: RootState) => state.User.users);
+  const Users = useSelector((state: RootState) => state.User.users);
+  const User = useSelector((state: RootState) => state.User.user);
 
-  const [datafilter, setDatafilter] = useState(User);
-
+  const [datafilter, setDatafilter] = useState(Users);
+  const [dataBackup, setDataBackup] = useState(datafilter);
   const dispatch = useDispatch();
 
   const filter = (e: EventInput) => {
     e.preventDefault();
     const inputs = e.nativeEvent.text;
     const text = inputs.trim().toLowerCase();
-    const data = User.filter((item) => item.name?.toLowerCase().match(text));
-
+    const data = dataBackup.filter((item) =>
+      item.name?.toLowerCase().match(text),
+    );
     setDatafilter(data);
   };
 
@@ -41,8 +43,10 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    setDatafilter(User);
-  }, [User]);
+    const fil = Users.filter((item) => item.id !== User?.uid);
+    setDatafilter(fil);
+    setDataBackup(fil);
+  }, [User, Users]);
 
   return (
     <View style={styles.container}>
@@ -57,20 +61,24 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
           onChange={filter}
         />
       </View>
-      <ScrollView
-        contentContainerStyle={{paddingTop: 8}}
+      <FlatList
+        data={datafilter}
         showsVerticalScrollIndicator={false}
-        style={styles.scroll}>
-        {datafilter.map((user) => (
+        keyExtractor={(item) => item.id as string}
+        maxToRenderPerBatch={15}
+        scrollEventThrottle={16}
+        contentContainerStyle={{paddingTop: 8}}
+        style={styles.scroll}
+        renderItem={({item}) => (
           <List
-            titlePress={() => navigation.navigate('UserVisited', user)}
-            title={user.name}
-            key={user.id}
+            titlePress={() => navigation.navigate('UserVisited', item)}
+            title={item.name}
+            key={item.id}
             desc=""
-            imgUrl={{uri: user.imgUrl}}
+            imgUrl={{uri: item.imgUrl}}
           />
-        ))}
-      </ScrollView>
+        )}
+      />
     </View>
   );
 };

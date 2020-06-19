@@ -66,7 +66,12 @@ export const DrawerScreen = () => (
 
 export const MainRouter = () => {
   return (
-    <Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+    <Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+        animationTypeForReplace: 'push',
+      }}>
       <Screen name="Home" component={Home} />
       <Screen name="UserProfile" component={UserProfile} />
       <Screen name="UserVisited" component={UserVisited} />

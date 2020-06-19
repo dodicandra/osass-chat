@@ -14,6 +14,7 @@ export interface UserInterface {
   phone?: string | undefined | null;
   imgUrl?: string | undefined | null;
   bio?: string | undefined | null;
+  uid?: string | undefined | null;
 }
 
 export interface UsersDataTypes {

@@ -35,7 +35,7 @@ export const signInService = (
       .auth()
       .signInWithEmailAndPassword(data.email?.trim(), data.password?.trim());
     if (auth?.user) {
-      const {displayName, email, phoneNumber} = auth.user;
+      const {displayName, email, phoneNumber, uid} = auth.user;
 
       const curenUser = await firebase.auth().currentUser;
       const token = await curenUser?.getIdTokenResult(true).then((res) => res);
@@ -46,6 +46,7 @@ export const signInService = (
           name: displayName,
           email: email,
           phone: phoneNumber,
+          uid,
         }),
       );
       dispatch(setToken(token?.token));
@@ -74,14 +75,19 @@ export const registerService = (
       });
       const auths = await firebase.auth().currentUser;
 
-      const {email, phoneNumber} = register.user;
+      const {email, phoneNumber, uid} = register.user;
 
       const token = await auths?.getIdTokenResult(true).then((res) => res);
 
       const dbref = await db.database().ref();
 
       dispatach(
-        setUser({name: auths?.displayName, email: email, phone: phoneNumber}),
+        setUser({
+          name: auths?.displayName,
+          email: email,
+          phone: phoneNumber,
+          uid,
+        }),
       );
       await setToLocal('token', token?.token);
       dispatach(setToken(token?.token));
