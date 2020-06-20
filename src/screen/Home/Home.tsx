@@ -3,10 +3,10 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {Header, List} from 'components';
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {colors} from 'utils';
 import {useDispatch, useSelector} from 'react-redux';
-import {getUserDataAction} from 'services';
+import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
+import {colors} from 'utils';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 type Drawer = DrawerScreenProps<DrawerStack>;
@@ -20,6 +20,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
 
   useEffect(() => {
     disptach(getUserDataAction());
+    disptach(setChatHistorySevices());
   }, [disptach]);
 
   return (

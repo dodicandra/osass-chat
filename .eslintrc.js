@@ -15,6 +15,7 @@ module.exports = {
         curly: 0,
         'react-native/no-inline-styles': 0,
         'react-hooks/exhaustive-deps': 1,
+        'no-new': 0,
       },
     },
   ],

@@ -1,7 +1,19 @@
-import {BaseChatTypes, ChatAllTypes} from './type';
+import {
+  BaseChatTypes,
+  ChatAllTypes,
+  ChatDataTypes,
+  ChatHistoryTypes,
+} from './type';
 
-export const setchatAction = (data: ChatAllTypes[]): BaseChatTypes => ({
+export const setchatAction = (data: ChatDataTypes[]): BaseChatTypes => ({
   type: 'SET_CHAT',
+  payload: data,
+});
+
+export const setChatHistoryAction = (
+  data: ChatHistoryTypes[],
+): BaseChatTypes => ({
+  type: 'SET_CHAT_HISTORY',
   payload: data,
 });
 
