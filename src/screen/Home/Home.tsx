@@ -3,10 +3,10 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {Header, List} from 'components';
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {colors} from 'utils';
 import {useDispatch, useSelector} from 'react-redux';
-import {getUserDataAction} from 'services';
+import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
+import {colors} from 'utils';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 type Drawer = DrawerScreenProps<DrawerStack>;
@@ -14,12 +14,14 @@ type Drawer = DrawerScreenProps<DrawerStack>;
 type HomeProps = MainStackApp & Drawer;
 
 export const Home: React.FC<HomeProps> = ({navigation}) => {
+  const History = useSelector((state: RootState) => state.Chat.history);
   const User = useSelector((state: RootState) => state.User);
 
   const disptach = useDispatch();
 
   useEffect(() => {
     disptach(getUserDataAction());
+    disptach(setChatHistorySevices());
   }, [disptach]);
 
   return (
@@ -33,14 +35,21 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
         style={styles.bodyContainer}>
-        <List
-          profilePress={() => navigation.navigate('UserVisited')}
-          titlePress={() => navigation.navigate('Chat')}
-        />
-        <List />
-        <List />
-        <List />
-        <List />
+        {History.map((item) => (
+          <List
+            key={item.chatKey}
+            profilePress={() => navigation.navigate('UserVisited')}
+            imgUrl={{uri: item.imgUrl}}
+            title={item.name}
+            titlePress={() =>
+              navigation.navigate('Chat', {
+                ...item.lastchat,
+                ...item,
+              })
+            }
+            desc={item.lastchat.content}
+          />
+        ))}
       </ScrollView>
     </View>
   );

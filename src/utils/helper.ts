@@ -1,8 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {EffectCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
 import {getToLocal} from './asycnStorage';
 import {store, setToken} from 'store';
+import moment from 'moment';
 
 const dispatch = store.dispatch;
 
@@ -50,3 +50,6 @@ export const useAuth = () => {
     })();
   }, []);
 };
+
+export const getYear = moment().format('YYYY-MM-DD');
+export const getTime = moment().format('hh-mm-ss A');

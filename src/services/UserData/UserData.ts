@@ -10,6 +10,7 @@ import RNblob from 'rn-fetch-blob';
 import {ImageTypes} from 'screen';
 import {
   RootState,
+  searchUsers,
   setLoading,
   setUser,
   stopLoading,
@@ -17,7 +18,6 @@ import {
   updateUserImg,
   updateUserNameAction,
   UserInterface,
-  searchUsers,
   UsersDataTypes,
 } from 'store';
 
@@ -44,7 +44,6 @@ export const uploadImageUser = (
 
     await dbRef.child(`user/${user?.uid}`).update({imgUrl});
     dispatch(updateUserImg(imgUrl));
-    console.log(user);
     return imgUrl;
   } catch (err) {
     console.log(err.message);
@@ -135,7 +134,6 @@ export const getUserBio = (): ThunkAction<
       (snapshot: FirebaseDatabaseTypes.DataSnapshot) => {
         const data: UserInterface = snapshot.val();
 
-        console.log(data.bio);
         dispatch(updateBioAction(data.bio));
       },
     );
@@ -158,7 +156,7 @@ export const getAllUsers = (): ThunkAction<
       const allUsers: string[] = [];
       Object.keys(data).map((val) => {
         allUsers.push({
-          id: val,
+          uid: val,
           ...data[val],
         });
       });

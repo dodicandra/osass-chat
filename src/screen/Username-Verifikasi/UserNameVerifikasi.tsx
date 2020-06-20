@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {firebase as auth} from '@react-native-firebase/auth';
 import {UserVer} from 'assets';
 import {Button, Input} from 'components';

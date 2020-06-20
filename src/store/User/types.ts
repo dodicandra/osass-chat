@@ -9,24 +9,24 @@ import {
 } from 'store/constan';
 
 export interface UserInterface {
-  name?: string | undefined | null;
-  email?: string | undefined | null;
-  phone?: string | undefined | null;
-  imgUrl?: string | undefined | null;
-  bio?: string | undefined | null;
-  uid?: string | undefined | null;
+  name?: string;
+  email?: string;
+  phone?: string;
+  imgUrl?: string;
+  bio?: string;
+  uid?: string;
 }
 
 export interface UsersDataTypes {
-  name?: string | undefined | null;
-  email?: string | undefined | null;
-  bio?: string | undefined | null;
-  id?: string | undefined;
+  name?: string;
+  email?: string;
+  bio?: string;
+  uid?: string | undefined;
   imgUrl?: string;
 }
 
 export interface UserState {
-  user: UserInterface | null;
+  user: UserInterface;
   token: null | undefined | string;
   users: UsersDataTypes[];
 }

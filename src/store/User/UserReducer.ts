@@ -1,7 +1,7 @@
 import {UserActionType, UserState} from './types';
 
 const initialState: UserState = {
-  user: null,
+  user: {},
   users: [],
   token: null,
 };
@@ -34,7 +34,7 @@ export function UserReducer(
     case 'CLEAR_USER':
       return {
         ...state,
-        user: null,
+        user: {},
         token: null,
       };
     case 'SET_TOKEN':

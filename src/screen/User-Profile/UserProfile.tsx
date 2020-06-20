@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {Input, ModalCustome, Profile} from 'components';
 import React, {useEffect, useState} from 'react';
 import {
@@ -37,7 +36,7 @@ export const UserProfile = () => {
 
   useEffect(() => {
     dispatch(getUserBio());
-  }, []);
+  }, [dispatch]);
 
   const upload = async () => {
     ImagePick.launchImageLibrary(

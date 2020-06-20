@@ -2,14 +2,21 @@ import React from 'react';
 import {ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import {colors, Fonts} from 'utils';
 import Profile from '../Profile/Profile';
+import moment from 'moment';
 
 interface BubleChatProps {
-  sender?: boolean;
-  content?: string;
+  sender?: boolean | string;
+  content?: string | number | undefined;
   imgLeft?: ImageSourcePropType;
+  time?: string | number | undefined | null;
 }
 
-const BubleChat: React.FC<BubleChatProps> = ({sender, content, imgLeft}) => {
+const BubleChat: React.FC<BubleChatProps> = ({
+  sender,
+  content,
+  imgLeft,
+  time,
+}) => {
   return !sender ? (
     <View style={styles.wraper}>
       <Profile source={imgLeft} right={10} size={40} />
@@ -19,7 +26,7 @@ const BubleChat: React.FC<BubleChatProps> = ({sender, content, imgLeft}) => {
             {content}
           </Text>
         </View>
-        <Text style={styles.time}>12:30</Text>
+        <Text style={styles.time}>{moment(time).format('LT')}</Text>
       </View>
     </View>
   ) : (
@@ -30,7 +37,7 @@ const BubleChat: React.FC<BubleChatProps> = ({sender, content, imgLeft}) => {
             {content}
           </Text>
         </View>
-        <Text style={styles.timeSender}>12:30</Text>
+        <Text style={styles.timeSender}>{moment(time).format('LT')}</Text>
       </View>
     </View>
   );

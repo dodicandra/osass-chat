@@ -3,6 +3,8 @@ import {IconLogin} from 'assets';
 import {Button, Input} from 'components';
 import React, {useRef} from 'react';
 import {
+  Animated,
+  Easing,
   Keyboard,
   SafeAreaView,
   ScrollView,
@@ -11,10 +13,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Animated, {multiply} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
 import {signInService} from 'services';
-import {colors, Fonts, tm1, useForm, useKeyBoard} from 'utils';
+import {colors, Fonts, useForm, useKeyBoard} from 'utils';
 
 const IMG_HEIGHT = 230;
 const IMG_WIDTH = 230;
@@ -34,16 +35,25 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
 
   const disabled = form.email.length > 0 && form.password.length > 0;
 
+  const timing = (node: Animated.Value, toValue: number, delay: number): any =>
+    Animated.timing(node, {
+      toValue,
+      delay,
+      duration: 200,
+      easing: Easing.inOut(Easing.cubic),
+      useNativeDriver: false,
+    }).start();
+
   const KeyboardShow = () => {
-    multiply(
-      tm1(height, IMG_HEIGHT / 2, DURATION),
-      tm1(width, IMG_WIDTH / 2, DURATION),
+    Animated.multiply(
+      timing(height, IMG_HEIGHT / 2, DURATION),
+      timing(width, IMG_WIDTH / 2, DURATION),
     );
   };
   const KeyboardHide = () => {
-    multiply(
-      tm1(height, IMG_HEIGHT, DURATION),
-      tm1(width, IMG_WIDTH, DURATION),
+    Animated.multiply(
+      timing(height, IMG_HEIGHT, DURATION),
+      timing(width, IMG_WIDTH, DURATION),
     );
   };
 
