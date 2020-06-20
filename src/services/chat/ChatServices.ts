@@ -74,7 +74,6 @@ export const setChatDataServices = (
         const value = snap.val();
         if (value) {
           const chats = Object.keys(value).map((val) => value[val]);
-          console.log('===>', 'send');
 
           dispatch(setchatAction(chats));
         } else {
