@@ -20,6 +20,11 @@ export const chatReducer = (
         ...state,
         chat: [],
       };
+    case 'SET_CHAT_HISTORY':
+      return {
+        ...state,
+        history: [...action.payload],
+      };
     default:
       return state;
   }

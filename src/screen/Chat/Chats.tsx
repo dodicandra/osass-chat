@@ -2,11 +2,15 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {BubleChat, Header, InputChat} from 'components';
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {sendChatServeices, setChatServices} from 'services';
-import {RootState, UsersDataTypes} from 'store';
-import {ChatDataTypes, clearChatActions} from 'store/chat';
+import {sendChat, setChatDataServices, setChatHistorySevices} from 'services';
+import {
+  RootState,
+  UsersDataTypes,
+  clearChatActions,
+  ChatDataTypes,
+} from 'store';
 import {colors, Fonts} from 'utils';
 
 type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
@@ -27,7 +31,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
   }, [navigation]);
 
   useEffect(() => {
-    dispatch(setChatServices(param?.id, User?.uid));
+    dispatch(setChatDataServices(param?.id!));
   }, [User, dispatch, param]);
 
   useEffect(() => {
@@ -36,15 +40,16 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
     });
   }, [dispatch, navigation]);
 
-  const send = () => {
+  const send = async () => {
     const data: ChatDataTypes = {
       content: state,
       sender: User?.uid!,
-      tanggal: moment().format('YYYY-MM-DD'),
-      time: moment().format('hh:mm:ss A'),
+      tanggal: moment().toISOString(),
+      time: moment().toISOString(),
     };
-
-    dispatch(sendChatServeices(param?.id, User?.uid, data));
+    dispatch(sendChat(User.uid!, param?.id!, data));
+    dispatch(setChatHistorySevices());
+    // dispatch(sendChatServeices(User?.uid, param?.id, data));
     setState('');
   };
 
@@ -66,17 +71,13 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
         showsVerticalScrollIndicator={false}
         style={styles.scroll}>
         {Chat.map((item) => (
-          <View key={item.tanggal as string} style={styles.chatContainer}>
-            <Text style={styles.chatTanggal}>{item.tanggal}</Text>
-            {item.data?.map((chat) => (
-              <BubleChat
-                key={chat.time as string}
-                time={chat.time}
-                imgLeft={{uri: param?.imgUrl}}
-                sender={chat.sender}
-                content={chat.content as string}
-              />
-            ))}
+          <View key={item.time as string} style={styles.chatContainer}>
+            <BubleChat
+              time={item.time}
+              imgLeft={{uri: param?.imgUrl}}
+              sender={item.sender === User.uid}
+              content={item.content as string}
+            />
           </View>
         ))}
       </ScrollView>

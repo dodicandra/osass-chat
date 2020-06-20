@@ -7,30 +7,35 @@ import {
 
 export interface ChatDataTypes {
   id?: string;
-  tanggal: string | undefined | null;
-  time: string | undefined | null;
-  content: string | undefined | null;
+  tanggal: string;
+  time: string;
+  content: string;
   sender: string | boolean;
 }
 
+export interface ChatHistoryTypes {
+  chatKey: string;
+  lastchat: ChatDataTypes[];
+}
+
 export interface ChatAllTypes {
-  tanggal: string | undefined | null;
-  data: ChatDataTypes[] | undefined | null;
+  tanggal: string;
+  data: ChatDataTypes[];
 }
 
 export interface ChatStateType {
-  chat: ChatAllTypes[];
-  history?: string[];
+  chat: ChatDataTypes[];
+  history: ChatHistoryTypes[];
 }
 
 interface ChatTypes {
   type: typeof SET_CHAT;
-  payload: ChatAllTypes[];
+  payload: ChatDataTypes[];
 }
 
 interface ChatHistory {
   type: typeof SET_CHAT_HISTORY;
-  payload: ChatAllTypes[];
+  payload: ChatHistoryTypes[];
 }
 
 interface ClearChat {
