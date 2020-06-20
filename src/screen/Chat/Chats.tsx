@@ -4,12 +4,18 @@ import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {sendChat, setChatDataServices, setChatHistorySevices} from 'services';
 import {
+  setChatDataServices,
+  setChatHistorySevices,
+  getUserChat,
+  sendNewChat,
+  updateChat,
+} from 'services';
+import {
+  ChatDataTypes,
+  clearChatActions,
   RootState,
   UsersDataTypes,
-  clearChatActions,
-  ChatDataTypes,
 } from 'store';
 import {colors, Fonts} from 'utils';
 
@@ -17,6 +23,7 @@ type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
 
 export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
   const param = route.params;
+  console.log('param', param);
 
   const Chat = useSelector((state: RootState) => state.Chat.chat);
   const User = useSelector((state: RootState) => state.User.user);
@@ -25,14 +32,14 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
   const [state, setState] = useState('');
 
   useEffect(() => {
+    dispatch(setChatDataServices(param?.uid!));
+  }, [dispatch, param]);
+
+  useEffect(() => {
     navigation.addListener('focus', () => {
       scrollRef.current!.scrollToEnd();
     });
   }, [navigation]);
-
-  useEffect(() => {
-    dispatch(setChatDataServices(param?.id!));
-  }, [User, dispatch, param]);
 
   useEffect(() => {
     navigation.addListener('blur', () => {
@@ -40,17 +47,31 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
     });
   }, [dispatch, navigation]);
 
-  const send = async () => {
+  const send = () => {
     const data: ChatDataTypes = {
       content: state,
       sender: User?.uid!,
       tanggal: moment().toISOString(),
       time: moment().toISOString(),
     };
-    dispatch(sendChat(User.uid!, param?.id!, data));
+    sendChat(data);
     dispatch(setChatHistorySevices());
-    // dispatch(sendChatServeices(User?.uid, param?.id, data));
     setState('');
+  };
+
+  const sendChat = async (data: ChatDataTypes) => {
+    try {
+      const chatKey = await getUserChat(param?.uid!);
+
+      if (!chatKey) {
+        await sendNewChat(User.uid!, param?.uid!, data);
+        dispatch(setChatDataServices(param?.uid!));
+      }
+      await updateChat(chatKey?.chatKey, data);
+      dispatch(setChatDataServices(param?.uid!));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const disabled = state.length > 0;

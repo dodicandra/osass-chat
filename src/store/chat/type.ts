@@ -6,16 +6,27 @@ import {
 } from './constan';
 
 export interface ChatDataTypes {
-  id?: string;
+  uid?: string;
   tanggal: string;
   time: string;
   content: string;
   sender: string | boolean;
 }
 
+export interface LastChatTDataTypes {
+  content: string;
+  sender: string;
+  tanggal: string;
+  time: string;
+  uid: string;
+}
 export interface ChatHistoryTypes {
   chatKey: string;
-  lastchat: ChatDataTypes[];
+  uid: string;
+  lastchat: ChatDataTypes;
+  bio: string;
+  imgUrl: string;
+  name: string;
 }
 
 export interface ChatAllTypes {

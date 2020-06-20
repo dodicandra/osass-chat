@@ -6,71 +6,19 @@ import {
 import moment from 'moment';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-import {RootState} from 'store';
+import {RootState, store} from 'store';
 import {
   ChatDataTypes,
-  setchatAction,
   clearChatActions,
+  setchatAction,
   setChatHistoryAction,
 } from 'store/chat';
-import {setToLocal} from 'utils';
 
 const dbRef = db.database().ref();
 
 interface ChatKey {
   chatKey: string;
 }
-
-export const sendChatServeices = async (
-  userUid: string,
-  friendUid: string,
-  data: ChatDataTypes,
-) => {
-  try {
-    const chatKey = dbRef.child('chats').push().key;
-
-    await db.database().ref(`chats/${chatKey}/${moment().unix()}`).update(data);
-
-    await dbRef.child(`userchat/${userUid}/${friendUid}`).set({chatKey});
-
-    await dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey});
-    // dbRef.child(`user/${friendUid}`).set(resKey.key);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const sendChat = (
-  userUid: string,
-  friendId: string,
-  data: ChatDataTypes,
-): ThunkAction<void, RootState, unknown, Action<string>> => async () => {
-  try {
-    const chatKey = await getUserChat(friendId);
-
-    if (!chatKey!.chatKey) {
-      await sendChatServeices(userUid, friendId, data);
-      return getUserChatContent(chatKey!.chatKey);
-    }
-    await updateChat(chatKey!.chatKey, data);
-    return getUserChatContent(friendId);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const updateChat = async (
-  chatKey: string | any,
-  data: ChatDataTypes,
-) => {
-  try {
-    dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
-      ...data,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 export const getUserChat = async (
   friendId: string,
@@ -83,6 +31,89 @@ export const getUserChat = async (
       .once('value');
 
     return snap.val();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const sendNewChat = async (
+  userUid: string,
+  friendUid: string,
+  data: ChatDataTypes,
+) => {
+  try {
+    const chatKey = dbRef.child('chats').push().key;
+
+    await db.database().ref(`chats/${chatKey}/${moment().unix()}`).update(data);
+
+    await dbRef.child(`userchat/${userUid}/${friendUid}`).set({chatKey});
+
+    await dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey});
+    return true;
+    // dbRef.child(`user/${friendUid}`).set(resKey.key);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const setChatDataServices = (
+  friendId: string,
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch,
+) => {
+  try {
+    const userChat = await getUserChat(friendId);
+
+    if (!userChat) {
+      dispatch(clearChatActions());
+      return null;
+    }
+    return dbRef
+      .child(`chats/${userChat?.chatKey}`)
+      .on('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
+        const value = snap.val();
+        if (value) {
+          const chats = Object.keys(value).map((val) => value[val]);
+          console.log('===>', 'send');
+
+          dispatch(setchatAction(chats));
+        } else {
+          dispatch(clearChatActions());
+        }
+      });
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
+
+export const sendChat = (
+  userUid: string,
+  friendId: string,
+  data: ChatDataTypes,
+): ThunkAction<void, RootState, unknown, Action<string>> => async () => {
+  try {
+    const chatKey = await getUserChat(friendId);
+
+    if (!chatKey) {
+      await sendNewChat(userUid, friendId, data);
+      return setChatDataServices(friendId);
+    }
+    await updateChat(chatKey?.chatKey, data);
+    return setChatDataServices(friendId);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateChat = async (
+  chatKey: string | undefined,
+  data: ChatDataTypes,
+) => {
+  try {
+    return await dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
+      ...data,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -109,10 +140,10 @@ export const setChatHistorySevices = (): ThunkAction<
 
     dbRef.child(`userchat/${user?.uid}`).on(
       'value',
-      (snap: FirebaseDatabaseTypes.DataSnapshot) => {
+      async (snap: FirebaseDatabaseTypes.DataSnapshot) => {
         const values = snap.val();
         if (values) {
-          const chatsAll = Object.keys(values).map(async (val) => {
+          const chatsAll = await Object.keys(values).map(async (val) => {
             let contentChat = await getUserChatContent(values[val].chatKey);
 
             if (contentChat) {
@@ -121,7 +152,11 @@ export const setChatHistorySevices = (): ThunkAction<
               );
             }
 
+            const userProfile = await dbRef.child(`user/${val}`).once('value');
+
             return {
+              uid: val,
+              ...userProfile.val(),
               ...values[val],
               ...(contentChat && {
                 lastchat: contentChat[contentChat.length - 1],
@@ -131,8 +166,6 @@ export const setChatHistorySevices = (): ThunkAction<
 
           Promise.all(chatsAll).then(async (response) => {
             dispatch(setChatHistoryAction(response));
-            console.log('response', response);
-
             resolve(response);
           });
         }
@@ -143,34 +176,4 @@ export const setChatHistorySevices = (): ThunkAction<
       },
     );
   });
-};
-
-export const setChatDataServices = (
-  friendId: string,
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
-) => {
-  try {
-    const userChat = await getUserChat(friendId);
-
-    if (!userChat?.chatKey) {
-      dispatch(clearChatActions());
-      return null;
-    }
-
-    await dbRef
-      .child(`chats/${userChat.chatKey}`)
-      .on('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
-        const value = snap.val();
-
-        if (value) {
-          const chats = Object.keys(value).map((val) => value[val]);
-          dispatch(setchatAction(chats));
-        } else {
-          dispatch(clearChatActions());
-        }
-      });
-  } catch (err) {
-    console.log(err);
-  }
 };

@@ -158,7 +158,7 @@ export const getAllUsers = (): ThunkAction<
       const allUsers: string[] = [];
       Object.keys(data).map((val) => {
         allUsers.push({
-          id: val,
+          uid: val,
           ...data[val],
         });
       });
