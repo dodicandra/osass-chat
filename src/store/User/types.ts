@@ -21,7 +21,7 @@ export interface UsersDataTypes {
   name?: string;
   email?: string;
   bio?: string;
-  id?: string | undefined;
+  uid?: string | undefined;
   imgUrl?: string;
 }
 

@@ -43,7 +43,7 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    const fil = Users.filter((item) => item.id !== User?.uid);
+    const fil = Users.filter((item) => item.uid !== User?.uid);
     setDatafilter(fil);
     setDataBackup(fil);
   }, [User, Users]);
@@ -64,7 +64,7 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
       <FlatList
         data={datafilter}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.id as string}
+        keyExtractor={(item) => item.uid as string}
         maxToRenderPerBatch={15}
         scrollEventThrottle={16}
         contentContainerStyle={{paddingTop: 8}}
@@ -73,7 +73,7 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
           <List
             titlePress={() => navigation.navigate('UserVisited', item)}
             title={item.name}
-            key={item.id}
+            key={item.uid}
             desc=""
             imgUrl={{uri: item.imgUrl}}
           />
