@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {speaker} from 'assets';
 import React from 'react';
 import {

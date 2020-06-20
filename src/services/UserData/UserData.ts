@@ -10,6 +10,7 @@ import RNblob from 'rn-fetch-blob';
 import {ImageTypes} from 'screen';
 import {
   RootState,
+  searchUsers,
   setLoading,
   setUser,
   stopLoading,
@@ -17,7 +18,6 @@ import {
   updateUserImg,
   updateUserNameAction,
   UserInterface,
-  searchUsers,
   UsersDataTypes,
 } from 'store';
 

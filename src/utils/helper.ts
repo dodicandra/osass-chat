@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {EffectCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
 import {getToLocal} from './asycnStorage';
@@ -24,7 +23,7 @@ export const useKeyBoard = (
       Keyboard.removeListener(Hide, () => {});
       Keyboard.removeListener(Show, () => {});
     };
-  }, []);
+  }, [calbackHide, callbackShow]);
 };
 
 export function useForm<State extends Record<string, object | string>>(

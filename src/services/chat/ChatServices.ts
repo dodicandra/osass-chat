@@ -12,6 +12,7 @@ import {
   setchatAction,
 } from 'store/chat';
 import {getYear} from 'utils/helper';
+import moment from 'moment';
 
 export const sendChatServeices = (
   friendUid: string | undefined,
@@ -23,7 +24,9 @@ export const sendChatServeices = (
   try {
     const dbRef = db.database().ref('chats/');
 
-    dbRef.child(`${friendUid}_${userUid}/${getYear}`).push(data);
+    dbRef
+      .child(`${friendUid}_${userUid}/${moment().format('YYYY-MM-DD')}`)
+      .push(data);
   } catch (err) {
     console.log(err);
   }
