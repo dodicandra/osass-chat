@@ -44,7 +44,7 @@ export const updateUserNameAction = (data: string): UserActionType => ({
   payload: {name: data},
 });
 
-export const updateBioAction = (data: string): UserActionType => ({
+export const updateBioAction = (data: string | undefined): UserActionType => ({
   type: 'UPDATE_USER_DATA',
   payload: {bio: data},
 });

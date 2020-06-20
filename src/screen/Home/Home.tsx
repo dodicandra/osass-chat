@@ -16,7 +16,6 @@ type HomeProps = MainStackApp & Drawer;
 export const Home: React.FC<HomeProps> = ({navigation}) => {
   const History = useSelector((state: RootState) => state.Chat.history);
   const User = useSelector((state: RootState) => state.User);
-  console.log('History', History);
 
   const disptach = useDispatch();
 

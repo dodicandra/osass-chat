@@ -44,7 +44,6 @@ export const uploadImageUser = (
 
     await dbRef.child(`user/${user?.uid}`).update({imgUrl});
     dispatch(updateUserImg(imgUrl));
-    console.log(user);
     return imgUrl;
   } catch (err) {
     console.log(err.message);
@@ -135,7 +134,6 @@ export const getUserBio = (): ThunkAction<
       (snapshot: FirebaseDatabaseTypes.DataSnapshot) => {
         const data: UserInterface = snapshot.val();
 
-        console.log(data.bio);
         dispatch(updateBioAction(data.bio));
       },
     );

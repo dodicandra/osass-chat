@@ -23,7 +23,7 @@ export const useKeyBoard = (
       Keyboard.removeListener(Hide, () => {});
       Keyboard.removeListener(Show, () => {});
     };
-  }, [calbackHide, callbackShow]);
+  }, []);
 };
 
 export function useForm<State extends Record<string, object | string>>(

@@ -23,7 +23,6 @@ type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
 
 export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
   const param = route.params;
-  console.log('param', param);
 
   const Chat = useSelector((state: RootState) => state.Chat.chat);
   const User = useSelector((state: RootState) => state.User.user);
