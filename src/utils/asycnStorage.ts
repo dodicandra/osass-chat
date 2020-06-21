@@ -13,7 +13,7 @@ export const setToLocal = async (key: string, val?: string) => {
 export const getToLocal = async (key: string) => {
   try {
     const res = await AsycnStorage.getItem(key);
-    return JSON.parse(res);
+    return JSON.parse(res as string);
   } catch (err) {
     console.log(err);
   }

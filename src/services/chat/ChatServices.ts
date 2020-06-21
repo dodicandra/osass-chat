@@ -6,7 +6,7 @@ import {
 import moment from 'moment';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-import {RootState, store} from 'store';
+import {RootState} from 'store';
 import {
   ChatDataTypes,
   clearChatActions,
@@ -21,7 +21,7 @@ interface ChatKey {
 }
 
 export const getUserChat = async (
-  friendId: string,
+  friendId: string | undefined,
 ): Promise<ChatKey | undefined> => {
   try {
     const user = auth.auth().currentUser;
@@ -37,8 +37,8 @@ export const getUserChat = async (
 };
 
 export const sendNewChat = async (
-  userUid: string,
-  friendUid: string,
+  userUid: string | undefined,
+  friendUid: string | undefined,
   data: ChatDataTypes,
 ) => {
   try {
@@ -50,14 +50,13 @@ export const sendNewChat = async (
 
     await dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey});
     return true;
-    // dbRef.child(`user/${friendUid}`).set(resKey.key);
   } catch (err) {
     console.log(err);
   }
 };
 
 export const setChatDataServices = (
-  friendId: string,
+  friendId: string | undefined,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
   dispatch,
 ) => {
@@ -83,25 +82,6 @@ export const setChatDataServices = (
   } catch (err) {
     console.log(err);
     throw new Error(err);
-  }
-};
-
-export const sendChat = (
-  userUid: string,
-  friendId: string,
-  data: ChatDataTypes,
-): ThunkAction<void, RootState, unknown, Action<string>> => async () => {
-  try {
-    const chatKey = await getUserChat(friendId);
-
-    if (!chatKey) {
-      await sendNewChat(userUid, friendId, data);
-      return setChatDataServices(friendId);
-    }
-    await updateChat(chatKey?.chatKey, data);
-    return setChatDataServices(friendId);
-  } catch (err) {
-    console.log(err);
   }
 };
 
