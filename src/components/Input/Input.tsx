@@ -70,7 +70,7 @@ const Input: React.FC<InputProps> = ({
             {secureTextEntry && (
               <TouchableOpacity
                 onPress={() => setActive(!active)}
-                style={{marginRight: 15}}>
+                style={{marginRight: 12}}>
                 <Icons.Entypo
                   name={active ? 'eye' : 'eye-with-line'}
                   size={30}
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontFamily: Fonts.Monstserrat.M,
-    maxWidth: 350,
   },
   text: {
     fontSize: 30,
