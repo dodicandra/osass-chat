@@ -1,6 +1,6 @@
 import {EffectCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
-import {setToken, store} from 'store';
+import {setToken, store, ChatHistoryTypes} from 'store';
 import {getToLocal} from './asycnStorage';
 
 const dispatch = store.dispatch;
@@ -54,4 +54,18 @@ export const findMsg = (err: {message: ''}): string => {
   const msg: string[] = err.message.split(/[^0-9a-zA-Z ]/g);
   let errMsg = msg.filter((t) => t !== '' && t !== ' ');
   return errMsg[errMsg.length - 1];
+};
+
+export const sortArr = (sortData: ChatHistoryTypes[]) => {
+  return sortData.sort((a, b) => {
+    const aCreateAt = Date.parse(a.createAt);
+    const bCreateAt = Date.parse(b.createAt);
+    if (aCreateAt > bCreateAt) {
+      return -1;
+    } else if (aCreateAt < bCreateAt) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 };

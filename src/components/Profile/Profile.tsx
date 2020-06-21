@@ -1,4 +1,4 @@
-import {speaker} from 'assets';
+import {speaker, UserDefault} from 'assets';
 import {ImgType} from 'components/type';
 import React from 'react';
 import {
@@ -63,7 +63,7 @@ const Profile: React.FC<ProfileProps> = ({
 
 Profile.defaultProps = {
   size: 64,
-  source: speaker,
+  source: UserDefault,
   loading: false,
 };
 

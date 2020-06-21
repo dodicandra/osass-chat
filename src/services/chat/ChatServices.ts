@@ -44,12 +44,20 @@ export const sendNewChat = async (
   try {
     const chatKey = dbRef.child('chats').push().key;
 
-    await db.database().ref(`chats/${chatKey}/${moment().unix()}`).update(data);
+    const race1 = db
+      .database()
+      .ref(`chats/${chatKey}/${moment().unix()}`)
+      .update(data);
 
-    await dbRef.child(`userchat/${userUid}/${friendUid}`).set({chatKey});
+    const race2 = dbRef
+      .child(`userchat/${userUid}/${friendUid}`)
+      .set({chatKey, createAt: moment().toISOString()});
 
-    await dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey});
-    return true;
+    const race3 = dbRef
+      .child(`userchat/${friendUid}/${userUid}`)
+      .set({chatKey, createAt: moment().toISOString()});
+
+    return await Promise.race([race1, race2, race3]);
   } catch (err) {
     console.log(err);
   }
@@ -86,13 +94,25 @@ export const setChatDataServices = (
 };
 
 export const updateChat = async (
+  userUid: string | undefined,
+  friendUid: string | undefined,
   chatKey: string | undefined,
   data: ChatDataTypes,
 ) => {
   try {
-    return await dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
+    const update1 = dbRef
+      .child(`userchat/${userUid}/${friendUid}`)
+      .update({chatKey, createAt: moment().toISOString()});
+
+    const update2 = dbRef
+      .child(`userchat/${friendUid}/${userUid}`)
+      .update({chatKey, createAt: moment().toISOString()});
+
+    const update3 = dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
       ...data,
     });
+
+    return await Promise.race([update3, update2, update1]);
   } catch (err) {
     console.log(err);
   }
