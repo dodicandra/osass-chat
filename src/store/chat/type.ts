@@ -27,6 +27,7 @@ export interface ChatHistoryTypes {
   bio: string;
   imgUrl: string;
   name: string;
+  createAt: string;
 }
 
 export interface ChatAllTypes {
