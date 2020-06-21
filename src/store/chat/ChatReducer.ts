@@ -25,6 +25,8 @@ export const chatReducer = (
         ...state,
         history: [...action.payload],
       };
+    case 'CLEAR_ALL':
+      return initialState;
     default:
       return state;
   }

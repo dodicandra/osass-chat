@@ -15,3 +15,7 @@ export const setChatHistoryAction = (
 export const clearChatActions = (): BaseChatTypes => ({
   type: 'CLEAR_CHAT',
 });
+
+export const clearAllActions = (): BaseChatTypes => ({
+  type: 'CLEAR_ALL',
+});

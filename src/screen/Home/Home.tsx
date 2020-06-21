@@ -21,15 +21,14 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
 
   const decs = sortArr(History);
 
-  // const getData = useCallback(() => {
-  //   disptach(getUserDataAction());
-  //   disptach(setChatHistorySevices());
-  // }, []);
-
-  useEffect(() => {
+  const getData = useCallback(() => {
     disptach(getUserDataAction());
     disptach(setChatHistorySevices());
-  }, [disptach]);
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [disptach, getData]);
 
   return (
     <View style={styles.container}>
