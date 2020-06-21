@@ -21,7 +21,7 @@ interface ChatKey {
 }
 
 export const getUserChat = async (
-  friendId: string,
+  friendId: string | undefined,
 ): Promise<ChatKey | undefined> => {
   try {
     const user = auth.auth().currentUser;
@@ -37,8 +37,8 @@ export const getUserChat = async (
 };
 
 export const sendNewChat = async (
-  userUid: string,
-  friendUid: string,
+  userUid: string | undefined,
+  friendUid: string | undefined,
   data: ChatDataTypes,
 ) => {
   try {
@@ -56,7 +56,7 @@ export const sendNewChat = async (
 };
 
 export const setChatDataServices = (
-  friendId: string,
+  friendId: string | undefined,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
   dispatch,
 ) => {

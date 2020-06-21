@@ -60,14 +60,14 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
 
   const sendChat = async (data: ChatDataTypes) => {
     try {
-      const chatKey = await getUserChat(param?.uid!);
+      const chatKey = await getUserChat(param?.uid);
 
       if (!chatKey) {
-        await sendNewChat(User.uid!, param?.uid!, data);
-        dispatch(setChatDataServices(param?.uid!));
+        await sendNewChat(User.uid, param?.uid, data);
+        dispatch(setChatDataServices(param?.uid));
       }
       await updateChat(chatKey?.chatKey, data);
-      dispatch(setChatDataServices(param?.uid!));
+      dispatch(setChatDataServices(param?.uid));
     } catch (err) {
       console.log(err);
     }
