@@ -66,7 +66,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
         await sendNewChat(User.uid, param?.uid, data);
         dispatch(setChatDataServices(param?.uid));
       }
-      await updateChat(chatKey?.chatKey, data);
+      await updateChat(User.uid, param?.uid, chatKey?.chatKey, data);
       dispatch(setChatDataServices(param?.uid));
     } catch (err) {
       console.log(err);

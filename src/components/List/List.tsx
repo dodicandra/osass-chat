@@ -1,14 +1,14 @@
+import {UserDefault} from 'assets';
 import React from 'react';
 import {
+  GestureResponderEvent,
+  ImageSourcePropType,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  ImageSourcePropType,
-  GestureResponderEvent,
+  View,
 } from 'react-native';
-import {speaker} from 'assets';
-import {Fonts, colors} from 'utils';
+import {colors, Fonts} from 'utils';
 import Profile from '../Profile/Profile';
 
 interface InputProps {
@@ -44,7 +44,7 @@ const List: React.FC<InputProps> = ({
 List.defaultProps = {
   title: 'Dodi candra',
   desc: 'Haloo selamat malam bisa bicara dengan dodi candra',
-  imgUrl: speaker,
+  imgUrl: UserDefault,
 };
 
 export default List;

@@ -75,6 +75,8 @@ export const registerService = (
     if (register.user) {
       await register.user.updateProfile({
         displayName: data.username,
+        photoURL:
+          'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03',
       });
       const auths = await firebase.auth().currentUser;
 
@@ -94,9 +96,11 @@ export const registerService = (
       );
       await setToLocal('token', token?.token);
       dispatach(setToken(token?.token));
-      const respon = await dbref
-        .child(`user/${register.user.uid}`)
-        .set({name: data.username});
+      const respon = await dbref.child(`user/${register.user.uid}`).update({
+        name: data.username,
+        imgUrl:
+          'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03',
+      });
       dispatach(stopLoading());
       return respon;
     }

@@ -1,12 +1,12 @@
-import {speaker} from 'assets';
+import {UserDefault} from 'assets';
 import React from 'react';
 import {
+  GestureResponderEvent,
   ImageSourcePropType,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  GestureResponderEvent,
 } from 'react-native';
 import {colors, Fonts, Icons} from 'utils';
 import Profile from '../Profile/Profile';
@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
 };
 
 Header.defaultProps = {
-  imgProfile: speaker,
+  imgProfile: UserDefault,
   icon: 'ios-menu',
   title: '',
 };

@@ -8,7 +8,7 @@ import {UserVer} from 'assets';
 import React from 'react';
 import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {clearToken} from 'store';
+import {clearToken, clearAllActions} from 'store';
 import {removeLocal} from 'utils';
 import Button from '../Button/Button';
 
@@ -22,6 +22,7 @@ const Drawer: React.FC<Props> = (props) => {
     await removeLocal('token');
     props.navigation.dispatch(DrawerActions.closeDrawer());
     dispatch(clearToken());
+    dispatch(clearAllActions());
   };
 
   return (

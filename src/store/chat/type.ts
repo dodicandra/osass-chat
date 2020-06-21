@@ -3,6 +3,7 @@ import {
   SET_CHAT_HISTORY,
   CLEAR_CHAT,
   CLEAR_CHAT_HISTORY,
+  CLEAR_ALL,
 } from './constan';
 
 export interface ChatDataTypes {
@@ -27,6 +28,7 @@ export interface ChatHistoryTypes {
   bio: string;
   imgUrl: string;
   name: string;
+  createAt: string;
 }
 
 export interface ChatAllTypes {
@@ -59,8 +61,13 @@ interface ClearHistoryChat {
   payload?: string;
 }
 
+interface ClearAll {
+  type: typeof CLEAR_ALL;
+}
+
 export type BaseChatTypes =
   | ChatTypes
   | ChatHistory
   | ClearChat
-  | ClearHistoryChat;
+  | ClearHistoryChat
+  | ClearAll;
