@@ -10,7 +10,8 @@ import {
 import {Action} from 'redux';
 import {firebase} from '@react-native-firebase/auth';
 import {firebase as db} from '@react-native-firebase/database';
-import {setToLocal} from 'utils';
+import {setToLocal, findMsg} from 'utils';
+import {ToastAndroid} from 'react-native';
 
 interface SingInTypes {
   email: string;
@@ -55,6 +56,8 @@ export const signInService = (
   } catch (err) {
     dispatch(setError(err.message));
     dispatch(stopLoading());
+    let errMsg = findMsg(err);
+    ToastAndroid.showWithGravity(errMsg, ToastAndroid.SHORT, ToastAndroid.TOP);
   }
 };
 
@@ -99,6 +102,7 @@ export const registerService = (
     }
   } catch (err) {
     dispatach(stopLoading());
-    throw err;
+    let errMsg = findMsg(err);
+    ToastAndroid.showWithGravity(errMsg, ToastAndroid.SHORT, ToastAndroid.TOP);
   }
 };
