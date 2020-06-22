@@ -2,6 +2,7 @@ import {EffectCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
 import {setToken, store} from 'store';
 import {getToLocal} from './asycnStorage';
+import firebase from 'react-native-firebase';
 
 const dispatch = store.dispatch;
 
@@ -55,3 +56,5 @@ export const findMsg = (err: {message: ''}): string => {
   let errMsg = msg.filter((t) => t !== '' && t !== ' ');
   return errMsg[errMsg.length - 1];
 };
+
+export const fire = firebase;
