@@ -8,9 +8,7 @@ import {
   setToken,
 } from 'store';
 import {Action} from 'redux';
-import {firebase} from '@react-native-firebase/auth';
-import {firebase as db} from '@react-native-firebase/database';
-import {setToLocal, findMsg} from 'utils';
+import {setToLocal, findMsg, fire} from 'utils';
 import {ToastAndroid} from 'react-native';
 
 interface SingInTypes {
@@ -32,13 +30,13 @@ export const signInService = (
 ) => {
   try {
     dispatch(setLoading());
-    const auth = await firebase
+    const auth = await fire
       .auth()
       .signInWithEmailAndPassword(data.email?.trim(), data.password?.trim());
     if (auth?.user) {
       const {displayName, email, phoneNumber, uid} = auth.user;
 
-      const curenUser = await firebase.auth().currentUser;
+      const curenUser = await fire.auth().currentUser;
       const token = await curenUser?.getIdTokenResult(true).then((res) => res);
 
       await setToLocal('token', token?.token);
@@ -69,7 +67,7 @@ export const registerService = (
 ) => {
   try {
     dispatach(setLoading());
-    const register = await firebase
+    const register = await fire
       .auth()
       .createUserWithEmailAndPassword(data.email.trim(), data.password.trim());
     if (register.user) {
@@ -78,13 +76,13 @@ export const registerService = (
         photoURL:
           'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03',
       });
-      const auths = await firebase.auth().currentUser;
+      const auths = await fire.auth().currentUser;
 
       const {email, phoneNumber, uid} = register.user;
 
       const token = await auths?.getIdTokenResult(true).then((res) => res);
 
-      const dbref = await db.database().ref();
+      const dbref = await fire.database().ref();
 
       dispatach(
         setUser({

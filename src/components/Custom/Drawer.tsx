@@ -1,4 +1,4 @@
-import {firebase as auth} from '@react-native-firebase/auth';
+import firebase from 'react-native-firebase';
 import {
   DrawerContentComponentProps,
   DrawerItemList,
@@ -18,7 +18,7 @@ const Drawer: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   const logOut = async () => {
-    auth.auth().signOut;
+    firebase.auth().signOut;
     await removeLocal('token');
     props.navigation.dispatch(DrawerActions.closeDrawer());
     dispatch(clearToken());

@@ -1,4 +1,3 @@
-import {firebase as auth} from '@react-native-firebase/auth';
 import {UserVer} from 'assets';
 import {Button, Input} from 'components';
 import React, {useRef} from 'react';
@@ -10,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import Animated, {multiply} from 'react-native-reanimated';
-import {colors, Fonts, tm1, useForm, useKeyBoard} from 'utils';
+import {colors, Fonts, tm1, useForm, useKeyBoard, fire} from 'utils';
 
 const IMG_HEIGHT = 220;
 const IMG_WIDTH = 274;
@@ -38,7 +37,7 @@ export const UserNameVerifikasi = () => {
   useKeyBoard(KeyboardShow, KeyboardHide);
 
   const changeDisplayName = async () => {
-    const user = await auth.auth().currentUser;
+    const user = await fire.auth().currentUser;
 
     const token = await user?.getIdTokenResult(true).then((t) => t);
 
