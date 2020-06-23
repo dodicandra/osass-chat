@@ -6,7 +6,7 @@ import {
   ChatDataTypes,
   clearChatActions,
   setchatAction,
-  setChatHistoryAction,
+  setChatHistoryAction
 } from 'store/chat';
 import {fire} from 'utils';
 
@@ -17,7 +17,7 @@ interface ChatKey {
 }
 
 export const getUserChat = async (
-  friendId: string | undefined,
+  friendId: string | undefined
 ): Promise<ChatKey | undefined> => {
   try {
     const user = fire.auth().currentUser;
@@ -35,29 +35,33 @@ export const getUserChat = async (
 export const sendNewChat = async (
   userUid: string | undefined,
   friendUid: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
     const chatKey = dbRef.child('chats').push().key;
 
-    await fire
-      .database()
-      .ref(`chats/${chatKey}/${moment().unix()}`)
+    const race1 = dbRef
+      .child(`chats/${chatKey}/${moment().unix()}`)
       .update(data);
 
-    await dbRef.child(`userchat/${userUid}/${friendUid}`).set({chatKey});
+    const race2 = dbRef
+      .child(`userchat/${userUid}/${friendUid}`)
+      .update({chatKey, createAt: `${moment().toISOString()}`});
 
-    await dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey});
-    return true;
+    const race3 = dbRef
+      .child(`userchat/${friendUid}/${userUid}`)
+      .update({chatKey, createAt: `${moment().toISOString()}`});
+
+    return await Promise.all([race1, race2, race3]);
   } catch (err) {
     console.log(err);
   }
 };
 
 export const setChatDataServices = (
-  friendId: string | undefined,
+  friendId: string | undefined
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     const userChat = await getUserChat(friendId);
@@ -84,11 +88,11 @@ export const setChatDataServices = (
 
 export const updateChat = async (
   chatKey: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
     return await dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
-      ...data,
+      ...data
     });
   } catch (err) {
     console.log(err);
@@ -124,7 +128,7 @@ export const setChatHistorySevices = (): ThunkAction<
 
             if (contentChat) {
               contentChat = Object.keys(contentChat).map(
-                (con) => contentChat[con],
+                (con) => contentChat[con]
               );
             }
 
@@ -135,8 +139,8 @@ export const setChatHistorySevices = (): ThunkAction<
               ...userProfile.val(),
               ...values[val],
               ...(contentChat && {
-                lastchat: contentChat[contentChat.length - 1],
-              }),
+                lastchat: contentChat[contentChat.length - 1]
+              })
             };
           });
 
@@ -149,7 +153,7 @@ export const setChatHistorySevices = (): ThunkAction<
       (err: Error) => {
         reject(err);
         console.log('Err', err);
-      },
+      }
     );
   });
 };

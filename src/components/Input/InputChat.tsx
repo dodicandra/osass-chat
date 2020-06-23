@@ -4,7 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  GestureResponderEvent,
+  GestureResponderEvent
 } from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import {colors, Fonts} from 'utils';
@@ -20,7 +20,7 @@ const InputChat: React.FC<InputChatProps> = ({
   disabled,
   onChangeText,
   value,
-  onSubmit,
+  onSubmit
 }) => {
   return (
     <View style={styles.container}>
@@ -41,8 +41,8 @@ const InputChat: React.FC<InputChatProps> = ({
           {
             backgroundColor: disabled
               ? colors.border.input
-              : colors.background.yellow,
-          },
+              : colors.background.yellow
+          }
         ]}>
         <Icons
           name="send"
@@ -55,7 +55,7 @@ const InputChat: React.FC<InputChatProps> = ({
 };
 
 InputChat.defaultProps = {
-  disabled: false,
+  disabled: false
 };
 
 export default InputChat;
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 7,
+    marginTop: 7
   },
   input: {
     borderWidth: 1,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 1.4,
     padding: 5,
-    textDecorationLine: 'none',
+    textDecorationLine: 'none'
   },
   send: {
     width: 50,
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
-    paddingRight: 3,
-  },
+    paddingRight: 3
+  }
 });

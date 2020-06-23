@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import Animated, {multiply} from 'react-native-reanimated';
 import {colors, Fonts, tm1, useForm, useKeyBoard, fire} from 'utils';
@@ -24,13 +24,13 @@ export const UserNameVerifikasi = () => {
   const KeyboardShow = () => {
     multiply(
       tm1(height, IMG_HEIGHT / 2, DURATION),
-      tm1(width, IMG_WIDTH / 2, DURATION),
+      tm1(width, IMG_WIDTH / 2, DURATION)
     );
   };
   const KeyboardHide = () => {
     multiply(
       tm1(height, IMG_HEIGHT, DURATION),
-      tm1(width, IMG_WIDTH, DURATION),
+      tm1(width, IMG_WIDTH, DURATION)
     );
   };
 
@@ -75,11 +75,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.yellow,
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   img: {
     resizeMode: 'contain',
-    marginTop: 20,
+    marginTop: 20
   },
   input: {width: '80%', marginBottom: 50, marginTop: 30},
   text: {
@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Monstserrat.M,
     marginTop: 20,
     marginLeft: 20,
-    alignSelf: 'flex-start',
-  },
+    alignSelf: 'flex-start'
+  }
 });

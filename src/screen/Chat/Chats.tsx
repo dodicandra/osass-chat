@@ -9,13 +9,13 @@ import {
   setChatHistorySevices,
   getUserChat,
   sendNewChat,
-  updateChat,
+  updateChat
 } from 'services';
 import {
   ChatDataTypes,
   clearChatActions,
   RootState,
-  UsersDataTypes,
+  UsersDataTypes
 } from 'store';
 import {colors, Fonts} from 'utils';
 
@@ -51,7 +51,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
       content: state,
       sender: User?.uid!,
       tanggal: moment().toISOString(),
-      time: moment().toISOString(),
+      time: moment().toISOString()
     };
     sendChat(data);
     dispatch(setChatHistorySevices());
@@ -114,17 +114,17 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   scroll: {
     flex: 1,
     marginHorizontal: 10,
     marginTop: -10,
-    zIndex: -99,
+    zIndex: -99
   },
   contentContainerStyle: {
     paddingVertical: 10,
-    paddingTop: 20,
+    paddingTop: 20
   },
   chatContainer: {flex: 1, backgroundColor: colors.background.white},
   chatTanggal: {
@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: colors.text.black,
     textAlign: 'center',
-    marginVertical: 15,
-  },
+    marginVertical: 15
+  }
 });

@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   Image,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import {colors} from 'utils';
 
@@ -28,7 +28,7 @@ const Profile: React.FC<ProfileProps> = ({
   bottom,
   onPress,
   size,
-  loading,
+  loading
 }) => {
   return (
     <TouchableOpacity
@@ -42,8 +42,8 @@ const Profile: React.FC<ProfileProps> = ({
           marginTop: top,
           marginBottom: bottom,
           height: size,
-          width: size,
-        },
+          width: size
+        }
       ]}>
       <Image
         defaultSource={speaker}
@@ -64,7 +64,7 @@ const Profile: React.FC<ProfileProps> = ({
 Profile.defaultProps = {
   size: 64,
   source: speaker,
-  loading: false,
+  loading: false
 };
 
 export default Profile;
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: colors.background.white,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  img: {resizeMode: 'contain'},
+  img: {resizeMode: 'contain'}
 });

@@ -8,7 +8,7 @@ const dispatch = store.dispatch;
 
 export const useKeyBoard = (
   callbackShow: EffectCallback,
-  calbackHide: EffectCallback,
+  calbackHide: EffectCallback
 ) => {
   useEffect(() => {
     let Show: KeyboardEventName;
@@ -27,7 +27,7 @@ export const useKeyBoard = (
 };
 
 export function useForm<State extends Record<string, object | string>>(
-  initialState: State,
+  initialState: State
 ) {
   const [state, setState] = useState<State>(initialState);
 

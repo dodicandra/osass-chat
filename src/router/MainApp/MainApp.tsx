@@ -23,7 +23,7 @@ export const DrawerScreen = () => (
       activeTintColor: colors.text.black,
       inactiveTintColor: colors.text.greey,
       labelStyle: {fontFamily: Fonts.Monstserrat.M, fontSize: 18},
-      activeBackgroundColor: 'transparent',
+      activeBackgroundColor: 'transparent'
     }}
     initialRouteName="Root">
     <Drawer.Screen
@@ -33,7 +33,7 @@ export const DrawerScreen = () => (
         drawerIcon: ({color}) => (
           <ListDrawer iconType="home" color={color} title="Home" />
         ),
-        swipeEnabled: false,
+        swipeEnabled: false
       }}
       component={MainRouter}
     />
@@ -43,7 +43,7 @@ export const DrawerScreen = () => (
         drawerLabel: '',
         drawerIcon: ({color}) => (
           <ListDrawer iconType="edit" color={color} title="Edit Profile" />
-        ),
+        )
       }}
       component={UserProfile}
     />
@@ -57,7 +57,7 @@ export const DrawerScreen = () => (
             color={color}
             title="Cari Teman"
           />
-        ),
+        )
       }}
       component={AllUser}
     />
@@ -70,7 +70,7 @@ export const MainRouter = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        animationTypeForReplace: 'push',
+        animationTypeForReplace: 'push'
       }}>
       <Screen name="Home" component={Home} />
       <Screen name="UserProfile" component={UserProfile} />
@@ -107,20 +107,20 @@ const style = StyleSheet.create({
     width: '100%',
     paddingVertical: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   text: {
     marginLeft: 30,
     fontFamily: Fonts.Monstserrat.M,
-    fontSize: 18,
+    fontSize: 18
   },
   gap: {
     borderBottomWidth: 2,
     marginLeft: 30,
     marginTop: 7,
-    width: '100%',
+    width: '100%'
   },
   wraper: {
-    width: '70%',
-  },
+    width: '70%'
+  }
 });

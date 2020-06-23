@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.treansparet,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   loading: {
     color: colors.background.yellow,
     fontSize: 20,
-    fontFamily: Fonts.Monstserrat.M,
-  },
+    fontFamily: Fonts.Monstserrat.M
+  }
 });

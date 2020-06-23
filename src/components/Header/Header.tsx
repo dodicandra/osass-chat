@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  GestureResponderEvent,
+  GestureResponderEvent
 } from 'react-native';
 import {colors, Fonts, Icons} from 'utils';
 import Profile from '../Profile/Profile';
@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   imgProfile,
   icon,
   title,
-  onPress,
+  onPress
 }) => {
   return (
     <View style={styles.headerContainer}>
@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
 Header.defaultProps = {
   imgProfile: speaker,
   icon: 'ios-menu',
-  title: '',
+  title: ''
 };
 
 const styles = StyleSheet.create({
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   title: {
     fontSize: 30,
     fontFamily: Fonts.Monstserrat.R,
     width: 230,
-    marginLeft: 10,
-  },
+    marginLeft: 10
+  }
 });

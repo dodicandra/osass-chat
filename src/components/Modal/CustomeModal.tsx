@@ -21,7 +21,7 @@ const CustomeModal: React.FC<Props> = ({
   onType,
   value,
   title,
-  disabled,
+  disabled
 }) => {
   return (
     <Modal visible={visible} transparent animated animationType="slide">
@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
     width: '80%',
     marginBottom: 200,
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalContainer: {
     backgroundColor: colors.background.treansparet,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
+    justifyContent: 'flex-end'
+  }
 });

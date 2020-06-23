@@ -29,5 +29,5 @@ export const Icons = {
   MaterialIcons,
   Octicons,
   SimpleLineIcons,
-  Zocial,
+  Zocial
 };

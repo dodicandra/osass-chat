@@ -44,7 +44,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
             titlePress={() =>
               navigation.navigate('Chat', {
                 ...item.lastchat,
-                ...item,
+                ...item
               })
             }
             desc={item.lastchat.content}
@@ -58,17 +58,17 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   bodyContainer: {
     flex: 1,
     zIndex: -1,
     marginHorizontal: 8,
     marginTop: -10,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   contentContainer: {
     paddingTop: 10,
-    paddingBottom: 10,
-  },
+    paddingBottom: 10
+  }
 });

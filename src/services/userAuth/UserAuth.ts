@@ -5,7 +5,7 @@ import {
   setUser,
   setError,
   stopLoading,
-  setToken,
+  setToken
 } from 'store';
 import {Action} from 'redux';
 import {setToLocal, findMsg, fire} from 'utils';
@@ -24,9 +24,9 @@ interface RegisterTypes {
 
 //login user services
 export const signInService = (
-  data: SingInTypes,
+  data: SingInTypes
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     dispatch(setLoading());
@@ -45,8 +45,8 @@ export const signInService = (
           name: displayName,
           email: email,
           phone: phoneNumber,
-          uid,
-        }),
+          uid
+        })
       );
       dispatch(setToken(token?.token));
       dispatch(stopLoading());
@@ -61,9 +61,9 @@ export const signInService = (
 
 // register user services
 export const registerService = (
-  data: RegisterTypes,
+  data: RegisterTypes
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatach,
+  dispatach
 ) => {
   try {
     dispatach(setLoading());
@@ -72,7 +72,7 @@ export const registerService = (
       .createUserWithEmailAndPassword(data.email.trim(), data.password.trim());
     if (register.user) {
       await register.user.updateProfile({
-        displayName: data.username,
+        displayName: data.username
       });
       const auths = await fire.auth().currentUser;
 
@@ -87,8 +87,8 @@ export const registerService = (
           name: auths?.displayName,
           email: email,
           phone: phoneNumber,
-          uid,
-        }),
+          uid
+        })
       );
       await setToLocal('token', token?.token);
       dispatach(setToken(token?.token));

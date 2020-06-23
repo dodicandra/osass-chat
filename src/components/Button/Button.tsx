@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   onPress,
   top,
   bottom,
-  disabled,
+  disabled
 }) => {
   return (
     <TouchableOpacity
@@ -29,13 +29,13 @@ const Button: React.FC<ButtonProps> = ({
           backgroundColor: disabled
             ? colors.background.yellow
             : colors.background.greey,
-          elevation: 4,
-        },
+          elevation: 4
+        }
       ]}>
       <Text
         style={[
           styles.text,
-          {color: disabled ? colors.background.greey : colors.text.yellow},
+          {color: disabled ? colors.background.greey : colors.text.yellow}
         ]}>
         {title}
       </Text>
@@ -51,10 +51,10 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 9,
+    borderRadius: 9
   },
   text: {
     fontSize: 36,
-    fontFamily: Fonts.Monstserrat.B,
-  },
+    fontFamily: Fonts.Monstserrat.B
+  }
 });

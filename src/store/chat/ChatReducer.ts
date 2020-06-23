@@ -2,28 +2,28 @@ import {BaseChatTypes, ChatStateType} from './type';
 
 const initialState: ChatStateType = {
   chat: [],
-  history: [],
+  history: []
 };
 
 export const chatReducer = (
   state = initialState,
-  action: BaseChatTypes,
+  action: BaseChatTypes
 ): ChatStateType => {
   switch (action.type) {
     case 'SET_CHAT':
       return {
         ...state,
-        chat: [...action.payload],
+        chat: [...action.payload]
       };
     case 'CLEAR_CHAT':
       return {
         ...state,
-        chat: [],
+        chat: []
       };
     case 'SET_CHAT_HISTORY':
       return {
         ...state,
-        history: [...action.payload],
+        history: [...action.payload]
       };
     default:
       return state;

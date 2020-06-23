@@ -8,12 +8,12 @@ import {chatReducer} from './chat';
 const reducer = combineReducers({
   UI: UiReducer,
   User: UserReducer,
-  Chat: chatReducer,
+  Chat: chatReducer
 });
 
 export type RootState = ReturnType<typeof reducer>;
 
 export const store = createStore(
   reducer,
-  composeWithDevTools(applyMiddleware(thunk)),
+  composeWithDevTools(applyMiddleware(thunk))
 );

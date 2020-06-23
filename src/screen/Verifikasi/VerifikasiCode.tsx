@@ -11,7 +11,7 @@ import {
   TextInputKeyPressEventData,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import {colors, Fonts} from 'utils';
 
@@ -124,22 +124,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.yellow,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   text: {
     fontSize: 18,
     fontFamily: Fonts.Monstserrat.B,
-    marginBottom: 50,
+    marginBottom: 50
   },
   containerInput: {
     flexDirection: 'row',
     width: '90%',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   clear: {
     color: colors.text.greey,
     fontSize: 17,
     fontFamily: Fonts.Monstserrat.B,
-    marginTop: 20,
-  },
+    marginTop: 20
+  }
 });

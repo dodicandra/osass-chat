@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {signInService} from 'services';
@@ -41,19 +41,19 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
       delay,
       duration: 200,
       easing: Easing.inOut(Easing.cubic),
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start();
 
   const KeyboardShow = () => {
     Animated.multiply(
       timing(height, IMG_HEIGHT / 2, DURATION),
-      timing(width, IMG_WIDTH / 2, DURATION),
+      timing(width, IMG_WIDTH / 2, DURATION)
     );
   };
   const KeyboardHide = () => {
     Animated.multiply(
       timing(height, IMG_HEIGHT, DURATION),
-      timing(width, IMG_WIDTH, DURATION),
+      timing(width, IMG_WIDTH, DURATION)
     );
   };
 
@@ -118,26 +118,26 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.yellow,
+    backgroundColor: colors.background.yellow
   },
   Image: {alignSelf: 'center', marginTop: 80},
   containerText: {
     width: 274,
     position: 'absolute',
     top: 20,
-    left: 20,
+    left: 20
   },
   input: {width: '90%'},
   text: {fontSize: 18, fontFamily: Fonts.Monstserrat.M},
   containerInput: {
     alignItems: 'center',
-    flex: 1,
+    flex: 1
   },
   register: {
     fontSize: 13,
     fontFamily: Fonts.Monstserrat.R,
     marginTop: 75,
     textAlign: 'center',
-    paddingVertical: 5,
-  },
+    paddingVertical: 5
+  }
 });

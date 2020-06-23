@@ -2,7 +2,7 @@ import {
   SET_CHAT,
   SET_CHAT_HISTORY,
   CLEAR_CHAT,
-  CLEAR_CHAT_HISTORY,
+  CLEAR_CHAT_HISTORY
 } from './constan';
 
 export interface ChatDataTypes {
