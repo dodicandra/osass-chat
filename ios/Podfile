@@ -79,6 +79,8 @@ target 'ossas' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
   target 'ossasTests' do
     inherit! :complete
     # Pods for testing
