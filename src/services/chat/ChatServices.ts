@@ -81,7 +81,6 @@ export const setChatDataServices = (
         const value = snap.val();
         if (value) {
           const chats = Object.keys(value).map((val) => value[val]);
-
           dispatch(setchatAction(chats));
         } else {
           dispatch(clearChatActions());
@@ -112,7 +111,7 @@ export const updateChat = async (
       ...data
     });
 
-    return await Promise.race([update3, update2]);
+    return await Promise.all([update3, update2]);
   } catch (err) {
     console.log(err);
   }
@@ -144,7 +143,6 @@ export const setChatHistorySevices = (): ThunkAction<
         if (values) {
           const chatsAll = await Object.keys(values).map(async (val) => {
             let contentChat = await getUserChatContent(values[val].chatKey);
-
             if (contentChat) {
               contentChat = Object.keys(contentChat).map(
                 (con) => contentChat[con]
@@ -152,7 +150,6 @@ export const setChatHistorySevices = (): ThunkAction<
             }
 
             const userProfile = await dbRef.child(`user/${val}`).once('value');
-
             return {
               uid: val,
               ...userProfile.val(),

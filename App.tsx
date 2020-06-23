@@ -20,18 +20,26 @@ const MainApp = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getDataChat = async () => {
-      await firebase
+    const getDataChat = () => {
+      firebase
         .database()
         .ref(`userchat/${User.user.uid}`)
         .on('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
           const values = snap.val();
           if (values) {
+            const asd = Object.keys(values).map((item) => item);
+
             setNotifikasi(values);
+            console.log(asd);
           }
         });
     };
     getDataChat();
+    return () =>
+      firebase
+        .database()
+        .ref(`userchat/${User.user.uid}`)
+        .off('value', getDataChat);
   }, [User.user.uid]);
 
   useEffect(() => {
@@ -39,6 +47,7 @@ const MainApp = () => {
       message: '',
       title: 'Pesan Baru'
     });
+    return () => {};
   }, [notif, notifikasi]);
 
   useEffect(() => {

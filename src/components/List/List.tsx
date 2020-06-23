@@ -9,6 +9,7 @@ import {
   View
 } from 'react-native';
 import {colors, Fonts} from 'utils';
+import moment from 'moment';
 import Profile from '../Profile/Profile';
 
 interface InputProps {
@@ -17,6 +18,7 @@ interface InputProps {
   imgUrl?: ImageSourcePropType | undefined | any;
   profilePress?: ((event: GestureResponderEvent) => void) | undefined;
   titlePress?: ((event: GestureResponderEvent) => void) | undefined;
+  time?: string;
 }
 
 const List: React.FC<InputProps> = ({
@@ -24,7 +26,8 @@ const List: React.FC<InputProps> = ({
   desc,
   imgUrl,
   profilePress,
-  titlePress
+  titlePress,
+  time
 }) => {
   return (
     <View style={styles.container}>
@@ -36,6 +39,11 @@ const List: React.FC<InputProps> = ({
         <Text numberOfLines={1} style={styles.desc}>
           {desc}
         </Text>
+        {time && (
+          <Text numberOfLines={1} style={styles.time}>
+            {moment(time).fromNow(true)}
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -74,5 +82,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flex: 1,
     borderBottomColor: colors.border.input
+  },
+  time: {
+    position: 'absolute',
+    right: 10,
+    fontSize: 10,
+    fontFamily: Fonts.Monstserrat.R,
+    maxWidth: 50
   }
 });

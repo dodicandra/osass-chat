@@ -1,8 +1,8 @@
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Header, List} from 'components';
-import React, {useEffect, useCallback} from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
@@ -67,6 +67,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
               profilePress={() => navigation.navigate('UserVisited', {...item})}
               imgUrl={{uri: item.imgUrl}}
               title={item.name}
+              time={item.lastchat.time}
               titlePress={() =>
                 navigation.navigate('Chat', {
                   ...item.lastchat,
