@@ -11,6 +11,18 @@ import {colors, getToLocal, sortArr} from 'utils';
 const MainApp = () => {
   const [loading, setLoading] = useState(true);
 
+  const History = useSelector((state: RootState) => state.Chat);
+  const notif = new NotifService();
+  const scheduler = sortArr(History.history);
+  const title = scheduler.map((item) => item.lastchat.content);
+
+  useEffect(() => {
+    notif.localNotif({
+      message: title[0],
+      title: 'Pesan Baru',
+    });
+  }, [notif, title]);
+
   const User = useSelector((state: RootState) => state.User);
   const UI = useSelector((state: RootState) => state.UI);
   const dispatch = useDispatch();
@@ -42,19 +54,6 @@ const MainApp = () => {
 };
 
 const App = () => {
-  const History = store.getState();
-  const notif = new NotifService();
-  const scheduler = sortArr(History.Chat.history);
-  const title = scheduler.map((item) => item.lastchat.content);
-
-  useEffect(() => {
-    notif.localNotif({
-      soundName: null,
-      message: title[0],
-      title: 'Pesan Baru',
-    });
-  }, []);
-
   return (
     <Provider store={store}>
       <StatusBar
