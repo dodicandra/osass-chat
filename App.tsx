@@ -19,7 +19,7 @@ const MainApp = () => {
   useEffect(() => {
     notif.localNotif({
       message: title[0],
-      title: 'Pesan Baru',
+      title: 'Pesan Baru'
     });
   }, [notif, title]);
 

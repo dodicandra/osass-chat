@@ -2,20 +2,20 @@ import {BaseChatTypes, ChatDataTypes, ChatHistoryTypes} from './type';
 
 export const setchatAction = (data: ChatDataTypes[]): BaseChatTypes => ({
   type: 'SET_CHAT',
-  payload: data,
+  payload: data
 });
 
 export const setChatHistoryAction = (
-  data: ChatHistoryTypes[],
+  data: ChatHistoryTypes[]
 ): BaseChatTypes => ({
   type: 'SET_CHAT_HISTORY',
-  payload: data,
+  payload: data
 });
 
 export const clearChatActions = (): BaseChatTypes => ({
-  type: 'CLEAR_CHAT',
+  type: 'CLEAR_CHAT'
 });
 
 export const clearAllActions = (): BaseChatTypes => ({
-  type: 'CLEAR_ALL',
+  type: 'CLEAR_ALL'
 });

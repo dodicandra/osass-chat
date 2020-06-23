@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import {UsersDataTypes} from 'store';
 import {colors, Fonts, Icons} from 'utils';
@@ -63,7 +63,7 @@ export const UserVisited: React.FC<UserProps> = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   userTitle: {
     fontSize: 30,
@@ -73,23 +73,23 @@ const styles = StyleSheet.create({
     left: 20,
     color: colors.background.white,
     textShadowColor: 'black',
-    textShadowRadius: 3,
+    textShadowRadius: 3
   },
   title: {
     fontSize: 30,
     fontFamily: Fonts.Monstserrat.M,
     marginBottom: 20,
-    marginLeft: 16,
+    marginLeft: 16
   },
   profileContainer: {
     height: 270,
     backgroundColor: 'black',
     elevation: 6,
-    position: 'relative',
+    position: 'relative'
   },
   wraper: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   btnIcon: {
     height: 73,
@@ -101,18 +101,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 233,
     right: 20,
-    elevation: 6,
+    elevation: 6
   },
   textAkun: {
     fontSize: 24,
     fontFamily: Fonts.Monstserrat.M,
     marginLeft: 30,
-    marginBottom: 20,
+    marginBottom: 20
   },
   username: {
     marginHorizontal: 30,
     marginBottom: 20,
     borderBottomColor: colors.border.input,
-    borderBottomWidth: 2,
-  },
+    borderBottomWidth: 2
+  }
 });

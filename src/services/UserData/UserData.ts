@@ -1,7 +1,7 @@
 import {firebase as auth} from '@react-native-firebase/auth';
 import {
   firebase as db,
-  FirebaseDatabaseTypes,
+  FirebaseDatabaseTypes
 } from '@react-native-firebase/database';
 import {firebase as storage} from '@react-native-firebase/storage';
 import {Action} from 'redux';
@@ -18,13 +18,13 @@ import {
   updateUserImg,
   updateUserNameAction,
   UserInterface,
-  UsersDataTypes,
+  UsersDataTypes
 } from 'store';
 
 export const uploadImageUser = (
-  data: ImageTypes,
+  data: ImageTypes
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     const dbRef = db.database().ref();
@@ -52,9 +52,9 @@ export const uploadImageUser = (
 };
 
 export const updateUserName = (
-  data: string,
+  data: string
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     dispatch(setLoading());
@@ -72,9 +72,9 @@ export const updateUserName = (
 };
 
 export const updateBio = (
-  data: string,
+  data: string
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     dispatch(setLoading());
@@ -82,7 +82,7 @@ export const updateBio = (
     const dbref = db.database().ref();
 
     await dbref.child(`user/${user?.uid}`).update({
-      bio: data,
+      bio: data
     });
 
     dispatch(updateBioAction(data));
@@ -108,8 +108,8 @@ export const getUserDataAction = (): ThunkAction<
         email: user?.displayName,
         imgUrl: user?.photoURL,
         name: user?.displayName,
-        uid: user?.uid,
-      }),
+        uid: user?.uid
+      })
     );
   } catch (err) {
     console.log(err.message);
@@ -135,7 +135,7 @@ export const getUserBio = (): ThunkAction<
         const data: UserInterface = snapshot.val();
 
         dispatch(updateBioAction(data.bio));
-      },
+      }
     );
   } catch (err) {
     console.log(err);
@@ -157,7 +157,7 @@ export const getAllUsers = (): ThunkAction<
       Object.keys(data).map((val) => {
         allUsers.push({
           uid: val,
-          ...data[val],
+          ...data[val]
         });
       });
       dispatch(searchUsers(allUsers as UsersDataTypes[]));

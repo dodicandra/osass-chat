@@ -39,7 +39,7 @@ PushNotification.configure({
   permissions: {
     alert: true,
     badge: true,
-    sound: true,
+    sound: true
   },
 
   // Should the initial notification be popped automatically
@@ -52,7 +52,7 @@ PushNotification.configure({
    * - Specified if permissions (ios) and token (android and ios) will requested or not,
    * - if not, you must call PushNotificationsHandler.requestPermissions() later
    */
-  requestPermissions: true,
+  requestPermissions: true
   // largeIcon: 'ic_launcher',
   // smallIcon: 'ic_notification',
 });

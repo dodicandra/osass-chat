@@ -5,7 +5,7 @@ import {
   SET_USER,
   SET_USERS,
   UPDATE_USER_DATA,
-  SEARCH_USER,
+  SEARCH_USER
 } from 'store/constan';
 
 export interface UserInterface {

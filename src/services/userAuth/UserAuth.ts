@@ -5,7 +5,7 @@ import {
   setUser,
   setError,
   stopLoading,
-  setToken,
+  setToken
 } from 'store';
 import {Action} from 'redux';
 import {firebase} from '@react-native-firebase/auth';
@@ -26,9 +26,9 @@ interface RegisterTypes {
 
 //login user services
 export const signInService = (
-  data: SingInTypes,
+  data: SingInTypes
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     dispatch(setLoading());
@@ -47,8 +47,8 @@ export const signInService = (
           name: displayName,
           email: email,
           phone: phoneNumber,
-          uid,
-        }),
+          uid
+        })
       );
       dispatch(setToken(token?.token));
       dispatch(stopLoading());
@@ -63,9 +63,9 @@ export const signInService = (
 
 // register user services
 export const registerService = (
-  data: RegisterTypes,
+  data: RegisterTypes
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatach,
+  dispatach
 ) => {
   try {
     dispatach(setLoading());
@@ -76,7 +76,7 @@ export const registerService = (
       await register.user.updateProfile({
         displayName: data.username,
         photoURL:
-          'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03',
+          'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03'
       });
       const auths = await firebase.auth().currentUser;
 
@@ -91,15 +91,15 @@ export const registerService = (
           name: auths?.displayName,
           email: email,
           phone: phoneNumber,
-          uid,
-        }),
+          uid
+        })
       );
       await setToLocal('token', token?.token);
       dispatach(setToken(token?.token));
       const respon = await dbref.child(`user/${register.user.uid}`).update({
         name: data.username,
         imgUrl:
-          'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03',
+          'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03'
       });
       dispatach(stopLoading());
       return respon;

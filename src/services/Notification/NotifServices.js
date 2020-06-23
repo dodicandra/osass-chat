@@ -44,7 +44,7 @@ export default class NotifService {
       message: message, // (required)
       playSound: true, // (optional) default: true
       soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the efault sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file n 'res/raw' directory and play it. default: 'default' (default sound is played)
-      number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+      number: 10 // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
       //actions: '["Yes", "No"]', // (Android only) See the doc for notification actions to know more
     });
   }
@@ -79,7 +79,7 @@ export default class NotifService {
       message: 'Kamu punya pesan baru', // (required)
       playSound: !!soundName, // (optional) default: true
       number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-      soundName: soundName ? soundName : 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the efault sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file n 'res/raw' directory and play it. default: 'default' (default sound is played)
+      soundName: soundName ? soundName : 'default' // (optional) Sound to play when the notification is shown. Value of 'default' plays the efault sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file n 'res/raw' directory and play it. default: 'default' (default sound is played)
     });
   }
 

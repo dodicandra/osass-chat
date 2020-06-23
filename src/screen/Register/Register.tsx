@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {registerService} from 'services';
@@ -24,7 +24,7 @@ export const Register: React.FC<RegisterProps> = () => {
   const [form, handleChange] = useForm({
     email: '',
     username: '',
-    password: '',
+    password: ''
   });
 
   const disabled =
@@ -86,15 +86,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: colors.background.yellow,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   text: {
     fontSize: 20,
     fontFamily: Fonts.Monstserrat.M,
     position: 'absolute',
     top: 34,
-    left: 30,
+    left: 30
   },
   input: {marginHorizontal: 20, marginVertical: 5},
-  btnWraper: {alignSelf: 'center', marginTop: 30, marginVertical: 5},
+  btnWraper: {alignSelf: 'center', marginTop: 30, marginVertical: 5}
 });

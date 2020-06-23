@@ -2,7 +2,7 @@ import {ImageSourcePropType, ImageURISource} from 'react-native';
 import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
-  TextInputKeyPressEventData,
+  TextInputKeyPressEventData
 } from 'react-native';
 import {TextInput} from 'react-native';
 

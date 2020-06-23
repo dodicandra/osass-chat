@@ -1,7 +1,7 @@
 import {firebase as auth} from '@react-native-firebase/auth';
 import {
   firebase as db,
-  FirebaseDatabaseTypes,
+  FirebaseDatabaseTypes
 } from '@react-native-firebase/database';
 import moment from 'moment';
 import {Action} from 'redux';
@@ -11,7 +11,7 @@ import {
   ChatDataTypes,
   clearChatActions,
   setchatAction,
-  setChatHistoryAction,
+  setChatHistoryAction
 } from 'store/chat';
 
 const dbRef = db.database().ref();
@@ -21,7 +21,7 @@ interface ChatKey {
 }
 
 export const getUserChat = async (
-  friendId: string | undefined,
+  friendId: string | undefined
 ): Promise<ChatKey | undefined> => {
   try {
     const user = auth.auth().currentUser;
@@ -39,7 +39,7 @@ export const getUserChat = async (
 export const sendNewChat = async (
   userUid: string | undefined,
   friendUid: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
     const chatKey = dbRef.child('chats').push().key;
@@ -64,9 +64,9 @@ export const sendNewChat = async (
 };
 
 export const setChatDataServices = (
-  friendId: string | undefined,
+  friendId: string | undefined
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+  dispatch
 ) => {
   try {
     const userChat = await getUserChat(friendId);
@@ -97,7 +97,7 @@ export const updateChat = async (
   userUid: string | undefined,
   friendUid: string | undefined,
   chatKey: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
     const update1 = dbRef
@@ -109,7 +109,7 @@ export const updateChat = async (
       .update({chatKey, createAt: moment().toISOString()});
 
     const update3 = dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
-      ...data,
+      ...data
     });
 
     return await Promise.race([update3, update2, update1]);
@@ -147,7 +147,7 @@ export const setChatHistorySevices = (): ThunkAction<
 
             if (contentChat) {
               contentChat = Object.keys(contentChat).map(
-                (con) => contentChat[con],
+                (con) => contentChat[con]
               );
             }
 
@@ -158,8 +158,8 @@ export const setChatHistorySevices = (): ThunkAction<
               ...userProfile.val(),
               ...values[val],
               ...(contentChat && {
-                lastchat: contentChat[contentChat.length - 1],
-              }),
+                lastchat: contentChat[contentChat.length - 1]
+              })
             };
           });
 
@@ -172,7 +172,7 @@ export const setChatHistorySevices = (): ThunkAction<
       (err: Error) => {
         reject(err);
         console.log('Err', err);
-      },
+      }
     );
   });
 };

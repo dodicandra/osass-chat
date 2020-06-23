@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ImagePick from 'react-native-image-picker';
 import {useDispatch, useSelector} from 'react-redux';
@@ -31,7 +31,7 @@ export const UserProfile = () => {
   const [image, setImage] = useState<ImageTypes>({
     uri: '',
     filename: '',
-    path: '',
+    path: ''
   });
 
   useEffect(() => {
@@ -43,18 +43,18 @@ export const UserProfile = () => {
       {
         quality: 1,
         mediaType: 'photo',
-        allowsEditing: true,
+        allowsEditing: true
       },
       async (res) => {
         if (!res.didCancel) {
           const src: ImageTypes = {
             uri: res.uri,
             filename: res.fileName,
-            path: res.path,
+            path: res.path
           };
           setImage(src);
         }
-      },
+      }
     );
   };
 
@@ -64,8 +64,8 @@ export const UserProfile = () => {
       await dispatch(
         uploadImageUser({
           uri: image.uri,
-          filename: image.filename,
-        }),
+          filename: image.filename
+        })
       );
 
       setImage({...image, uri: ''});
@@ -165,24 +165,24 @@ export const UserProfile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   title: {
     fontSize: 30,
     fontFamily: Fonts.Monstserrat.M,
     marginBottom: 20,
-    marginLeft: 16,
+    marginLeft: 16
   },
   profileContainer: {
     height: 200,
     backgroundColor: colors.background.yellow,
     justifyContent: 'center',
     elevation: 6,
-    position: 'relative',
+    position: 'relative'
   },
   wraper: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   btnIcon: {
     height: 73,
@@ -196,19 +196,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 160,
     right: 20,
-    elevation: 6,
+    elevation: 6
   },
   textAkun: {
     fontSize: 24,
     fontFamily: Fonts.Monstserrat.M,
     marginLeft: 30,
-    marginBottom: 20,
+    marginBottom: 20
   },
   username: {
     marginHorizontal: 30,
     marginBottom: 20,
     borderBottomColor: colors.border.input,
-    borderBottomWidth: 2,
+    borderBottomWidth: 2
   },
   upload: {
     position: 'absolute',
@@ -219,10 +219,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 3,
+    elevation: 3
   },
   textUpload: {
     fontFamily: Fonts.Monstserrat.M,
-    color: colors.background.white,
-  },
+    color: colors.background.white
+  }
 });

@@ -1,7 +1,7 @@
 import {firebase as auth} from '@react-native-firebase/auth';
 import {
   DrawerContentComponentProps,
-  DrawerItemList,
+  DrawerItemList
 } from '@react-navigation/drawer';
 import {DrawerActions} from '@react-navigation/native';
 import {UserVer} from 'assets';
@@ -40,12 +40,12 @@ export default Drawer;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   image: {
     height: 150,
     width: '100%',
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
-  logout: {position: 'absolute', bottom: 20, alignSelf: 'center'},
+  logout: {position: 'absolute', bottom: 20, alignSelf: 'center'}
 });
