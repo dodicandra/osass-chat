@@ -2,12 +2,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Loading, Splash} from 'components';
 import React, {useEffect, useState} from 'react';
 import {Modal, StatusBar} from 'react-native';
-//@ts-expect-error
-import OneSignal from 'react-native-onesignal';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import {Auth, DrawerScreen} from 'router';
+import {NotifService} from 'services';
 import {RootState, setToken, store} from 'store';
-import {colors, getToLocal} from 'utils';
+import {colors, getToLocal, sortArr} from 'utils';
 
 const MainApp = () => {
   const [loading, setLoading] = useState(true);
@@ -43,46 +42,17 @@ const MainApp = () => {
 };
 
 const App = () => {
-  OneSignal.setLogLevel(6, 0);
-
-  OneSignal.init('2e4f9f18-4700-452a-8510-a1162015e160', {
-    kOSSettingsKeyAutoPrompt: false,
-    kOSSettingsKeyInAppLaunchURL: false,
-    kOSSettingsKeyInFocusDisplayOption: 2,
-  });
-  OneSignal.inFocusDisplaying(2);
-
-  const onReceived = (notification: any) => {
-    console.log('Notification received: ', notification);
-  };
-
-  const onOpened = (openResult: {
-    notification: {
-      payload: {body: any; additionalData: any};
-      isAppInFocus: any;
-    };
-  }) => {
-    console.log('Message: ', openResult.notification.payload.body);
-    console.log('Data: ', openResult.notification.payload.additionalData);
-    console.log('isActive: ', openResult.notification.isAppInFocus);
-    console.log('openResult: ', openResult);
-  };
-
-  const onIds = (device: any) => {
-    console.log('Device info: ', device);
-  };
-  const myiOSPromptCallback = (_permission: any) => {};
+  const History = store.getState();
+  const notif = new NotifService();
+  const scheduler = sortArr(History.Chat.history);
+  const title = scheduler.map((item) => item.lastchat.content);
 
   useEffect(() => {
-    OneSignal.promptForPushNotificationsWithUserResponse(myiOSPromptCallback);
-    OneSignal.addEventListener('received', onReceived);
-    OneSignal.addEventListener('opened', onOpened);
-    OneSignal.addEventListener('ids', onIds);
-    return () => {
-      OneSignal.removeEventListener('received', onReceived);
-      OneSignal.removeEventListener('opened', onOpened);
-      OneSignal.removeEventListener('ids', onIds);
-    };
+    notif.localNotif({
+      soundName: null,
+      message: title[0],
+      title: 'Pesan Baru',
+    });
   }, []);
 
   return (
