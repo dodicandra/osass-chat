@@ -40,7 +40,8 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
     navigation.addListener('focus', async () => {
       dispatch(getAllUsers());
     });
-  }, [dispatch, navigation]);
+    return () => {};
+  }, [navigation]);
 
   useEffect(() => {
     const fil = Users.filter((item) => item.uid !== User?.uid);

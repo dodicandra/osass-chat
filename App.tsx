@@ -1,3 +1,4 @@
+import {firebase, FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {NavigationContainer} from '@react-navigation/native';
 import {Loading, Splash} from 'components';
 import React, {useEffect, useState} from 'react';
@@ -6,26 +7,39 @@ import {Provider, useDispatch, useSelector} from 'react-redux';
 import {Auth, DrawerScreen} from 'router';
 import {NotifService} from 'services';
 import {RootState, setToken, store} from 'store';
-import {colors, getToLocal, sortArr} from 'utils';
+import {colors, getToLocal} from 'utils';
 
 const MainApp = () => {
   const [loading, setLoading] = useState(true);
 
-  const History = useSelector((state: RootState) => state.Chat);
+  const [notifikasi, setNotifikasi] = useState([]);
+
   const notif = new NotifService();
-  const scheduler = sortArr(History.history);
-  const title = scheduler.map((item) => item.lastchat.content);
-
-  useEffect(() => {
-    notif.localNotif({
-      message: title[0],
-      title: 'Pesan Baru'
-    });
-  }, [notif, title]);
-
   const User = useSelector((state: RootState) => state.User);
   const UI = useSelector((state: RootState) => state.UI);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getDataChat = async () => {
+      await firebase
+        .database()
+        .ref(`userchat/${User.user.uid}`)
+        .on('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
+          const values = snap.val();
+          if (values) {
+            setNotifikasi(values);
+          }
+        });
+    };
+    getDataChat();
+  }, [User.user.uid]);
+
+  useEffect(() => {
+    notif.localNotif({
+      message: '',
+      title: 'Pesan Baru'
+    });
+  }, [notif, notifikasi]);
 
   useEffect(() => {
     (async () => {

@@ -100,9 +100,9 @@ export const updateChat = async (
   data: ChatDataTypes
 ) => {
   try {
-    const update1 = dbRef
-      .child(`userchat/${userUid}/${friendUid}`)
-      .update({chatKey, createAt: moment().toISOString()});
+    // const update1 = dbRef
+    //   .child(`userchat/${userUid}/${friendUid}`)
+    //   .update({chatKey, createAt: moment().toISOString()});
 
     const update2 = dbRef
       .child(`userchat/${friendUid}/${userUid}`)
@@ -112,7 +112,7 @@ export const updateChat = async (
       ...data
     });
 
-    return await Promise.race([update3, update2, update1]);
+    return await Promise.race([update3, update2]);
   } catch (err) {
     console.log(err);
   }
@@ -163,7 +163,7 @@ export const setChatHistorySevices = (): ThunkAction<
             };
           });
 
-          Promise.all(chatsAll).then(async (response) => {
+          await Promise.all(chatsAll).then((response) => {
             dispatch(setChatHistoryAction(response));
             resolve(response);
           });

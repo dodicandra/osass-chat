@@ -32,6 +32,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
 
   useEffect(() => {
     dispatch(setChatDataServices(param?.uid!));
+    return () => {};
   }, [dispatch, param]);
 
   useEffect(() => {

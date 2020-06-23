@@ -24,10 +24,12 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
   const getData = useCallback(() => {
     disptach(getUserDataAction());
     disptach(setChatHistorySevices());
-  }, []);
+    return () => {};
+  }, [disptach]);
 
   useEffect(() => {
     getData();
+    return () => {};
   }, [disptach, getData]);
 
   return (
