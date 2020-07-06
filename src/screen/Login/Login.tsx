@@ -1,7 +1,5 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {IconLogin} from 'assets';
-import {Button, Input} from 'components';
-import React, {useRef} from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useRef } from 'react';
 import {
   Animated,
   Easing,
@@ -13,9 +11,12 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {signInService} from 'services';
-import {colors, Fonts, useForm, useKeyBoard} from 'utils';
+import { useDispatch } from 'react-redux';
+
+import { IconLogin } from 'assets';
+import { Button, Input } from 'components';
+import { signInService } from 'services';
+import { colors, Fonts, useForm, useKeyBoard } from 'utils';
 
 const IMG_HEIGHT = 230;
 const IMG_WIDTH = 230;
@@ -25,13 +26,13 @@ type StackProps = StackScreenProps<StackAuth, 'Login'>;
 
 interface RegisterProps extends StackProps {}
 
-export const Login: React.FC<RegisterProps> = ({navigation}) => {
+export const Login: React.FC<RegisterProps> = ({ navigation }) => {
   const height = useRef(new Animated.Value(IMG_HEIGHT)).current;
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
   const dispatch = useDispatch();
 
-  const [form, setForm] = useForm({email: '', password: ''});
+  const [form, setForm] = useForm({ email: '', password: '' });
 
   const disabled = form.email.length > 0 && form.password.length > 0;
 
@@ -72,7 +73,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={styles.containerText}>
             <Text style={styles.text}>
               Selamat datang di Ossas! Temapt bercakap dengan siapapun!..
@@ -82,7 +83,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
             <Animated.Image
               resizeMethod="scale"
               resizeMode="contain"
-              style={[styles.Image, {height, width}]}
+              style={[styles.Image, { height, width }]}
               source={IconLogin}
             />
             <Input
@@ -100,7 +101,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
               title="Password"
               secureTextEntry
             />
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <Button disabled={!disabled} onPress={signIn} title="log-in" />
             </View>
           </View>
@@ -120,15 +121,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.yellow
   },
-  Image: {alignSelf: 'center', marginTop: 80},
+  Image: { alignSelf: 'center', marginTop: 80 },
   containerText: {
     width: 274,
     position: 'absolute',
     top: 20,
     left: 20
   },
-  input: {width: '90%'},
-  text: {fontSize: 18, fontFamily: Fonts.Monstserrat.M},
+  input: { width: '90%' },
+  text: { fontSize: 18, fontFamily: Fonts.Monstserrat.M },
   containerInput: {
     alignItems: 'center',
     flex: 1

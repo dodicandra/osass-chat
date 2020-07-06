@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
-import {colors, Fonts} from 'utils';
-import {OnChange, OnKeyPress, RefInput} from 'components/type';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { colors, Fonts } from 'utils';
+import { OnChange, OnKeyPress, RefInput } from 'components/type';
 
 interface InputProps {
   onChangeText?(e: any): void;
@@ -12,7 +12,10 @@ interface InputProps {
 }
 
 const InputCode = React.forwardRef(
-  ({onChangeText, value, onChange, onKeyPress}: InputProps, ref: RefInput) => {
+  (
+    { onChangeText, value, onChange, onKeyPress }: InputProps,
+    ref: RefInput
+  ) => {
     return (
       <View style={styles.containerRoot}>
         <View style={styles.container}>

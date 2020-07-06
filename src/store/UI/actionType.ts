@@ -1,4 +1,4 @@
-import {UiActionType} from './types';
+import { UiActionType } from './types';
 
 export const setLoading = (): UiActionType => ({
   type: 'SET_LOADING'

@@ -1,4 +1,9 @@
-import {SET_LOADING, STOP_LOADING, SET_ERROR, CLEAR_ERROR} from 'store/constan';
+import {
+  SET_LOADING,
+  STOP_LOADING,
+  SET_ERROR,
+  CLEAR_ERROR
+} from 'store/constan';
 
 export interface UiInterface {
   loading: boolean;

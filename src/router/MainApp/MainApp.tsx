@@ -1,10 +1,11 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import {Home, UserProfile, UserVisited, Chats, AllUser} from 'screen';
-import {DrawerCustom} from 'components';
-import {Icons, colors, Fonts} from 'utils';
-import {View, Text, StyleSheet} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { DrawerCustom } from 'components';
+import { AllUser, Chats, Home, UserProfile, UserVisited } from 'screen';
+import { colors, Fonts, Icons } from 'utils';
 
 interface ListDrawerProps {
   color: string;
@@ -12,7 +13,7 @@ interface ListDrawerProps {
   iconType: 'account-search-outline' | 'edit' | 'home';
 }
 
-const {Navigator, Screen} = createStackNavigator<StackMainApp>();
+const { Navigator, Screen } = createStackNavigator<StackMainApp>();
 
 const Drawer = createDrawerNavigator<DrawerStack>();
 
@@ -22,7 +23,7 @@ export const DrawerScreen = () => (
     drawerContentOptions={{
       activeTintColor: colors.text.black,
       inactiveTintColor: colors.text.greey,
-      labelStyle: {fontFamily: Fonts.Monstserrat.M, fontSize: 18},
+      labelStyle: { fontFamily: Fonts.Monstserrat.M, fontSize: 18 },
       activeBackgroundColor: 'transparent'
     }}
     initialRouteName="Root">
@@ -30,7 +31,7 @@ export const DrawerScreen = () => (
       name="Root"
       options={{
         drawerLabel: 'Home',
-        drawerIcon: ({color}) => (
+        drawerIcon: ({ color }) => (
           <ListDrawer iconType="home" color={color} title="Home" />
         ),
         swipeEnabled: false
@@ -41,7 +42,7 @@ export const DrawerScreen = () => (
       name="UserProfile"
       options={{
         drawerLabel: '',
-        drawerIcon: ({color}) => (
+        drawerIcon: ({ color }) => (
           <ListDrawer iconType="edit" color={color} title="Edit Profile" />
         )
       }}
@@ -51,7 +52,7 @@ export const DrawerScreen = () => (
       name="AllUsers"
       options={{
         drawerLabel: '',
-        drawerIcon: ({color}) => (
+        drawerIcon: ({ color }) => (
           <ListDrawer
             iconType="account-search-outline"
             color={color}
@@ -80,7 +81,7 @@ export const MainRouter = () => {
   );
 };
 
-const ListDrawer: React.FC<ListDrawerProps> = ({color, title, iconType}) => {
+const ListDrawer: React.FC<ListDrawerProps> = ({ color, title, iconType }) => {
   return (
     <View style={style.container}>
       {iconType === 'edit' ? (
@@ -95,8 +96,8 @@ const ListDrawer: React.FC<ListDrawerProps> = ({color, title, iconType}) => {
         />
       )}
       <View style={style.wraper}>
-        <Text style={[style.text, {color}]}>{title}</Text>
-        <View style={[style.gap, {borderBottomColor: color}]} />
+        <Text style={[style.text, { color }]}>{title}</Text>
+        <View style={[style.gap, { borderBottomColor: color }]} />
       </View>
     </View>
   );

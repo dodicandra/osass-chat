@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import {colors, Fonts, Icons} from 'utils';
+import { colors, Fonts, Icons } from 'utils';
 
 interface InputProps extends TextInputProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -49,7 +49,7 @@ const Input: React.FC<InputProps> = ({
       <View
         style={[
           styles.container,
-          {borderColor: borderColor, borderWidth: borderWidth}
+          { borderColor: borderColor, borderWidth: borderWidth }
         ]}>
         {phoneCode && <Text style={styles.prefix}>+62</Text>}
         {onlyText ? (
@@ -62,7 +62,7 @@ const Input: React.FC<InputProps> = ({
         ) : (
           <>
             <TextInput
-              style={[styles.input, {fontSize}]}
+              style={[styles.input, { fontSize }]}
               numberOfLines={1}
               secureTextEntry={secureTextEntry && active}
               {...props}
@@ -70,7 +70,7 @@ const Input: React.FC<InputProps> = ({
             {secureTextEntry && (
               <TouchableOpacity
                 onPress={() => setActive(!active)}
-                style={{marginRight: 15}}>
+                style={{ marginRight: 15 }}>
                 <Icons.Entypo
                   name={active ? 'eye' : 'eye-with-line'}
                   size={30}

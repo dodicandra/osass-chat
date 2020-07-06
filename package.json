@@ -48,7 +48,6 @@
     "install": "^0.13.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
-    "prettier": "^2.0.4",
     "prop-types": "^15.7.2",
     "react-test-renderer": "16.11.0",
     "redux-devtools-extension": "^2.13.8",

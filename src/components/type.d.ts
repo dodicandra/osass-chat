@@ -1,10 +1,10 @@
-import {ImageSourcePropType, ImageURISource} from 'react-native';
+import { ImageSourcePropType, ImageURISource } from 'react-native';
 import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   TextInputKeyPressEventData
 } from 'react-native';
-import {TextInput} from 'react-native';
+import { TextInput } from 'react-native';
 
 type ImgType =
   | number

@@ -1,19 +1,20 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {StackScreenProps} from '@react-navigation/stack';
-import {Header, List} from 'components';
-import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getUserDataAction, setChatHistorySevices} from 'services';
-import {RootState} from 'store';
-import {colors} from 'utils';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useEffect } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Header, List } from 'components';
+import { getUserDataAction, setChatHistorySevices } from 'services';
+import { RootState } from 'store';
+import { colors } from 'utils';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 type Drawer = DrawerScreenProps<DrawerStack>;
 
 type HomeProps = MainStackApp & Drawer;
 
-export const Home: React.FC<HomeProps> = ({navigation}) => {
+export const Home: React.FC<HomeProps> = ({ navigation }) => {
   const History = useSelector((state: RootState) => state.Chat.history);
   const User = useSelector((state: RootState) => state.User);
 
@@ -27,7 +28,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Header
-        imgProfile={{uri: User.user?.imgUrl}}
+        imgProfile={{ uri: User.user?.imgUrl }}
         onPress={() => navigation.openDrawer()}
         title="Ossas"
       />
@@ -39,7 +40,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
           <List
             key={item.chatKey}
             profilePress={() => navigation.navigate('UserVisited')}
-            imgUrl={{uri: item.imgUrl}}
+            imgUrl={{ uri: item.imgUrl }}
             title={item.name}
             titlePress={() =>
               navigation.navigate('Chat', {

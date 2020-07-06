@@ -1,5 +1,4 @@
-import {Input, ModalCustome, Profile} from 'components';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -8,10 +7,17 @@ import {
   View
 } from 'react-native';
 import ImagePick from 'react-native-image-picker';
-import {useDispatch, useSelector} from 'react-redux';
-import {getUserBio, updateBio, updateUserName, uploadImageUser} from 'services';
-import {RootState} from 'store';
-import {colors, Fonts, Icons, useForm} from 'utils';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Input, ModalCustome, Profile } from 'components';
+import {
+  getUserBio,
+  updateBio,
+  updateUserName,
+  uploadImageUser
+} from 'services';
+import { RootState } from 'store';
+import { colors, Fonts, Icons, useForm } from 'utils';
 
 export interface ImageTypes {
   uri?: string;
@@ -24,7 +30,7 @@ export const UserProfile = () => {
   const UI = useSelector((state: RootState) => state.UI);
   const dispatch = useDispatch();
 
-  const [form, onChange] = useForm({name: '', bio: ''});
+  const [form, onChange] = useForm({ name: '', bio: '' });
   const [visibleName, setVisibleName] = useState(false);
   const [visibleBio, setVisibleBio] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -68,7 +74,7 @@ export const UserProfile = () => {
         })
       );
 
-      setImage({...image, uri: ''});
+      setImage({ ...image, uri: '' });
       setLoading(false);
     } catch (err) {
       console.log(err.message);
@@ -91,7 +97,7 @@ export const UserProfile = () => {
         <View style={styles.wraper}>
           <Profile
             loading={loading}
-            source={{uri: image.uri ? image.uri : User.user?.imgUrl}}
+            source={{ uri: image.uri ? image.uri : User.user?.imgUrl }}
             left={17}
             size={95}
           />
@@ -113,7 +119,7 @@ export const UserProfile = () => {
           color={colors.text.greey}
         />
       </TouchableOpacity>
-      <View style={{flex: 1, paddingTop: 50}}>
+      <View style={{ flex: 1, paddingTop: 50 }}>
         <Text style={styles.textAkun}>Akun</Text>
         <Input
           title="username"

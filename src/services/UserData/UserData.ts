@@ -1,7 +1,8 @@
-import {Action} from 'redux';
-import {ThunkAction} from 'redux-thunk';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import RNblob from 'rn-fetch-blob';
-import {ImageTypes} from 'screen';
+
+import { ImageTypes } from 'screen';
 import {
   RootState,
   searchUsers,
@@ -11,10 +12,9 @@ import {
   updateBioAction,
   updateUserImg,
   updateUserNameAction,
-  UserInterface,
   UsersDataTypes
 } from 'store';
-import {fire} from 'utils';
+import { fire } from 'utils';
 
 export const uploadImageUser = (
   data: ImageTypes
@@ -35,9 +35,9 @@ export const uploadImageUser = (
     await fileRef.putFile(`${path}`);
     const imgUrl = await fileRef.getDownloadURL();
 
-    await user?.updateProfile({photoURL: imgUrl});
+    await user?.updateProfile({ photoURL: imgUrl });
 
-    await dbRef.child(`user/${user?.uid}`).update({imgUrl});
+    await dbRef.child(`user/${user?.uid}`).update({ imgUrl });
     dispatch(updateUserImg(imgUrl));
     return imgUrl;
   } catch (err) {
@@ -55,8 +55,8 @@ export const updateUserName = (
     dispatch(setLoading());
     const user = fire.auth().currentUser;
     const dbref = fire.database().ref();
-    await user?.updateProfile({displayName: data});
-    await dbref.child(`user/${user?.uid}`).update({name: data});
+    await user?.updateProfile({ displayName: data });
+    await dbref.child(`user/${user?.uid}`).update({ name: data });
     dispatch(updateUserNameAction(data));
     dispatch(stopLoading());
   } catch (err) {
@@ -125,7 +125,7 @@ export const getUserBio = (): ThunkAction<
     const dbref = fire.database().ref(`user/${user?.uid}`);
 
     await dbref.once('value', (snapshot) => {
-      const data: UserInterface = snapshot.val();
+      const data = snapshot.val();
 
       dispatch(updateBioAction(data.bio));
     });

@@ -1,5 +1,5 @@
-import {speaker} from 'assets';
-import {ImgType} from 'components/type';
+import { speaker } from 'assets';
+import { ImgType } from 'components/type';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import {colors} from 'utils';
+import { colors } from 'utils';
 
 interface ProfileProps {
   source?: ImgType | any;
@@ -48,13 +48,13 @@ const Profile: React.FC<ProfileProps> = ({
       <Image
         defaultSource={speaker}
         source={source}
-        style={[styles.img, {height: size, width: size}]}
+        style={[styles.img, { height: size, width: size }]}
       />
       {loading && (
         <ActivityIndicator
           size="large"
           color={colors.background.yellow}
-          style={{position: 'absolute'}}
+          style={{ position: 'absolute' }}
         />
       )}
     </TouchableOpacity>
@@ -79,5 +79,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  img: {resizeMode: 'contain'}
+  img: { resizeMode: 'contain' }
 });

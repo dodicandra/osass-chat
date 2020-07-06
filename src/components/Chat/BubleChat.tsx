@@ -1,6 +1,6 @@
 import React from 'react';
-import {ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
-import {colors, Fonts} from 'utils';
+import { ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import { colors, Fonts } from 'utils';
 import Profile from '../Profile/Profile';
 import moment from 'moment';
 

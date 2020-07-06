@@ -1,4 +1,4 @@
-import {UserActionType, UserState} from './types';
+import { UserActionType, UserState } from './types';
 
 const initialState: UserState = {
   user: {},
@@ -29,7 +29,7 @@ export function UserReducer(
     case 'UPDATE_USER_DATA':
       return {
         ...state,
-        user: {...state.user, ...action.payload}
+        user: { ...state.user, ...action.payload }
       };
     case 'CLEAR_USER':
       return {

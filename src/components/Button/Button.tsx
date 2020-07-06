@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {colors, Fonts} from 'utils';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+
+import { colors, Fonts } from 'utils';
 
 interface ButtonProps {
   title: string | undefined;
@@ -35,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({
       <Text
         style={[
           styles.text,
-          {color: disabled ? colors.background.greey : colors.text.yellow}
+          { color: disabled ? colors.background.greey : colors.text.yellow }
         ]}>
         {title}
       </Text>

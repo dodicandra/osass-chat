@@ -1,4 +1,4 @@
-import {speaker} from 'assets';
+import { speaker } from 'assets';
 import React from 'react';
 import {
   ImageSourcePropType,
@@ -8,7 +8,7 @@ import {
   View,
   GestureResponderEvent
 } from 'react-native';
-import {colors, Fonts, Icons} from 'utils';
+import { colors, Fonts, Icons } from 'utils';
 import Profile from '../Profile/Profile';
 
 interface HeaderProps {
@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <View style={styles.headerContainer}>
-      <TouchableOpacity onPress={onPress} style={{marginLeft: 20}}>
+      <TouchableOpacity onPress={onPress} style={{ marginLeft: 20 }}>
         <Icons.Ionicons
           name={icon === 'ios-menu' ? 'ios-menu' : 'ios-arrow-back'}
           size={40}

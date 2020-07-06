@@ -1,6 +1,11 @@
 import React from 'react';
-import {Modal, StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
-import {colors} from 'utils';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback
+} from 'react-native';
+import { colors } from 'utils';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 
@@ -33,7 +38,7 @@ const CustomeModal: React.FC<Props> = ({
               phoneCode={false}
               title=""
               value={value}
-              containerStyle={{width: '90%'}}
+              containerStyle={{ width: '90%' }}
               keyboardType="default"
             />
             <Button disabled={disabled} onPress={onSubmit} title={title} />

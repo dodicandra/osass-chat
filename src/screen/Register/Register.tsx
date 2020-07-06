@@ -1,6 +1,4 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {RegisterIntro} from 'assets';
-import {Button, Input} from 'components';
+import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import {
   ImageBackground,
@@ -10,9 +8,12 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import {registerService} from 'services';
-import {colors, Fonts, useForm} from 'utils';
+import { useDispatch } from 'react-redux';
+
+import { RegisterIntro } from 'assets';
+import { Button, Input } from 'components';
+import { registerService } from 'services';
+import { colors, Fonts, useForm } from 'utils';
 
 type StackProps = StackScreenProps<StackAuth, 'Register'>;
 
@@ -95,6 +96,6 @@ const styles = StyleSheet.create({
     top: 34,
     left: 30
   },
-  input: {marginHorizontal: 20, marginVertical: 5},
-  btnWraper: {alignSelf: 'center', marginTop: 30, marginVertical: 5}
+  input: { marginHorizontal: 20, marginVertical: 5 },
+  btnWraper: { alignSelf: 'center', marginTop: 30, marginVertical: 5 }
 });

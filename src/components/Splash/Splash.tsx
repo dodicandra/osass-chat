@@ -1,12 +1,12 @@
 import React from 'react';
-import {ActivityIndicator, Modal, StyleSheet, View} from 'react-native';
-import {colors} from 'utils';
+import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
+import { colors } from 'utils';
 
 interface Props {
   visible: boolean;
 }
 
-const Splash: React.FC<Props> = ({visible}) => {
+const Splash: React.FC<Props> = ({ visible }) => {
   return (
     <Modal visible={visible} transparent animated animationType="fade">
       <View style={styles.container}>

@@ -1,9 +1,9 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import {UiReducer} from './UI';
-import {UserReducer} from './User';
-import {chatReducer} from './chat';
+import { UiReducer } from './UI';
+import { UserReducer } from './User';
+import { chatReducer } from './chat';
 
 const reducer = combineReducers({
   UI: UiReducer,

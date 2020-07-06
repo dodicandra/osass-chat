@@ -1,4 +1,4 @@
-import Animated, {Easing, timing} from 'react-native-reanimated';
+import Animated, { Easing, timing } from 'react-native-reanimated';
 
 export const tm1 = (
   val: Animated.Value<number>,

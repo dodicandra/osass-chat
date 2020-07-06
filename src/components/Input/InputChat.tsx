@@ -7,7 +7,7 @@ import {
   GestureResponderEvent
 } from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
-import {colors, Fonts} from 'utils';
+import { colors, Fonts } from 'utils';
 
 interface InputChatProps {
   disabled?: boolean;

@@ -3,13 +3,13 @@ import {
   DrawerContentComponentProps,
   DrawerItemList
 } from '@react-navigation/drawer';
-import {DrawerActions} from '@react-navigation/native';
-import {UserVer} from 'assets';
+import { DrawerActions } from '@react-navigation/native';
+import { UserVer } from 'assets';
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {clearToken} from 'store';
-import {removeLocal} from 'utils';
+import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { clearToken } from 'store';
+import { removeLocal } from 'utils';
 import Button from '../Button/Button';
 
 type Props = DrawerContentComponentProps;
@@ -46,5 +46,5 @@ const styles = StyleSheet.create({
     width: '100%',
     resizeMode: 'contain'
   },
-  logout: {position: 'absolute', bottom: 20, alignSelf: 'center'}
+  logout: { position: 'absolute', bottom: 20, alignSelf: 'center' }
 });

@@ -1,4 +1,4 @@
-import {UiActionType, UiInterface} from './types';
+import { UiActionType, UiInterface } from './types';
 
 const initalState: UiInterface = {
   loading: false,

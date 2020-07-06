@@ -1,4 +1,4 @@
-import {BaseChatTypes, ChatStateType} from './type';
+import { BaseChatTypes, ChatStateType } from './type';
 
 const initialState: ChatStateType = {
   chat: [],

@@ -7,8 +7,8 @@ import {
   ImageSourcePropType,
   GestureResponderEvent
 } from 'react-native';
-import {speaker} from 'assets';
-import {Fonts, colors} from 'utils';
+import { speaker } from 'assets';
+import { Fonts, colors } from 'utils';
 import Profile from '../Profile/Profile';
 
 interface InputProps {

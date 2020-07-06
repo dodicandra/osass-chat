@@ -1,9 +1,9 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {BubleChat, Header, InputChat} from 'components';
+import { StackScreenProps } from '@react-navigation/stack';
+import { BubleChat, Header, InputChat } from 'components';
 import moment from 'moment';
-import React, {useEffect, useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setChatDataServices,
   setChatHistorySevices,
@@ -17,11 +17,11 @@ import {
   RootState,
   UsersDataTypes
 } from 'store';
-import {colors, Fonts} from 'utils';
+import { colors, Fonts } from 'utils';
 
 type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
 
-export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
+export const Chats: React.FC<ChatProps> = ({ navigation, route }) => {
   const param = route.params;
 
   const Chat = useSelector((state: RootState) => state.Chat.chat);
@@ -80,7 +80,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
         onPress={() => navigation.goBack()}
         title={param?.name}
         icon="ios-arrow-back"
-        imgProfile={{uri: param?.imgUrl}}
+        imgProfile={{ uri: param?.imgUrl }}
       />
       <ScrollView
         ref={scrollRef}
@@ -94,7 +94,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
           <View key={item.time as string} style={styles.chatContainer}>
             <BubleChat
               time={item.time}
-              imgLeft={{uri: param?.imgUrl}}
+              imgLeft={{ uri: param?.imgUrl }}
               sender={item.sender === User.uid}
               content={item.content as string}
             />
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingTop: 20
   },
-  chatContainer: {flex: 1, backgroundColor: colors.background.white},
+  chatContainer: { flex: 1, backgroundColor: colors.background.white },
   chatTanggal: {
     fontFamily: Fonts.Monstserrat.R,
     fontSize: 10,

@@ -1,14 +1,15 @@
 import moment from 'moment';
-import {Action} from 'redux';
-import {ThunkAction} from 'redux-thunk';
-import {RootState} from 'store';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
+import { RootState } from 'store';
 import {
   ChatDataTypes,
   clearChatActions,
   setchatAction,
   setChatHistoryAction
 } from 'store/chat';
-import {fire} from 'utils';
+import { fire } from 'utils';
 
 const dbRef = fire.database().ref();
 
@@ -46,11 +47,11 @@ export const sendNewChat = async (
 
     const race2 = dbRef
       .child(`userchat/${userUid}/${friendUid}`)
-      .update({chatKey, createAt: `${moment().toISOString()}`});
+      .update({ chatKey, createAt: `${moment().toISOString()}` });
 
     const race3 = dbRef
       .child(`userchat/${friendUid}/${userUid}`)
-      .update({chatKey, createAt: `${moment().toISOString()}`});
+      .update({ chatKey, createAt: `${moment().toISOString()}` });
 
     return await Promise.all([race1, race2, race3]);
   } catch (err) {

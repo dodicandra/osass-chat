@@ -3,9 +3,11 @@
   "extends": "@react-native-community",
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": 1,
     "no-unused-vars": 0,
     "@typescript-eslint/no-unused-vars": 1,
     "curly": 0,

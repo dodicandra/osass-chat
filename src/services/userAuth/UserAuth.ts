@@ -1,15 +1,16 @@
-import {ThunkAction} from 'redux-thunk';
+import { ToastAndroid } from 'react-native';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
 import {
   RootState,
-  setLoading,
-  setUser,
   setError,
-  stopLoading,
-  setToken
+  setLoading,
+  setToken,
+  setUser,
+  stopLoading
 } from 'store';
-import {Action} from 'redux';
-import {setToLocal, findMsg, fire} from 'utils';
-import {ToastAndroid} from 'react-native';
+import { findMsg, fire, setToLocal } from 'utils';
 
 interface SingInTypes {
   email: string;
@@ -34,7 +35,7 @@ export const signInService = (
       .auth()
       .signInWithEmailAndPassword(data.email?.trim(), data.password?.trim());
     if (auth?.user) {
-      const {displayName, email, phoneNumber, uid} = auth.user;
+      const { displayName, email, phoneNumber, uid } = auth.user;
 
       const curenUser = await fire.auth().currentUser;
       const token = await curenUser?.getIdTokenResult(true).then((res) => res);
@@ -54,7 +55,7 @@ export const signInService = (
   } catch (err) {
     dispatch(setError(err.message));
     dispatch(stopLoading());
-    let errMsg = findMsg(err);
+    let errMsg = findMsg({ message: err.message });
     ToastAndroid.showWithGravity(errMsg, ToastAndroid.SHORT, ToastAndroid.TOP);
   }
 };
@@ -76,7 +77,7 @@ export const registerService = (
       });
       const auths = await fire.auth().currentUser;
 
-      const {email, phoneNumber, uid} = register.user;
+      const { email, phoneNumber, uid } = register.user;
 
       const token = await auths?.getIdTokenResult(true).then((res) => res);
 
@@ -94,13 +95,13 @@ export const registerService = (
       dispatach(setToken(token?.token));
       const respon = await dbref
         .child(`user/${register.user.uid}`)
-        .set({name: data.username});
+        .set({ name: data.username });
       dispatach(stopLoading());
       return respon;
     }
   } catch (err) {
     dispatach(stopLoading());
-    let errMsg = findMsg(err);
+    let errMsg = findMsg({ message: err.message });
     ToastAndroid.showWithGravity(errMsg, ToastAndroid.SHORT, ToastAndroid.TOP);
   }
 };

@@ -1,6 +1,5 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {Button, InputCode} from 'components';
-import React, {useRef, useState} from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
+import React, { useRef, useState } from 'react';
 import {
   Keyboard,
   NativeSyntheticEvent,
@@ -13,7 +12,9 @@ import {
   TouchableWithoutFeedback,
   View
 } from 'react-native';
-import {colors, Fonts} from 'utils';
+
+import { Button, InputCode } from 'components';
+import { colors, Fonts } from 'utils';
 
 type Event = NativeSyntheticEvent<TextInputChangeEventData>;
 type EventKey = NativeSyntheticEvent<TextInputKeyPressEventData>;
@@ -22,7 +23,7 @@ type StackProp = StackScreenProps<StackAuth>;
 
 interface VeriProps extends StackProp {}
 
-export const VerifikasiCode: React.FC<VeriProps> = ({navigation}) => {
+export const VerifikasiCode: React.FC<VeriProps> = ({ navigation }) => {
   const ref = useRef<TextInput>(null);
   const ref1 = useRef<TextInput>(null);
   const ref2 = useRef<TextInput>(null);

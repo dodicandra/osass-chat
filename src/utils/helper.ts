@@ -1,7 +1,7 @@
-import {EffectCallback, useEffect, useState} from 'react';
-import {Keyboard, KeyboardEventName, Platform} from 'react-native';
-import {setToken, store} from 'store';
-import {getToLocal} from './asycnStorage';
+import { EffectCallback, useEffect, useState } from 'react';
+import { Keyboard, KeyboardEventName, Platform } from 'react-native';
+import { setToken, store } from 'store';
+import { getToLocal } from './asycnStorage';
 import firebase from 'react-native-firebase';
 
 const dispatch = store.dispatch;
@@ -23,7 +23,7 @@ export const useKeyBoard = (
       Keyboard.removeListener(Hide, () => {});
       Keyboard.removeListener(Show, () => {});
     };
-  }, []);
+  }, [calbackHide, callbackShow]);
 };
 
 export function useForm<State extends Record<string, object | string>>(
@@ -32,7 +32,7 @@ export function useForm<State extends Record<string, object | string>>(
   const [state, setState] = useState<State>(initialState);
 
   const handleChange = (key: keyof State, val: string): any => {
-    setState({...state, [key]: val});
+    setState({ ...state, [key]: val });
   };
 
   return [state, handleChange] as const;
@@ -51,8 +51,8 @@ export const useAuth = () => {
   }, []);
 };
 
-export const findMsg = (err: {message: ''}): string => {
-  const msg: string[] = err.message.split(/[^0-9a-zA-Z ]/g);
+export const findMsg = ({ message }: { message: string }) => {
+  const msg = message.split(/[^0-9a-zA-Z ]/g);
   let errMsg = msg.filter((t) => t !== '' && t !== ' ');
   return errMsg[errMsg.length - 1];
 };

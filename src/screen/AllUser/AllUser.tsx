@@ -1,6 +1,5 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {Input, List} from 'components';
-import React, {useEffect, useState} from 'react';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   NativeSyntheticEvent,
@@ -8,17 +7,19 @@ import {
   TextInputChangeEventData,
   View
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getAllUsers} from 'services';
-import {RootState} from 'store';
-import {colors} from 'utils';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Input, List } from 'components';
+import { getAllUsers } from 'services';
+import { RootState } from 'store';
+import { colors } from 'utils';
 
 type Navigation = DrawerScreenProps<DrawerStack, 'AllUsers'>;
 type EventInput = NativeSyntheticEvent<TextInputChangeEventData>;
 
 interface Props extends Navigation {}
 
-export const AllUser: React.FC<Props> = ({navigation}) => {
+export const AllUser: React.FC<Props> = ({ navigation }) => {
   const Users = useSelector((state: RootState) => state.User.users);
   const User = useSelector((state: RootState) => state.User.user);
 
@@ -67,15 +68,15 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
         keyExtractor={(item) => item.uid as string}
         maxToRenderPerBatch={15}
         scrollEventThrottle={16}
-        contentContainerStyle={{paddingTop: 8}}
+        contentContainerStyle={{ paddingTop: 8 }}
         style={styles.scroll}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <List
             titlePress={() => navigation.navigate('UserVisited', item)}
             title={item.name}
             key={item.uid}
             desc=""
-            imgUrl={{uri: item.imgUrl}}
+            imgUrl={{ uri: item.imgUrl }}
           />
         )}
       />

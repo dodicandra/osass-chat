@@ -1,5 +1,4 @@
-import {StackScreenProps} from '@react-navigation/stack';
-import {Input} from 'components';
+import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import {
   ImageBackground,
@@ -9,18 +8,20 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import {UsersDataTypes} from 'store';
-import {colors, Fonts, Icons} from 'utils';
+
+import { Input } from 'components';
+import { UsersDataTypes } from 'store';
+import { colors, Fonts, Icons } from 'utils';
 
 type UserProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'UserVisited'>;
 
-export const UserVisited: React.FC<UserProps> = ({navigation, route}) => {
+export const UserVisited: React.FC<UserProps> = ({ navigation, route }) => {
   const data = route.params;
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <ImageBackground
-        source={{uri: data?.imgUrl}}
+        source={{ uri: data?.imgUrl }}
         resizeMode="contain"
         style={styles.profileContainer}>
         <Text style={styles.userTitle}>{data?.name}</Text>
@@ -31,7 +32,7 @@ export const UserVisited: React.FC<UserProps> = ({navigation, route}) => {
         style={styles.btnIcon}>
         <Icons.Entypo name="chat" size={40} color={colors.text.greey} />
       </TouchableOpacity>
-      <View style={{flex: 1, paddingTop: 50}}>
+      <View style={{ flex: 1, paddingTop: 50 }}>
         <Text style={styles.textAkun}>Info</Text>
         <Input
           title="username"
