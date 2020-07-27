@@ -9,10 +9,10 @@ import {
 } from 'store/constan';
 
 export interface UserInterface {
-  name?: string;
-  email?: string;
-  phone?: string;
-  imgUrl?: string;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  imgUrl?: string | null;
   bio?: string;
   uid?: string;
 }

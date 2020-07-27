@@ -1,11 +1,7 @@
-import {firebase as auth} from '@react-native-firebase/auth';
-import {
-  firebase as db,
-  FirebaseDatabaseTypes,
-} from '@react-native-firebase/database';
 import moment from 'moment';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
+
 import {RootState} from 'store';
 import {
   ChatDataTypes,
@@ -13,8 +9,10 @@ import {
   setchatAction,
   setChatHistoryAction,
 } from 'store/chat';
+import {fire} from 'utils';
 
-const dbRef = db.database().ref();
+const dbRef = fire.database().ref();
+const auth = fire.auth();
 
 interface ChatKey {
   chatKey: string;
@@ -24,7 +22,7 @@ export const getUserChat = async (
   friendId: string | undefined,
 ): Promise<ChatKey | undefined> => {
   try {
-    const user = auth.auth().currentUser;
+    const user = auth.currentUser;
 
     const snap = await dbRef
       .child(`userchat/${user?.uid}/${friendId}`)
@@ -44,7 +42,7 @@ export const sendNewChat = async (
   try {
     const chatKey = dbRef.child('chats').push().key;
 
-    const race1 = db
+    const race1 = fire
       .database()
       .ref(`chats/${chatKey}/${moment().unix()}`)
       .update(data);
@@ -75,18 +73,16 @@ export const setChatDataServices = (
       dispatch(clearChatActions());
       return null;
     }
-    return dbRef
-      .child(`chats/${userChat?.chatKey}`)
-      .on('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
-        const value = snap.val();
-        if (value) {
-          const chats = Object.keys(value).map((val) => value[val]);
+    return dbRef.child(`chats/${userChat?.chatKey}`).on('value', (snap) => {
+      const value = snap.val();
+      if (value) {
+        const chats = Object.keys(value).map((val) => value[val]);
 
-          dispatch(setchatAction(chats));
-        } else {
-          dispatch(clearChatActions());
-        }
-      });
+        dispatch(setchatAction(chats));
+      } else {
+        dispatch(clearChatActions());
+      }
+    });
   } catch (err) {
     console.log(err);
     throw new Error(err);
@@ -135,11 +131,11 @@ export const setChatHistorySevices = (): ThunkAction<
   Action<string>
 > => async (dispatch) => {
   new Promise((resolve, reject) => {
-    const user = auth.auth().currentUser;
+    const user = auth.currentUser;
 
     dbRef.child(`userchat/${user?.uid}`).on(
       'value',
-      async (snap: FirebaseDatabaseTypes.DataSnapshot) => {
+      async (snap) => {
         const values = snap.val();
         if (values) {
           const chatsAll = await Object.keys(values).map(async (val) => {

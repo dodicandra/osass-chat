@@ -2,7 +2,7 @@ import {EffectCallback, useEffect, useState} from 'react';
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
 import {setToken, store, ChatHistoryTypes} from 'store';
 import {getToLocal} from './asycnStorage';
-
+import firebase from 'react-native-firebase';
 const dispatch = store.dispatch;
 
 export const useKeyBoard = (
@@ -69,3 +69,5 @@ export const sortArr = (sortData: ChatHistoryTypes[]) => {
     }
   });
 };
+
+export const fire = firebase;
