@@ -1,16 +1,17 @@
 import { speaker } from 'assets';
-import { ImgType } from 'components/type';
 import React from 'react';
 import {
   ActivityIndicator,
   Image,
+  ImageURISource,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageSourcePropType
 } from 'react-native';
 import { colors } from 'utils';
 
 interface ProfileProps {
-  source?: ImgType | any;
+  source?: number | ImageURISource | ImageURISource[] | undefined;
   left?: number;
   right?: number;
   top?: number;
@@ -46,8 +47,7 @@ const Profile: React.FC<ProfileProps> = ({
         }
       ]}>
       <Image
-        defaultSource={speaker}
-        source={source}
+        source={source as ImageSourcePropType}
         style={[styles.img, { height: size, width: size }]}
       />
       {loading && (

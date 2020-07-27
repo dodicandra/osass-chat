@@ -1,18 +1,20 @@
-import { speaker } from 'assets';
 import React from 'react';
 import {
-  ImageSourcePropType,
+  GestureResponderEvent,
+  ImageURISource,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  GestureResponderEvent
+  View
 } from 'react-native';
+
+import { speaker } from 'assets';
 import { colors, Fonts, Icons } from 'utils';
+
 import Profile from '../Profile/Profile';
 
 interface HeaderProps {
-  imgProfile?: ImageSourcePropType;
+  imgProfile?: number | ImageURISource | ImageURISource[] | undefined;
   icon?: 'ios-arrow-back' | 'ios-menu';
   title?: string | undefined | null;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;

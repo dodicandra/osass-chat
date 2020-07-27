@@ -1,7 +1,12 @@
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ImageSourcePropType,
+  ScrollView,
+  StyleSheet,
+  View
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Header, List } from 'components';
@@ -28,7 +33,7 @@ export const Home: React.FC<HomeProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header
-        imgProfile={{ uri: User.user?.imgUrl }}
+        imgProfile={{ uri: User.user.imgUrl } as ImageSourcePropType}
         onPress={() => navigation.openDrawer()}
         title="Ossas"
       />
