@@ -43,11 +43,7 @@ const MainApp = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar
-        backgroundColor={colors.background.yellow}
-        barStyle="dark-content"
-        animated
-      />
+      <StatusBar backgroundColor={colors.background.yellow} barStyle="dark-content" animated />
       <MainApp />
     </Provider>
   );

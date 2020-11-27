@@ -14,15 +14,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const CustomeModal: React.FC<Props> = ({
-  visible,
-  onSubmit,
-  overlayPress,
-  onType,
-  value,
-  title,
-  disabled,
-}) => {
+const CustomeModal: React.FC<Props> = ({visible, onSubmit, overlayPress, onType, value, title, disabled}) => {
   return (
     <Modal visible={visible} transparent animated animationType="slide">
       <TouchableWithoutFeedback onPress={overlayPress}>
@@ -54,12 +46,12 @@ const styles = StyleSheet.create({
     width: '80%',
     marginBottom: 200,
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalContainer: {
     backgroundColor: colors.background.treansparet,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
+    justifyContent: 'flex-end'
+  }
 });

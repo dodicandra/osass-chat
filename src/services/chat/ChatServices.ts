@@ -3,12 +3,7 @@ import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 
 import {RootState} from 'store';
-import {
-  ChatDataTypes,
-  clearChatActions,
-  setchatAction,
-  setChatHistoryAction,
-} from 'store/chat';
+import {ChatDataTypes, clearChatActions, setchatAction, setChatHistoryAction} from 'store/chat';
 import {fire} from 'utils';
 
 const dbRef = fire.database().ref();
@@ -18,15 +13,11 @@ interface ChatKey {
   chatKey: string;
 }
 
-export const getUserChat = async (
-  friendId: string | undefined,
-): Promise<ChatKey | undefined> => {
+export const getUserChat = async (friendId: string | undefined): Promise<ChatKey | undefined> => {
   try {
     const user = auth.currentUser;
 
-    const snap = await dbRef
-      .child(`userchat/${user?.uid}/${friendId}`)
-      .once('value');
+    const snap = await dbRef.child(`userchat/${user?.uid}/${friendId}`).once('value');
 
     return snap.val();
   } catch (err) {
@@ -37,15 +28,12 @@ export const getUserChat = async (
 export const sendNewChat = async (
   userUid: string | undefined,
   friendUid: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
     const chatKey = dbRef.child('chats').push().key;
 
-    const race1 = fire
-      .database()
-      .ref(`chats/${chatKey}/${moment().unix()}`)
-      .update(data);
+    const race1 = fire.database().ref(`chats/${chatKey}/${moment().unix()}`).update(data);
 
     const race2 = dbRef
       .child(`userchat/${userUid}/${friendUid}`)
@@ -62,10 +50,8 @@ export const sendNewChat = async (
 };
 
 export const setChatDataServices = (
-  friendId: string | undefined,
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
-) => {
+  friendId: string | undefined
+): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const userChat = await getUserChat(friendId);
 
@@ -93,7 +79,7 @@ export const updateChat = async (
   userUid: string | undefined,
   friendUid: string | undefined,
   chatKey: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
     const update1 = dbRef
@@ -105,7 +91,7 @@ export const updateChat = async (
       .update({chatKey, createAt: moment().toISOString()});
 
     const update3 = dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
-      ...data,
+      ...data
     });
 
     return await Promise.race([update3, update2, update1]);
@@ -124,12 +110,9 @@ export const getUserChatContent = async (chatKey: string | undefined) => {
   }
 };
 
-export const setChatHistorySevices = (): ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
-> => async (dispatch) => {
+export const setChatHistorySevices = (): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
   new Promise((resolve, reject) => {
     const user = auth.currentUser;
 
@@ -142,9 +125,7 @@ export const setChatHistorySevices = (): ThunkAction<
             let contentChat = await getUserChatContent(values[val].chatKey);
 
             if (contentChat) {
-              contentChat = Object.keys(contentChat).map(
-                (con) => contentChat[con],
-              );
+              contentChat = Object.keys(contentChat).map((con) => contentChat[con]);
             }
 
             const userProfile = await dbRef.child(`user/${val}`).once('value');
@@ -154,8 +135,8 @@ export const setChatHistorySevices = (): ThunkAction<
               ...userProfile.val(),
               ...values[val],
               ...(contentChat && {
-                lastchat: contentChat[contentChat.length - 1],
-              }),
+                lastchat: contentChat[contentChat.length - 1]
+              })
             };
           });
 
@@ -168,7 +149,7 @@ export const setChatHistorySevices = (): ThunkAction<
       (err: Error) => {
         reject(err);
         console.log('Err', err);
-      },
+      }
     );
   });
 };

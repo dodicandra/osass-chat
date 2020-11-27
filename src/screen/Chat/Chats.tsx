@@ -1,22 +1,11 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {BubleChat, Header, InputChat} from 'components';
 import moment from 'moment';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  setChatDataServices,
-  setChatHistorySevices,
-  getUserChat,
-  sendNewChat,
-  updateChat,
-} from 'services';
-import {
-  ChatDataTypes,
-  clearChatActions,
-  RootState,
-  UsersDataTypes,
-} from 'store';
+import {setChatDataServices, setChatHistorySevices, getUserChat, sendNewChat, updateChat} from 'services';
+import {ChatDataTypes, clearChatActions, RootState, UsersDataTypes} from 'store';
 import {colors, Fonts} from 'utils';
 
 type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
@@ -30,9 +19,35 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
   const scrollRef = useRef<ScrollView>(null);
   const [state, setState] = useState('');
 
-  useEffect(() => {
+  const dispatchSendChat = useCallback(
+    (value) => {
+      dispatch(setChatDataServices(value));
+    },
+    [dispatch]
+  );
+
+  const dispatchSendData = useCallback(
+    (value) => {
+      dispatch(setChatDataServices(value));
+    },
+    [dispatch]
+  );
+
+  const dispatchSetChatHistory = useCallback(() => {
+    dispatch(setChatHistorySevices());
+  }, [dispatch]);
+
+  const dispatchClearChat = useCallback(() => {
+    dispatch(clearChatActions());
+  }, [dispatch]);
+
+  const dispatchSetChat = useCallback(() => {
     dispatch(setChatDataServices(param?.uid!));
   }, [dispatch, param]);
+
+  useEffect(() => {
+    dispatchSetChat();
+  }, [dispatchSetChat, param]);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -42,19 +57,19 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.addListener('blur', () => {
-      dispatch(clearChatActions());
+      dispatchClearChat();
     });
-  }, [dispatch, navigation]);
+  }, [dispatchClearChat, navigation]);
 
   const send = () => {
     const data: ChatDataTypes = {
       content: state,
       sender: User?.uid!,
       tanggal: moment().toISOString(),
-      time: moment().toISOString(),
+      time: moment().toISOString()
     };
     sendChat(data);
-    dispatch(setChatHistorySevices());
+    dispatchSetChatHistory();
     setState('');
   };
 
@@ -64,10 +79,10 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
 
       if (!chatKey) {
         await sendNewChat(User.uid, param?.uid, data);
-        dispatch(setChatDataServices(param?.uid));
+        dispatchSendChat(param?.uid);
       }
       await updateChat(User.uid, param?.uid, chatKey?.chatKey, data);
-      dispatch(setChatDataServices(param?.uid));
+      dispatchSendData(param?.uid);
     } catch (err) {
       console.log(err);
     }
@@ -101,12 +116,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
           </View>
         ))}
       </ScrollView>
-      <InputChat
-        disabled={!disabled}
-        onChangeText={(val) => setState(val)}
-        value={state}
-        onSubmit={send}
-      />
+      <InputChat disabled={!disabled} onChangeText={(val) => setState(val)} value={state} onSubmit={send} />
     </View>
   );
 };
@@ -114,17 +124,17 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   scroll: {
     flex: 1,
     marginHorizontal: 10,
     marginTop: -10,
-    zIndex: -99,
+    zIndex: -99
   },
   contentContainerStyle: {
     paddingVertical: 10,
-    paddingTop: 20,
+    paddingTop: 20
   },
   chatContainer: {flex: 1, backgroundColor: colors.background.white},
   chatTanggal: {
@@ -132,6 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: colors.text.black,
     textAlign: 'center',
-    marginVertical: 15,
-  },
+    marginVertical: 15
+  }
 });

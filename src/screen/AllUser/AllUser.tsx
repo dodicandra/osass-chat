@@ -1,13 +1,7 @@
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {Input, List} from 'components';
 import React, {useEffect, useState} from 'react';
-import {
-  FlatList,
-  NativeSyntheticEvent,
-  StyleSheet,
-  TextInputChangeEventData,
-  View,
-} from 'react-native';
+import {FlatList, NativeSyntheticEvent, StyleSheet, TextInputChangeEventData, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllUsers} from 'services';
 import {RootState} from 'store';
@@ -30,9 +24,7 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
     e.preventDefault();
     const inputs = e.nativeEvent.text;
     const text = inputs.trim().toLowerCase();
-    const data = dataBackup.filter((item) =>
-      item.name?.toLowerCase().match(text),
-    );
+    const data = dataBackup.filter((item) => item.name?.toLowerCase().match(text));
     setDatafilter(data);
   };
 
@@ -86,24 +78,24 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   searchContainer: {
     backgroundColor: colors.background.yellow,
     justifyContent: 'center',
     borderBottomEndRadius: 10,
-    borderBottomStartRadius: 10,
+    borderBottomStartRadius: 10
   },
   contentStyle: {
     marginHorizontal: 20,
     marginBottom: 20,
-    marginTop: -10,
+    marginTop: -10
   },
   scroll: {
     flex: 1,
     marginTop: -7,
     backgroundColor: colors.background.white,
     zIndex: -99,
-    marginHorizontal: 15,
-  },
+    marginHorizontal: 15
+  }
 });

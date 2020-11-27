@@ -23,17 +23,15 @@ export const DrawerScreen = () => (
       activeTintColor: colors.text.black,
       inactiveTintColor: colors.text.greey,
       labelStyle: {fontFamily: Fonts.Monstserrat.M, fontSize: 18},
-      activeBackgroundColor: 'transparent',
+      activeBackgroundColor: 'transparent'
     }}
     initialRouteName="Root">
     <Drawer.Screen
       name="Root"
       options={{
         drawerLabel: 'Home',
-        drawerIcon: ({color}) => (
-          <ListDrawer iconType="home" color={color} title="Home" />
-        ),
-        swipeEnabled: false,
+        drawerIcon: ({color}) => <ListDrawer iconType="home" color={color} title="Home" />,
+        swipeEnabled: false
       }}
       component={MainRouter}
     />
@@ -41,9 +39,7 @@ export const DrawerScreen = () => (
       name="UserProfile"
       options={{
         drawerLabel: '',
-        drawerIcon: ({color}) => (
-          <ListDrawer iconType="edit" color={color} title="Edit Profile" />
-        ),
+        drawerIcon: ({color}) => <ListDrawer iconType="edit" color={color} title="Edit Profile" />
       }}
       component={UserProfile}
     />
@@ -52,12 +48,8 @@ export const DrawerScreen = () => (
       options={{
         drawerLabel: '',
         drawerIcon: ({color}) => (
-          <ListDrawer
-            iconType="account-search-outline"
-            color={color}
-            title="Cari Teman"
-          />
-        ),
+          <ListDrawer iconType="account-search-outline" color={color} title="Cari Teman" />
+        )
       }}
       component={AllUser}
     />
@@ -70,7 +62,7 @@ export const MainRouter = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        animationTypeForReplace: 'push',
+        animationTypeForReplace: 'push'
       }}>
       <Screen name="Home" component={Home} />
       <Screen name="UserProfile" component={UserProfile} />
@@ -88,11 +80,7 @@ const ListDrawer: React.FC<ListDrawerProps> = ({color, title, iconType}) => {
       ) : iconType === 'home' ? (
         <Icons.AntDesign name="home" size={25} color={color} />
       ) : (
-        <Icons.MaterialCommunityIcons
-          name="account-search-outline"
-          size={25}
-          color={color}
-        />
+        <Icons.MaterialCommunityIcons name="account-search-outline" size={25} color={color} />
       )}
       <View style={style.wraper}>
         <Text style={[style.text, {color}]}>{title}</Text>
@@ -107,20 +95,20 @@ const style = StyleSheet.create({
     width: '100%',
     paddingVertical: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   text: {
     marginLeft: 30,
     fontFamily: Fonts.Monstserrat.M,
-    fontSize: 18,
+    fontSize: 18
   },
   gap: {
     borderBottomWidth: 2,
     marginLeft: 30,
     marginTop: 7,
-    width: '100%',
+    width: '100%'
   },
   wraper: {
-    width: '70%',
-  },
+    width: '70%'
+  }
 });

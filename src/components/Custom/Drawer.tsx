@@ -1,7 +1,4 @@
-import {
-  DrawerContentComponentProps,
-  DrawerItemList,
-} from '@react-navigation/drawer';
+import {DrawerContentComponentProps, DrawerItemList} from '@react-navigation/drawer';
 import {DrawerActions} from '@react-navigation/native';
 import React from 'react';
 import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
@@ -41,12 +38,12 @@ export default Drawer;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   image: {
     height: 150,
     width: '100%',
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
-  logout: {position: 'absolute', bottom: 20, alignSelf: 'center'},
+  logout: {position: 'absolute', bottom: 20, alignSelf: 'center'}
 });

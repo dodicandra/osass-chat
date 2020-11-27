@@ -21,8 +21,4 @@ interface SetClearErrorType {
   type: typeof CLEAR_ERROR;
 }
 
-export type UiActionType =
-  | SetLoadingType
-  | SetStopLoadingType
-  | SetErroType
-  | SetClearErrorType;
+export type UiActionType = SetLoadingType | SetStopLoadingType | SetErroType | SetClearErrorType;

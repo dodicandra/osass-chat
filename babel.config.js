@@ -15,16 +15,16 @@ module.exports = {
           '.tsx',
           '.jsx',
           '.js',
-          '.json',
+          '.json'
         ],
         alias: {
           screens: './src/screens',
           router: './src/router',
           components: './src/components',
           utils: './src/utils',
-          store: './src/store',
-        },
-      },
-    ],
-  ],
+          store: './src/store'
+        }
+      }
+    ]
+  ]
 };

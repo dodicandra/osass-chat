@@ -11,7 +11,7 @@ import {
   TextInputKeyPressEventData,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import {colors, Fonts} from 'utils';
 
@@ -77,11 +77,7 @@ export const VerifikasiCode: React.FC<VeriProps> = ({navigation}) => {
       <View style={styles.container}>
         <Text style={styles.text}>Siahkan Masukan Code Verifikasimu..</Text>
         <View style={styles.containerInput}>
-          <InputCode
-            ref={ref}
-            onChangeText={onChange}
-            onChange={(e: any) => onChangeInput(e, '1')}
-          />
+          <InputCode ref={ref} onChangeText={onChange} onChange={(e: any) => onChangeInput(e, '1')} />
           <InputCode
             onKeyPress={onKeyPress}
             onChangeText={onChange}
@@ -100,20 +96,12 @@ export const VerifikasiCode: React.FC<VeriProps> = ({navigation}) => {
             ref={ref3}
             onChange={(e: any) => onChangeInput(e, '4')}
           />
-          <InputCode
-            onKeyPress={onKeyPress}
-            onChangeText={onChange}
-            ref={ref4}
-          />
+          <InputCode onKeyPress={onKeyPress} onChangeText={onChange} ref={ref4} />
         </View>
         <TouchableOpacity onPress={clearInput}>
           <Text style={styles.clear}>Bersihkan Semua</Text>
         </TouchableOpacity>
-        <Button
-          onPress={() => navigation.navigate('UserNameVerifikasi')}
-          top={40}
-          title="Verifikasi"
-        />
+        <Button onPress={() => navigation.navigate('UserNameVerifikasi')} top={40} title="Verifikasi" />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -124,22 +112,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.yellow,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   text: {
     fontSize: 18,
     fontFamily: Fonts.Monstserrat.B,
-    marginBottom: 50,
+    marginBottom: 50
   },
   containerInput: {
     flexDirection: 'row',
     width: '90%',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   clear: {
     color: colors.text.greey,
     fontSize: 17,
     fontFamily: Fonts.Monstserrat.B,
-    marginTop: 20,
-  },
+    marginTop: 20
+  }
 });

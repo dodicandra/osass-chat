@@ -2,28 +2,25 @@ import {UiActionType, UiInterface} from './types';
 
 const initalState: UiInterface = {
   loading: false,
-  error: '',
+  error: ''
 };
 
-export function UiReducer(
-  state = initalState,
-  action: UiActionType,
-): UiInterface {
+export function UiReducer(state = initalState, action: UiActionType): UiInterface {
   switch (action.type) {
     case 'SET_LOADING':
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case 'STOP_LOADING':
       return {
         ...state,
-        loading: false,
+        loading: false
       };
     case 'SET_ERROR':
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
     case 'CLEAR_ERROR':
       return state;

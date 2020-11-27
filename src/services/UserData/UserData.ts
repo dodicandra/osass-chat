@@ -13,15 +13,13 @@ import {
   updateUserImg,
   updateUserNameAction,
   UserInterface,
-  UsersDataTypes,
+  UsersDataTypes
 } from 'store';
 import {fire} from 'utils';
 
 export const uploadImageUser = (
-  data: ImageTypes,
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
-) => {
+  data: ImageTypes
+): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const dbRef = fire.database().ref();
 
@@ -47,10 +45,8 @@ export const uploadImageUser = (
   }
 };
 
-export const updateUserName = (
-  data: string,
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+export const updateUserName = (data: string): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
 ) => {
   try {
     dispatch(setLoading());
@@ -67,10 +63,8 @@ export const updateUserName = (
   }
 };
 
-export const updateBio = (
-  data: string,
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
+export const updateBio = (data: string): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
 ) => {
   try {
     dispatch(setLoading());
@@ -78,7 +72,7 @@ export const updateBio = (
     const dbref = fire.database().ref();
 
     await dbref.child(`user/${user?.uid}`).update({
-      bio: data,
+      bio: data
     });
 
     dispatch(updateBioAction(data));
@@ -91,12 +85,9 @@ export const updateBio = (
   }
 };
 
-export const getUserDataAction = (): ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
-> => async (dispatch) => {
+export const getUserDataAction = (): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
   try {
     const user = fire.auth().currentUser;
     dispatch(
@@ -104,8 +95,8 @@ export const getUserDataAction = (): ThunkAction<
         email: user?.displayName,
         imgUrl: user?.photoURL,
         name: user?.displayName,
-        uid: user?.uid,
-      }),
+        uid: user?.uid
+      })
     );
   } catch (err) {
     console.log(err.message);
@@ -115,12 +106,7 @@ export const getUserDataAction = (): ThunkAction<
 
 // GET
 
-export const getUserBio = (): ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
-> => async (dispatch) => {
+export const getUserBio = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const user = fire.auth().currentUser;
     const dbref = fire.database().ref(`user/${user?.uid}`);
@@ -135,12 +121,7 @@ export const getUserBio = (): ThunkAction<
   }
 };
 
-export const getAllUsers = (): ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
-> => async (dispatch) => {
+export const getAllUsers = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const dbref = fire.database().ref('user');
 
@@ -150,7 +131,7 @@ export const getAllUsers = (): ThunkAction<
       Object.keys(data).map((val) => {
         allUsers.push({
           uid: val,
-          ...data[val],
+          ...data[val]
         });
       });
       dispatch(searchUsers(allUsers as UsersDataTypes[]));

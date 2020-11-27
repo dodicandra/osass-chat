@@ -24,32 +24,28 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
   const getData = useCallback(() => {
     disptach(getUserDataAction());
     disptach(setChatHistorySevices());
-  }, []);
+  }, [disptach]);
 
   useEffect(() => {
     getData();
-  }, [disptach, getData]);
+  }, [getData]);
 
   return (
     <View style={styles.container}>
-      <Header
-        imgProfile={{uri: User.user?.imgUrl}}
-        onPress={() => navigation.openDrawer()}
-        title="Ossas"
-      />
+      <Header imgProfile={{uri: User.user?.imgUrl!}} onPress={() => navigation.openDrawer()} title="Ossas" />
       {History.length <= 0 ? (
         <View
           style={{
             flex: 1,
             backgroundColor: colors.background.white,
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'center'
           }}>
           <Text
             style={{
               fontFamily: Fonts.Monstserrat.M,
               fontSize: 18,
-              color: colors.text.black,
+              color: colors.text.black
             }}>
             Belum ada chat
           </Text>
@@ -68,7 +64,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
               titlePress={() =>
                 navigation.navigate('Chat', {
                   ...item.lastchat,
-                  ...item,
+                  ...item
                 })
               }
               desc={item.lastchat.content}
@@ -83,17 +79,17 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   bodyContainer: {
     flex: 1,
     zIndex: -1,
     marginHorizontal: 8,
     marginTop: -10,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   contentContainer: {
     paddingTop: 10,
-    paddingBottom: 10,
-  },
+    paddingBottom: 10
+  }
 });

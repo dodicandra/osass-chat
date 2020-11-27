@@ -10,13 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  title,
-  onPress,
-  top,
-  bottom,
-  disabled,
-}) => {
+const Button: React.FC<ButtonProps> = ({title, onPress, top, bottom, disabled}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -26,17 +20,11 @@ const Button: React.FC<ButtonProps> = ({
         {
           marginTop: top,
           marginBottom: bottom,
-          backgroundColor: disabled
-            ? colors.background.yellow
-            : colors.background.greey,
-          elevation: 4,
-        },
+          backgroundColor: disabled ? colors.background.yellow : colors.background.greey,
+          elevation: 4
+        }
       ]}>
-      <Text
-        style={[
-          styles.text,
-          {color: disabled ? colors.background.greey : colors.text.yellow},
-        ]}>
+      <Text style={[styles.text, {color: disabled ? colors.background.greey : colors.text.yellow}]}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -51,10 +39,10 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 9,
+    borderRadius: 9
   },
   text: {
     fontSize: 36,
-    fontFamily: Fonts.Monstserrat.B,
-  },
+    fontFamily: Fonts.Monstserrat.B
+  }
 });

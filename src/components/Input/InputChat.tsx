@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-  GestureResponderEvent,
-} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View, GestureResponderEvent} from 'react-native';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import {colors, Fonts} from 'utils';
 
@@ -16,12 +10,7 @@ interface InputChatProps {
   onSubmit?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
-const InputChat: React.FC<InputChatProps> = ({
-  disabled,
-  onChangeText,
-  value,
-  onSubmit,
-}) => {
+const InputChat: React.FC<InputChatProps> = ({disabled, onChangeText, value, onSubmit}) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -39,23 +28,17 @@ const InputChat: React.FC<InputChatProps> = ({
         style={[
           styles.send,
           {
-            backgroundColor: disabled
-              ? colors.border.input
-              : colors.background.yellow,
-          },
+            backgroundColor: disabled ? colors.border.input : colors.background.yellow
+          }
         ]}>
-        <Icons
-          name="send"
-          size={25}
-          color={disabled ? colors.background.white : colors.text.greey}
-        />
+        <Icons name="send" size={25} color={disabled ? colors.background.white : colors.text.greey} />
       </TouchableOpacity>
     </View>
   );
 };
 
 InputChat.defaultProps = {
-  disabled: false,
+  disabled: false
 };
 
 export default InputChat;
@@ -68,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 7,
+    marginTop: 7
   },
   input: {
     borderWidth: 1,
@@ -81,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 1.4,
     padding: 5,
-    textDecorationLine: 'none',
+    textDecorationLine: 'none'
   },
   send: {
     width: 50,
@@ -90,6 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
-    paddingRight: 3,
-  },
+    paddingRight: 3
+  }
 });
