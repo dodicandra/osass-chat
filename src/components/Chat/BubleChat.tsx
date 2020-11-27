@@ -7,7 +7,7 @@ import moment from 'moment';
 interface BubleChatProps {
   sender?: boolean | string;
   content?: string | number | undefined;
-  imgLeft?: ImageSourcePropType;
+  imgLeft: ImageSourcePropType;
   time?: string | number | undefined | null;
 }
 

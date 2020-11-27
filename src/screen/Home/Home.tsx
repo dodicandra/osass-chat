@@ -3,7 +3,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {Header, List} from 'components';
 import React, {useEffect, useCallback} from 'react';
 import {ScrollView, StyleSheet, View, Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {connect} from 'react-redux';
 import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
 import {colors, Fonts, sortArr} from 'utils';
@@ -11,20 +11,22 @@ import {colors, Fonts, sortArr} from 'utils';
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 type Drawer = DrawerScreenProps<DrawerStack>;
 
-type HomeProps = MainStackApp & Drawer;
+interface Props {
+  History: RootState['Chat']['history'];
+  User: RootState['User'];
+  getUserData: typeof getUserDataAction;
+  setChatHistory: typeof setChatHistorySevices;
+}
 
-export const Home: React.FC<HomeProps> = ({navigation}) => {
-  const History = useSelector((state: RootState) => state.Chat.history);
-  const User = useSelector((state: RootState) => state.User);
+type HomeProps = MainStackApp & Drawer & Props;
 
-  const disptach = useDispatch();
-
+const HomeApp: React.FC<HomeProps> = ({navigation, History, User, getUserData, setChatHistory}) => {
   const decs = sortArr(History);
 
   const getData = useCallback(() => {
-    disptach(getUserDataAction());
-    disptach(setChatHistorySevices());
-  }, [disptach]);
+    getUserData();
+    setChatHistory();
+  }, [getUserData, setChatHistory]);
 
   useEffect(() => {
     getData();
@@ -75,6 +77,18 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
     </View>
   );
 };
+
+const mapState = (state: RootState) => ({
+  History: state.Chat.history,
+  User: state.User
+});
+
+const mapDispatch = (dispatch: any) => ({
+  getUserData: () => dispatch(getUserDataAction()),
+  setChatHistory: () => dispatch(setChatHistorySevices())
+});
+
+export const Home = connect(mapState, mapDispatch)(HomeApp);
 
 const styles = StyleSheet.create({
   container: {

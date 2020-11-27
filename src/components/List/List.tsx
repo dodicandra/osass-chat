@@ -1,5 +1,5 @@
 import {UserDefault} from 'assets';
-import React from 'react';
+import React, {memo} from 'react';
 import {
   GestureResponderEvent,
   ImageSourcePropType,
@@ -41,7 +41,7 @@ List.defaultProps = {
   imgUrl: UserDefault
 };
 
-export default List;
+export default memo(List);
 
 const styles = StyleSheet.create({
   container: {

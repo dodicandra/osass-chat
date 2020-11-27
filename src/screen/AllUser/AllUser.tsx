@@ -1,6 +1,6 @@
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {Input, List} from 'components';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {FlatList, NativeSyntheticEvent, StyleSheet, TextInputChangeEventData, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllUsers} from 'services';
@@ -28,11 +28,15 @@ export const AllUser: React.FC<Props> = ({navigation}) => {
     setDatafilter(data);
   };
 
+  const dispatchGetAllusers = useCallback(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
   useEffect(() => {
     navigation.addListener('focus', async () => {
-      dispatch(getAllUsers());
+      dispatchGetAllusers();
     });
-  }, [dispatch, navigation]);
+  }, [dispatchGetAllusers, navigation]);
 
   useEffect(() => {
     const fil = Users.filter((item) => item.uid !== User?.uid);

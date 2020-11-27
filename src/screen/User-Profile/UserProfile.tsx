@@ -85,7 +85,7 @@ export const UserProfile = () => {
         <View style={styles.wraper}>
           <Profile
             loading={loading}
-            source={{uri: image.uri ? image.uri : User.user?.imgUrl}}
+            source={{uri: image.uri ? image.uri : User.user?.imgUrl!}}
             left={17}
             size={95}
           />
