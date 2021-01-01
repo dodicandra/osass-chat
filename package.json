@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "rn": "react-native",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write \"./src/**/*.{ts,tsx,json,js}\""
@@ -16,6 +17,7 @@
     "@react-navigation/drawer": "^5.8.2",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
+    "axios": "^0.21.1",
     "moment": "^2.27.0",
     "react": "16.13.1",
     "react-native": "0.63.2",

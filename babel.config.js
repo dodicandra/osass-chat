@@ -22,7 +22,8 @@ module.exports = {
           router: './src/router',
           components: './src/components',
           utils: './src/utils',
-          store: './src/store'
+          store: './src/store',
+          config: './src/config'
         }
       }
     ]

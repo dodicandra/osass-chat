@@ -1,10 +1,10 @@
 import moment from 'moment';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-
 import {RootState} from 'store';
-import {ChatDataTypes, clearChatActions, setchatAction, setChatHistoryAction} from 'store/chat';
+import {clearChatActions, setchatAction, setChatHistoryAction, ChatDataTypes} from 'store/chat';
 import {fire} from 'utils';
+import {httpToken} from 'utils/http-token';
 
 const dbRef = fire.database().ref();
 const auth = fire.auth();
@@ -43,7 +43,18 @@ export const sendNewChat = async (
       .child(`userchat/${friendUid}/${userUid}`)
       .set({chatKey, createAt: moment().toISOString()});
 
-    return await Promise.race([race1, race2, race3]);
+    const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
+    const body = {
+      to: userpushToken.token,
+      notification: {
+        body: data.content,
+        title: auth.currentUser?.displayName
+      }
+    };
+
+    await httpToken(body);
+
+    return await Promise.all([race1, race2, race3]);
   } catch (err) {
     console.log(err);
   }
@@ -59,6 +70,7 @@ export const setChatDataServices = (
       dispatch(clearChatActions());
       return null;
     }
+
     return dbRef.child(`chats/${userChat?.chatKey}`).on('value', (snap) => {
       const value = snap.val();
       if (value) {
@@ -82,21 +94,28 @@ export const updateChat = async (
   data: ChatDataTypes
 ) => {
   try {
-    const update1 = dbRef
-      .child(`userchat/${userUid}/${friendUid}`)
-      .update({chatKey, createAt: moment().toISOString()});
+    await dbRef.child(`userchat/${userUid}/${friendUid}`).update({chatKey, createAt: moment().toISOString()});
 
-    const update2 = dbRef
-      .child(`userchat/${friendUid}/${userUid}`)
-      .update({chatKey, createAt: moment().toISOString()});
+    await dbRef.child(`userchat/${friendUid}/${userUid}`).update({chatKey, createAt: moment().toISOString()});
 
-    const update3 = dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
+    await dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
       ...data
     });
 
-    return await Promise.race([update3, update2, update1]);
+    const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
+
+    const body = {
+      to: userpushToken.token,
+      notification: {
+        body: data.content,
+        title: auth.currentUser?.displayName
+      }
+    };
+
+    await httpToken(body);
   } catch (err) {
-    console.log(err);
+    console.log('EROR =>', err);
+    throw err;
   }
 };
 

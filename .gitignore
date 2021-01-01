@@ -64,3 +64,4 @@ buck-out/
 
 # google
 google-services.json
+fire-base.ts

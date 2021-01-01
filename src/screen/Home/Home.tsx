@@ -1,12 +1,15 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {StackScreenProps} from '@react-navigation/stack';
+import React, {useCallback, useEffect} from 'react';
+
 import {Header, List} from 'components';
-import React, {useEffect, useCallback} from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {RemoteMessage} from 'react-native-firebase/messaging';
 import {connect} from 'react-redux';
 import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
-import {colors, Fonts, sortArr} from 'utils';
+import {colors, fire, sortArr, Fonts} from 'utils';
+
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {StackScreenProps} from '@react-navigation/stack';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 type Drawer = DrawerScreenProps<DrawerStack>;
@@ -31,6 +34,15 @@ const HomeApp: React.FC<HomeProps> = ({navigation, History, User, getUserData, s
   useEffect(() => {
     getData();
   }, [getData]);
+
+  useEffect(() => {
+    const subs = fire.messaging().onMessage((res: RemoteMessage) => {
+      Alert.alert('message' + JSON.stringify(res.messageId));
+      console.log(res);
+    });
+
+    return subs;
+  }, []);
 
   return (
     <View style={styles.container}>

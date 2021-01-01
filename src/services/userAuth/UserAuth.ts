@@ -1,11 +1,8 @@
-// import {firebase} from '@react-native-firebase/auth';
-// import {firebase as db} from '@react-native-firebase/database';
 import {ToastAndroid} from 'react-native';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-
-import {RootState, setError, setLoading, setToken, setUser, stopLoading} from 'store';
-import {findMsg, setToLocal, fire} from 'utils';
+import {setError, setLoading, setToken, setUser, stopLoading, RootState} from 'store';
+import {findMsg, fire, setToLocal} from 'utils';
 
 interface SingInTypes {
   email: string;
@@ -30,6 +27,12 @@ export const signInService = (
 
       const curenUser = await fire.auth().currentUser;
       const token = await curenUser?.getIdTokenResult(true).then((res) => res);
+      const pushToken = await fire.messaging().getToken();
+      const db = fire.database().ref();
+
+      await db.child(`user/${curenUser?.uid}`).update({
+        token: pushToken
+      });
 
       await setToLocal('token', token?.token);
       dispatch(
@@ -71,7 +74,7 @@ export const registerService = (
       const {email, phoneNumber, uid} = register.user;
 
       const token = await auths?.getIdTokenResult(true).then((res) => res);
-
+      const pushToken = await fire.messaging().getToken();
       const dbref = await fire.database().ref();
 
       dispatach(
@@ -86,6 +89,7 @@ export const registerService = (
       dispatach(setToken(token?.token));
       const respon = await dbref.child(`user/${register.user.uid}`).update({
         name: data.username,
+        token: pushToken,
         imgUrl:
           'https://firebasestorage.googleapis.com/v0/b/ossas-59ac1.appspot.com/o/userDefault001.png?alt=media&token=7d6ce670-eb02-4e0a-8142-92d3b8b6ce03'
       });
