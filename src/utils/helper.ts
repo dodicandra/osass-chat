@@ -2,8 +2,9 @@
 import {useEffect, useState, EffectCallback} from 'react';
 
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
-import firebase from 'react-native-firebase';
 import {setToken, store, ChatHistoryTypes} from 'store';
+
+import firebase from '@react-native-firebase/app';
 
 import {getToLocal} from './asycnStorage';
 

@@ -6,8 +6,11 @@ import {clearChatActions, setchatAction, setChatHistoryAction, ChatDataTypes} fr
 import {fire} from 'utils';
 import {httpToken} from 'utils/http-token';
 
-const dbRef = fire.database().ref();
-const auth = fire.auth();
+import fireAuth from '@react-native-firebase/auth';
+import fireDb from '@react-native-firebase/database';
+
+const dbRef = fireDb().ref();
+const auth = fireAuth();
 
 interface ChatKey {
   chatKey: string;
@@ -38,13 +41,14 @@ export const sendNewChat = async (userUid: string | undefined, friendUid: string
     const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
     const body = {
       to: userpushToken.token,
-      notification: {
-        body: data.content,
-        title: auth.currentUser?.displayName
-      },
+      // notification: {
+      //   body: data.content,
+      //   title: auth.currentUser?.displayName
+      // },
       data: {
         user: userpushToken.name,
-        image: userpushToken.imgUrl
+        image: userpushToken.imgUrl,
+        content: data.content
       }
     };
 
@@ -102,13 +106,14 @@ export const updateChat = async (
 
     const body = {
       to: userpushToken.token,
-      notification: {
-        body: data.content,
-        title: auth.currentUser?.displayName
-      },
+      // notification: {
+      //   body: data.content,
+      //   title: auth.currentUser?.displayName
+      // },
       data: {
         user: userpushToken.name,
-        image: userpushToken.imgUrl
+        image: userpushToken.imgUrl,
+        content: data.content
       }
     };
 

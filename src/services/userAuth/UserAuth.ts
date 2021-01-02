@@ -4,6 +4,10 @@ import {ThunkAction} from 'redux-thunk';
 import {setError, setLoading, setToken, setUser, stopLoading, RootState} from 'store';
 import {findMsg, fire, setToLocal} from 'utils';
 
+import fireAuth from '@react-native-firebase/auth';
+import fireDb from '@react-native-firebase/database';
+import fireMSg from '@react-native-firebase/messaging';
+
 interface SingInTypes {
   email: string;
   password: string;
@@ -23,10 +27,10 @@ export const signInService = (data: SingInTypes): ThunkAction<void, RootState, u
     if (auth?.user) {
       const {displayName, email, phoneNumber, uid} = auth.user;
 
-      const curenUser = await fire.auth().currentUser;
+      const curenUser = await fireAuth().currentUser;
       const token = await curenUser?.getIdTokenResult(true).then((res) => res);
-      const pushToken = await fire.messaging().getToken();
-      const db = fire.database().ref();
+      const pushToken = await fireMSg().getToken();
+      const db = fireDb().ref();
 
       await db.child(`user/${curenUser?.uid}`).update({
         token: pushToken
@@ -71,7 +75,7 @@ export const registerService = (data: RegisterTypes): ThunkAction<void, RootStat
 
       const token = await auths?.getIdTokenResult(true).then((res) => res);
       const pushToken = await fire.messaging().getToken();
-      const dbref = await fire.database().ref();
+      const dbref = await fireDb().ref();
 
       dispatach(
         setUser({

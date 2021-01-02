@@ -17,13 +17,15 @@ import {
 } from 'store';
 import {fire} from 'utils';
 
+import fireStrg from '@react-native-firebase/storage';
+
 export const uploadImageUser = (data: ImageTypes): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const dbRef = fire.database().ref();
 
     const user = fire.auth().currentUser;
 
-    const fileRef = fire.storage().ref(`image/User${user?.uid}`);
+    const fileRef = fireStrg().ref(`image/User${user?.uid}`);
 
     await fileRef.putFile(`${data.uri}`);
     const imgUrl = await fileRef.getDownloadURL();
