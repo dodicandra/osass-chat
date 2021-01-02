@@ -1,17 +1,12 @@
-import {Input, ModalCustome, Profile} from 'components';
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import ImagePick from 'react-native-image-picker';
+
+import {Input, ModalCustome, Profile} from 'components';
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker/src/index';
 import {useDispatch, useSelector} from 'react-redux';
 import {getUserBio, updateBio, updateUserName, uploadImageUser} from 'services';
 import {RootState} from 'store';
-import {colors, Fonts, Icons, useForm} from 'utils';
+import {colors, useForm, Fonts, Icons} from 'utils';
 
 export interface ImageTypes {
   uri?: string;
@@ -28,34 +23,32 @@ export const UserProfile = () => {
   const [visibleName, setVisibleName] = useState(false);
   const [visibleBio, setVisibleBio] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<ImageTypes>({
-    uri: '',
-    filename: '',
-    path: '',
-  });
+  const [image, setImage] = useState<ImageTypes>({uri: '', filename: ''});
 
   useEffect(() => {
     dispatch(getUserBio());
   }, [dispatch]);
 
-  const upload = async () => {
-    ImagePick.launchImageLibrary(
-      {
-        quality: 1,
-        mediaType: 'photo',
-        allowsEditing: true,
-      },
-      async (res) => {
-        if (!res.didCancel) {
-          const src: ImageTypes = {
-            uri: res.uri,
-            filename: res.fileName,
-            path: res.path,
-          };
-          setImage(src);
+  const upload = () => {
+    try {
+      launchImageLibrary(
+        {
+          quality: 0.5,
+          mediaType: 'photo'
+        },
+        (res) => {
+          if (!res.didCancel) {
+            const src: ImageTypes = {
+              uri: res.uri,
+              filename: res.fileName
+            };
+            setImage(src);
+          }
         }
-      },
-    );
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const uploadFoto = async () => {
@@ -64,8 +57,8 @@ export const UserProfile = () => {
       await dispatch(
         uploadImageUser({
           uri: image.uri,
-          filename: image.filename,
-        }),
+          filename: image.filename
+        })
       );
 
       setImage({...image, uri: ''});
@@ -76,12 +69,12 @@ export const UserProfile = () => {
   };
 
   const updateName = async () => {
-    await dispatch(updateUserName(form.name));
+    dispatch(updateUserName(form.name));
     setVisibleName(false);
   };
 
   const updatebio = async () => {
-    await dispatch(updateBio(form.bio));
+    dispatch(updateBio(form.bio));
     setVisibleBio(false);
   };
 
@@ -89,29 +82,17 @@ export const UserProfile = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.profileContainer}>
         <View style={styles.wraper}>
-          <Profile
-            loading={loading}
-            source={{uri: image.uri ? image.uri : User.user?.imgUrl}}
-            left={17}
-            size={95}
-          />
+          <Profile loading={loading} source={{uri: image.uri ? image.uri : User.user?.imgUrl!}} left={17} size={95} />
           <Text style={styles.title}>{User.user?.name}</Text>
         </View>
-        {image.uri!.length > 0 ? (
+        {image.uri && image.uri.length > 0 ? (
           <TouchableOpacity onPress={uploadFoto} style={styles.upload}>
             <Text style={styles.textUpload}>Upload</Text>
           </TouchableOpacity>
         ) : null}
       </View>
-      <TouchableOpacity
-        onPress={upload}
-        importantForAccessibility="yes"
-        style={styles.btnIcon}>
-        <Icons.FontAwesome5
-          name="camera-retro"
-          size={40}
-          color={colors.text.greey}
-        />
+      <TouchableOpacity onPress={upload} importantForAccessibility="yes" style={styles.btnIcon}>
+        <Icons.FontAwesome5 name="camera-retro" size={40} color={colors.text.greey} />
       </TouchableOpacity>
       <View style={{flex: 1, paddingTop: 50}}>
         <Text style={styles.textAkun}>Akun</Text>
@@ -165,24 +146,24 @@ export const UserProfile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   title: {
     fontSize: 30,
     fontFamily: Fonts.Monstserrat.M,
     marginBottom: 20,
-    marginLeft: 16,
+    marginLeft: 16
   },
   profileContainer: {
     height: 200,
     backgroundColor: colors.background.yellow,
     justifyContent: 'center',
     elevation: 6,
-    position: 'relative',
+    position: 'relative'
   },
   wraper: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   btnIcon: {
     height: 73,
@@ -196,19 +177,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 160,
     right: 20,
-    elevation: 6,
+    elevation: 6
   },
   textAkun: {
     fontSize: 24,
     fontFamily: Fonts.Monstserrat.M,
     marginLeft: 30,
-    marginBottom: 20,
+    marginBottom: 20
   },
   username: {
     marginHorizontal: 30,
     marginBottom: 20,
     borderBottomColor: colors.border.input,
-    borderBottomWidth: 2,
+    borderBottomWidth: 2
   },
   upload: {
     position: 'absolute',
@@ -219,10 +200,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 3,
+    elevation: 3
   },
   textUpload: {
     fontFamily: Fonts.Monstserrat.M,
-    color: colors.background.white,
-  },
+    color: colors.background.white
+  }
 });

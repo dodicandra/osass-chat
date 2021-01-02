@@ -1,7 +1,7 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {IconLogin} from 'assets';
 import {Button, Input} from 'components';
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
   Animated,
   Easing,
@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {signInService} from 'services';
@@ -30,6 +30,12 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
   const width = useRef(new Animated.Value(IMG_WIDTH)).current;
 
   const dispatch = useDispatch();
+  const dispatchSigIn = useCallback(
+    (value) => {
+      dispatch(signInService(value));
+    },
+    [dispatch]
+  );
 
   const [form, setForm] = useForm({email: '', password: ''});
 
@@ -41,20 +47,14 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
       delay,
       duration: 200,
       easing: Easing.inOut(Easing.cubic),
-      useNativeDriver: false,
+      useNativeDriver: false
     }).start();
 
   const KeyboardShow = () => {
-    Animated.multiply(
-      timing(height, IMG_HEIGHT / 2, DURATION),
-      timing(width, IMG_WIDTH / 2, DURATION),
-    );
+    Animated.multiply(timing(height, IMG_HEIGHT / 2, DURATION), timing(width, IMG_WIDTH / 2, DURATION));
   };
   const KeyboardHide = () => {
-    Animated.multiply(
-      timing(height, IMG_HEIGHT, DURATION),
-      timing(width, IMG_WIDTH, DURATION),
-    );
+    Animated.multiply(timing(height, IMG_HEIGHT, DURATION), timing(width, IMG_WIDTH, DURATION));
   };
 
   useKeyBoard(KeyboardShow, KeyboardHide);
@@ -64,8 +64,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
       if (form.email.trim() === '' && form.password.trim() === '') {
         return;
       }
-
-      dispatch(signInService(form));
+      dispatchSigIn(form);
     } catch (err) {
       console.log(err);
     }
@@ -76,9 +75,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView style={{flex: 1}}>
           <View style={styles.containerText}>
-            <Text style={styles.text}>
-              Selamat datang di Ossas! Temapt bercakap dengan siapapun!..
-            </Text>
+            <Text style={styles.text}>Selamat datang di Ossas! Temapt bercakap dengan siapapun!..</Text>
           </View>
           <View style={styles.containerInput}>
             <Animated.Image
@@ -106,9 +103,7 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
               <Button disabled={!disabled} onPress={signIn} title="log-in" />
             </View>
           </View>
-          <Text
-            onPress={() => navigation.navigate('Register')}
-            style={styles.register}>
+          <Text onPress={() => navigation.navigate('Register')} style={styles.register}>
             Belum Punya Akun? Daftar disini
           </Text>
         </ScrollView>
@@ -120,26 +115,26 @@ export const Login: React.FC<RegisterProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.yellow,
+    backgroundColor: colors.background.yellow
   },
   Image: {alignSelf: 'center', marginTop: 80},
   containerText: {
     width: 274,
     position: 'absolute',
     top: 20,
-    left: 20,
+    left: 20
   },
   input: {width: '90%'},
   text: {fontSize: 18, fontFamily: Fonts.Monstserrat.M},
   containerInput: {
     alignItems: 'center',
-    flex: 1,
+    flex: 1
   },
   register: {
     fontSize: 13,
     fontFamily: Fonts.Monstserrat.R,
     marginTop: 75,
     textAlign: 'center',
-    paddingVertical: 5,
-  },
+    paddingVertical: 5
+  }
 });

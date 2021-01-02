@@ -2,14 +2,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {RegisterIntro} from 'assets';
 import {Button, Input} from 'components';
 import React from 'react';
-import {
-  ImageBackground,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {ImageBackground, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {registerService} from 'services';
 import {colors, Fonts, useForm} from 'utils';
@@ -24,13 +17,10 @@ export const Register: React.FC<RegisterProps> = () => {
   const [form, handleChange] = useForm({
     email: '',
     username: '',
-    password: '',
+    password: ''
   });
 
-  const disabled =
-    form.email.length > 0 &&
-    form.username.length > 0 &&
-    form.password.length > 0;
+  const disabled = form.email.length > 0 && form.username.length > 0 && form.password.length > 0;
 
   const handleSubmit = async () => {
     try {
@@ -42,10 +32,7 @@ export const Register: React.FC<RegisterProps> = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ImageBackground
-        resizeMode="contain"
-        style={styles.container}
-        source={RegisterIntro}>
+      <ImageBackground resizeMode="contain" style={styles.container} source={RegisterIntro}>
         <Text style={styles.text}>Yuuk Mendaftar di Ossas.</Text>
         <Input
           keyboardType="default"
@@ -70,11 +57,7 @@ export const Register: React.FC<RegisterProps> = () => {
           onChangeText={(val) => handleChange('password', val)}
         />
         <View style={styles.btnWraper}>
-          <Button
-            disabled={!disabled}
-            onPress={handleSubmit}
-            title="register"
-          />
+          <Button disabled={!disabled} onPress={handleSubmit} title="register" />
         </View>
       </ImageBackground>
     </TouchableWithoutFeedback>
@@ -86,15 +69,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: colors.background.yellow,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   text: {
     fontSize: 20,
     fontFamily: Fonts.Monstserrat.M,
     position: 'absolute',
     top: 34,
-    left: 30,
+    left: 30
   },
   input: {marginHorizontal: 20, marginVertical: 5},
-  btnWraper: {alignSelf: 'center', marginTop: 30, marginVertical: 5},
+  btnWraper: {alignSelf: 'center', marginTop: 30, marginVertical: 5}
 });

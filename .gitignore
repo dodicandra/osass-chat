@@ -61,3 +61,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# google
+google-services.json
+fire-base.ts

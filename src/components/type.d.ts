@@ -1,23 +1,12 @@
 import {ImageSourcePropType, ImageURISource} from 'react-native';
-import {
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-  TextInputKeyPressEventData,
-} from 'react-native';
+import {NativeSyntheticEvent, TextInputChangeEventData, TextInputKeyPressEventData} from 'react-native';
 import {TextInput} from 'react-native';
 
-type ImgType =
-  | number
-  | ImageURISource
-  | ImageURISource[]
-  | undefined
-  | ImageSourcePropType;
+type ImgType = number | ImageURISource | ImageURISource[] | undefined | ImageSourcePropType;
 
 type OnChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
 
-type OnKeyPress =
-  | ((e: NativeSyntheticEvent<TextInputKeyPressEventData>) => void)
-  | undefined;
+type OnKeyPress = ((e: NativeSyntheticEvent<TextInputKeyPressEventData>) => void) | undefined;
 
 type RefInput =
   | string

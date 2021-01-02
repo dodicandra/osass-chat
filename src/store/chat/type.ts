@@ -1,10 +1,4 @@
-import {
-  SET_CHAT,
-  SET_CHAT_HISTORY,
-  CLEAR_CHAT,
-  CLEAR_CHAT_HISTORY,
-  CLEAR_ALL,
-} from './constan';
+import {SET_CHAT, SET_CHAT_HISTORY, CLEAR_CHAT, CLEAR_CHAT_HISTORY, CLEAR_ALL} from './constan';
 
 export interface ChatDataTypes {
   uid?: string;
@@ -65,9 +59,4 @@ interface ClearAll {
   type: typeof CLEAR_ALL;
 }
 
-export type BaseChatTypes =
-  | ChatTypes
-  | ChatHistory
-  | ClearChat
-  | ClearHistoryChat
-  | ClearAll;
+export type BaseChatTypes = ChatTypes | ChatHistory | ClearChat | ClearHistoryChat | ClearAll;

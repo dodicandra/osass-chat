@@ -5,14 +5,14 @@ import {
   SET_USER,
   SET_USERS,
   UPDATE_USER_DATA,
-  SEARCH_USER,
+  SEARCH_USER
 } from 'store/constan';
 
 export interface UserInterface {
-  name?: string;
-  email?: string;
-  phone?: string;
-  imgUrl?: string;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  imgUrl?: string | null;
   bio?: string;
   uid?: string;
 }

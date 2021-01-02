@@ -30,7 +30,7 @@ const InputCode = React.forwardRef(
         </View>
       </View>
     );
-  },
+  }
 );
 
 export default InputCode;
@@ -44,15 +44,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.white,
     borderRadius: 7,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   input: {
     fontSize: 35,
     fontFamily: Fonts.Monstserrat.M,
     width: '100%',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   containerRoot: {
-    justifyContent: 'space-evenly',
-  },
+    justifyContent: 'space-evenly'
+  }
 });

@@ -1,16 +1,10 @@
-import {firebase as auth} from '@react-native-firebase/auth';
+import React, {useRef} from 'react';
+import {Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import Animated, {multiply} from 'react-native-reanimated';
+
 import {UserVer} from 'assets';
 import {Button, Input} from 'components';
-import React, {useRef} from 'react';
-import {
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import Animated, {multiply} from 'react-native-reanimated';
-import {colors, Fonts, tm1, useForm, useKeyBoard} from 'utils';
+import {colors, fire, Fonts, tm1, useForm, useKeyBoard} from 'utils';
 
 const IMG_HEIGHT = 220;
 const IMG_WIDTH = 274;
@@ -23,28 +17,20 @@ export const UserNameVerifikasi = () => {
   const [form, onChange] = useForm({name: ''});
 
   const KeyboardShow = () => {
-    multiply(
-      tm1(height, IMG_HEIGHT / 2, DURATION),
-      tm1(width, IMG_WIDTH / 2, DURATION),
-    );
+    multiply(tm1(height, IMG_HEIGHT / 2, DURATION), tm1(width, IMG_WIDTH / 2, DURATION));
   };
   const KeyboardHide = () => {
-    multiply(
-      tm1(height, IMG_HEIGHT, DURATION),
-      tm1(width, IMG_WIDTH, DURATION),
-    );
+    multiply(tm1(height, IMG_HEIGHT, DURATION), tm1(width, IMG_WIDTH, DURATION));
   };
 
   useKeyBoard(KeyboardShow, KeyboardHide);
 
   const changeDisplayName = async () => {
-    const user = await auth.auth().currentUser;
+    const user = await fire.auth().currentUser;
 
     const token = await user?.getIdTokenResult(true).then((t) => t);
 
-    const curenUser = user
-      ?.updateProfile({displayName: form.name})
-      .then((res) => res);
+    const curenUser = user?.updateProfile({displayName: form.name}).then((res) => res);
 
     Promise.all([user, token, curenUser]).then((res) => console.log(res));
   };
@@ -53,10 +39,7 @@ export const UserNameVerifikasi = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.text}>Buat User Name Kamu..</Text>
-        <Animated.Image
-          source={UserVer}
-          style={[styles.img, {height, width}]}
-        />
+        <Animated.Image source={UserVer} style={[styles.img, {height, width}]} />
         <Input
           phoneCode={false}
           title="Username"
@@ -76,11 +59,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.yellow,
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   img: {
     resizeMode: 'contain',
-    marginTop: 20,
+    marginTop: 20
   },
   input: {width: '80%', marginBottom: 50, marginTop: 30},
   text: {
@@ -88,6 +71,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Monstserrat.M,
     marginTop: 20,
     marginLeft: 20,
-    alignSelf: 'flex-start',
-  },
+    alignSelf: 'flex-start'
+  }
 });

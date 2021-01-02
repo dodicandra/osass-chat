@@ -1,34 +1,26 @@
-import {firebase as auth} from '@react-native-firebase/auth';
-import {
-  firebase as db,
-  FirebaseDatabaseTypes,
-} from '@react-native-firebase/database';
 import moment from 'moment';
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootState} from 'store';
-import {
-  ChatDataTypes,
-  clearChatActions,
-  setchatAction,
-  setChatHistoryAction,
-} from 'store/chat';
+import {clearChatActions, setchatAction, setChatHistoryAction, ChatDataTypes} from 'store/chat';
+import {fire} from 'utils';
+import {httpToken} from 'utils/http-token';
 
-const dbRef = db.database().ref();
+import fireAuth from '@react-native-firebase/auth';
+import fireDb from '@react-native-firebase/database';
+
+const dbRef = fireDb().ref();
+const auth = fireAuth();
 
 interface ChatKey {
   chatKey: string;
 }
 
-export const getUserChat = async (
-  friendId: string | undefined,
-): Promise<ChatKey | undefined> => {
+export const getUserChat = async (friendId: string | undefined): Promise<ChatKey | undefined> => {
   try {
-    const user = auth.auth().currentUser;
+    const user = auth.currentUser;
 
-    const snap = await dbRef
-      .child(`userchat/${user?.uid}/${friendId}`)
-      .once('value');
+    const snap = await dbRef.child(`userchat/${user?.uid}/${friendId}`).once('value');
 
     return snap.val();
   } catch (err) {
@@ -36,38 +28,43 @@ export const getUserChat = async (
   }
 };
 
-export const sendNewChat = async (
-  userUid: string | undefined,
-  friendUid: string | undefined,
-  data: ChatDataTypes,
-) => {
+export const sendNewChat = async (userUid: string | undefined, friendUid: string | undefined, data: ChatDataTypes) => {
   try {
     const chatKey = dbRef.child('chats').push().key;
 
-    const race1 = db
-      .database()
-      .ref(`chats/${chatKey}/${moment().unix()}`)
-      .update(data);
+    const race1 = fire.database().ref(`chats/${chatKey}/${moment().unix()}`).update(data);
 
-    const race2 = dbRef
-      .child(`userchat/${userUid}/${friendUid}`)
-      .set({chatKey, createAt: moment().toISOString()});
+    const race2 = dbRef.child(`userchat/${userUid}/${friendUid}`).set({chatKey, createAt: moment().toISOString()});
 
-    const race3 = dbRef
-      .child(`userchat/${friendUid}/${userUid}`)
-      .set({chatKey, createAt: moment().toISOString()});
+    const race3 = dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey, createAt: moment().toISOString()});
 
-    return await Promise.race([race1, race2, race3]);
+    const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
+    const curentUser = (await dbRef.child(`user/${userUid}`).once('value')).val();
+
+    const body = {
+      to: userpushToken.token,
+      // notification: {
+      //   body: data.content,
+      //   title: auth.currentUser?.displayName
+      // },
+      data: {
+        user: curentUser.name,
+        image: userpushToken.imgUrl,
+        content: data.content
+      }
+    };
+
+    await httpToken(body);
+
+    return await Promise.all([race1, race2, race3]);
   } catch (err) {
     console.log(err);
   }
 };
 
 export const setChatDataServices = (
-  friendId: string | undefined,
-): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch,
-) => {
+  friendId: string | undefined
+): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const userChat = await getUserChat(friendId);
 
@@ -75,18 +72,17 @@ export const setChatDataServices = (
       dispatch(clearChatActions());
       return null;
     }
-    return dbRef
-      .child(`chats/${userChat?.chatKey}`)
-      .on('value', (snap: FirebaseDatabaseTypes.DataSnapshot) => {
-        const value = snap.val();
-        if (value) {
-          const chats = Object.keys(value).map((val) => value[val]);
 
-          dispatch(setchatAction(chats));
-        } else {
-          dispatch(clearChatActions());
-        }
-      });
+    return dbRef.child(`chats/${userChat?.chatKey}`).on('value', (snap) => {
+      const value = snap.val();
+      if (value) {
+        const chats = Object.keys(value).map((val) => value[val]);
+
+        dispatch(setchatAction(chats));
+      } else {
+        dispatch(clearChatActions());
+      }
+    });
   } catch (err) {
     console.log(err);
     throw new Error(err);
@@ -97,24 +93,37 @@ export const updateChat = async (
   userUid: string | undefined,
   friendUid: string | undefined,
   chatKey: string | undefined,
-  data: ChatDataTypes,
+  data: ChatDataTypes
 ) => {
   try {
-    const update1 = dbRef
-      .child(`userchat/${userUid}/${friendUid}`)
-      .update({chatKey, createAt: moment().toISOString()});
+    await dbRef.child(`userchat/${userUid}/${friendUid}`).update({chatKey, createAt: moment().toISOString()});
 
-    const update2 = dbRef
-      .child(`userchat/${friendUid}/${userUid}`)
-      .update({chatKey, createAt: moment().toISOString()});
+    await dbRef.child(`userchat/${friendUid}/${userUid}`).update({chatKey, createAt: moment().toISOString()});
 
-    const update3 = dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
-      ...data,
+    await dbRef.child(`chats/${chatKey}/${moment().unix()}`).set({
+      ...data
     });
 
-    return await Promise.race([update3, update2, update1]);
+    const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
+    const curenUser = (await dbRef.child(`user/${userUid}`).once('value')).val();
+
+    const body = {
+      to: userpushToken.token,
+      // notification: {
+      //   body: data.content,
+      //   title: auth.currentUser?.displayName
+      // },
+      data: {
+        user: curenUser?.name,
+        image: userpushToken.imgUrl,
+        content: data.content
+      }
+    };
+
+    await httpToken(body);
   } catch (err) {
-    console.log(err);
+    console.log('EROR =>', err);
+    throw err;
   }
 };
 
@@ -128,27 +137,20 @@ export const getUserChatContent = async (chatKey: string | undefined) => {
   }
 };
 
-export const setChatHistorySevices = (): ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
-> => async (dispatch) => {
+export const setChatHistorySevices = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   new Promise((resolve, reject) => {
-    const user = auth.auth().currentUser;
+    const user = auth.currentUser;
 
     dbRef.child(`userchat/${user?.uid}`).on(
       'value',
-      async (snap: FirebaseDatabaseTypes.DataSnapshot) => {
+      async (snap) => {
         const values = snap.val();
         if (values) {
           const chatsAll = await Object.keys(values).map(async (val) => {
             let contentChat = await getUserChatContent(values[val].chatKey);
 
             if (contentChat) {
-              contentChat = Object.keys(contentChat).map(
-                (con) => contentChat[con],
-              );
+              contentChat = Object.keys(contentChat).map((con) => contentChat[con]);
             }
 
             const userProfile = await dbRef.child(`user/${val}`).once('value');
@@ -158,8 +160,8 @@ export const setChatHistorySevices = (): ThunkAction<
               ...userProfile.val(),
               ...values[val],
               ...(contentChat && {
-                lastchat: contentChat[contentChat.length - 1],
-              }),
+                lastchat: contentChat[contentChat.length - 1]
+              })
             };
           });
 
@@ -172,7 +174,7 @@ export const setChatHistorySevices = (): ThunkAction<
       (err: Error) => {
         reject(err);
         console.log('Err', err);
-      },
+      }
     );
   });
 };

@@ -1,55 +1,67 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
-import {StackScreenProps} from '@react-navigation/stack';
+import React, {useCallback, useEffect} from 'react';
+
 import {Header, List} from 'components';
-import React, {useEffect, useCallback} from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
 import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
-import {colors, Fonts, sortArr} from 'utils';
+import {colors, sortArr, Fonts} from 'utils';
+import {showNotifWix} from 'utils/notife';
+
+import fireMsg, {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {StackScreenProps} from '@react-navigation/stack';
 
 type MainStackApp = StackScreenProps<StackMainApp, 'Home'>;
 type Drawer = DrawerScreenProps<DrawerStack>;
 
-type HomeProps = MainStackApp & Drawer;
+interface Props {
+  History: RootState['Chat']['history'];
+  User: RootState['User'];
+  getUserData: typeof getUserDataAction;
+  setChatHistory: typeof setChatHistorySevices;
+}
 
-export const Home: React.FC<HomeProps> = ({navigation}) => {
-  const History = useSelector((state: RootState) => state.Chat.history);
-  const User = useSelector((state: RootState) => state.User);
+type HomeProps = MainStackApp & Drawer & Props;
 
-  const disptach = useDispatch();
-
+const HomeApp: React.FC<HomeProps> = ({navigation, History, User, getUserData, setChatHistory}) => {
   const decs = sortArr(History);
 
   const getData = useCallback(() => {
-    disptach(getUserDataAction());
-    disptach(setChatHistorySevices());
-  }, []);
+    getUserData();
+    setChatHistory();
+  }, [getUserData, setChatHistory]);
 
   useEffect(() => {
     getData();
-  }, [disptach, getData]);
+  }, [getData]);
+
+  useEffect(() => {
+    const subs = fireMsg().onMessage(async (res: FirebaseMessagingTypes.RemoteMessage) => {
+      showNotifWix(res);
+    });
+
+    return () => {
+      subs();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Header
-        imgProfile={{uri: User.user?.imgUrl}}
-        onPress={() => navigation.openDrawer()}
-        title="Ossas"
-      />
+      <Header imgProfile={{uri: User.user?.imgUrl!}} onPress={() => navigation.openDrawer()} title="Ossas" />
       {History.length <= 0 ? (
         <View
           style={{
             flex: 1,
             backgroundColor: colors.background.white,
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'center'
           }}>
           <Text
             style={{
               fontFamily: Fonts.Monstserrat.M,
               fontSize: 18,
-              color: colors.text.black,
+              color: colors.text.black
             }}>
             Belum ada chat
           </Text>
@@ -68,7 +80,7 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
               titlePress={() =>
                 navigation.navigate('Chat', {
                   ...item.lastchat,
-                  ...item,
+                  ...item
                 })
               }
               desc={item.lastchat.content}
@@ -80,20 +92,32 @@ export const Home: React.FC<HomeProps> = ({navigation}) => {
   );
 };
 
+const mapState = (state: RootState) => ({
+  History: state.Chat.history,
+  User: state.User
+});
+
+const mapDispatch = (dispatch: any) => ({
+  getUserData: () => dispatch(getUserDataAction()),
+  setChatHistory: () => dispatch(setChatHistorySevices())
+});
+
+export const Home = connect(mapState, mapDispatch)(HomeApp);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   bodyContainer: {
     flex: 1,
     zIndex: -1,
     marginHorizontal: 8,
     marginTop: -10,
-    backgroundColor: colors.background.white,
+    backgroundColor: colors.background.white
   },
   contentContainer: {
     paddingTop: 10,
-    paddingBottom: 10,
-  },
+    paddingBottom: 10
+  }
 });

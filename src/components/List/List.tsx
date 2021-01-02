@@ -1,12 +1,12 @@
 import {UserDefault} from 'assets';
-import React from 'react';
+import React, {memo} from 'react';
 import {
   GestureResponderEvent,
   ImageSourcePropType,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import {colors, Fonts} from 'utils';
 import Profile from '../Profile/Profile';
@@ -19,13 +19,7 @@ interface InputProps {
   titlePress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
-const List: React.FC<InputProps> = ({
-  title,
-  desc,
-  imgUrl,
-  profilePress,
-  titlePress,
-}) => {
+const List: React.FC<InputProps> = ({title, desc, imgUrl, profilePress, titlePress}) => {
   return (
     <View style={styles.container}>
       <Profile onPress={profilePress} source={imgUrl} />
@@ -44,35 +38,35 @@ const List: React.FC<InputProps> = ({
 List.defaultProps = {
   title: 'Dodi candra',
   desc: 'Haloo selamat malam bisa bicara dengan dodi candra',
-  imgUrl: UserDefault,
+  imgUrl: UserDefault
 };
 
-export default List;
+export default memo(List);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
     marginVertical: 10,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   title: {
     fontSize: 24,
     fontFamily: Fonts.Monstserrat.M,
     color: colors.text.black,
-    maxWidth: 300,
+    maxWidth: 300
   },
   desc: {
     fontSize: 19,
     fontFamily: Fonts.Monstserrat.R,
     color: colors.text.greey,
     marginBottom: 20,
-    maxWidth: 200,
+    maxWidth: 200
   },
   containerText: {
     marginLeft: 13,
     borderBottomWidth: 1,
     flex: 1,
-    borderBottomColor: colors.border.input,
-  },
+    borderBottomColor: colors.border.input
+  }
 });

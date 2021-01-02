@@ -1,16 +1,10 @@
 import {speaker, UserDefault} from 'assets';
-import {ImgType} from 'components/type';
 import React from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {ActivityIndicator, Image, ImageSourcePropType, StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from 'utils';
 
 interface ProfileProps {
-  source?: ImgType | any;
+  source: ImageSourcePropType;
   left?: number;
   right?: number;
   top?: number;
@@ -20,16 +14,7 @@ interface ProfileProps {
   loading?: boolean;
 }
 
-const Profile: React.FC<ProfileProps> = ({
-  source,
-  left,
-  right,
-  top,
-  bottom,
-  onPress,
-  size,
-  loading,
-}) => {
+const Profile: React.FC<ProfileProps> = ({source, left, right, top, bottom, onPress, size, loading}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -42,20 +27,12 @@ const Profile: React.FC<ProfileProps> = ({
           marginTop: top,
           marginBottom: bottom,
           height: size,
-          width: size,
-        },
+          width: size
+        }
       ]}>
-      <Image
-        defaultSource={speaker}
-        source={source}
-        style={[styles.img, {height: size, width: size}]}
-      />
+      <Image defaultSource={speaker} source={source} style={[styles.img, {height: size, width: size}]} />
       {loading && (
-        <ActivityIndicator
-          size="large"
-          color={colors.background.yellow}
-          style={{position: 'absolute'}}
-        />
+        <ActivityIndicator size="large" color={colors.background.yellow} style={{position: 'absolute'}} />
       )}
     </TouchableOpacity>
   );
@@ -64,7 +41,7 @@ const Profile: React.FC<ProfileProps> = ({
 Profile.defaultProps = {
   size: 64,
   source: UserDefault,
-  loading: false,
+  loading: false
 };
 
 export default Profile;
@@ -77,7 +54,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: colors.background.white,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  img: {resizeMode: 'contain'},
+  img: {resizeMode: 'contain'}
 });

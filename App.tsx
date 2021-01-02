@@ -1,30 +1,35 @@
-import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect, useState, FC} from 'react';
+
 import {Loading, Splash} from 'components';
-import React, {useEffect, useState} from 'react';
 import {Modal, StatusBar} from 'react-native';
-import {Provider, useDispatch, useSelector} from 'react-redux';
+import {connect, Provider} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
 import {Auth, DrawerScreen} from 'router';
-import {RootState, setToken, store} from 'store';
+import {setToken, store, RootState, UserActionType} from 'store';
 import {colors, getToLocal} from 'utils';
 
-const MainApp = () => {
-  const [loading, setLoading] = useState(true);
+import {NavigationContainer} from '@react-navigation/native';
 
-  const User = useSelector((state: RootState) => state.User);
-  const UI = useSelector((state: RootState) => state.UI);
-  const dispatch = useDispatch();
+interface MainAppProps {
+  UI: RootState['UI'];
+  User: RootState['User'];
+  setUserToken: (token: string) => any;
+}
+
+const MainApp: FC<MainAppProps> = ({UI, User, setUserToken}) => {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       try {
         const token = await getToLocal('token');
-        await dispatch(setToken(token));
+        setUserToken(token);
         setLoading(false);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [dispatch]);
+  }, [setUserToken]);
 
   if (loading) {
     return <Splash visible={loading} />;
@@ -40,15 +45,22 @@ const MainApp = () => {
   );
 };
 
+const mapState = (state: RootState) => ({
+  User: state.User,
+  UI: state.UI
+});
+
+const mapDispatch = (dispatch: ThunkDispatch<any, any, UserActionType>) => ({
+  setUserToken: (token: string) => dispatch(setToken(token))
+});
+
+const MainAppWraper = connect(mapState, mapDispatch)(MainApp);
+
 const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar
-        backgroundColor={colors.background.yellow}
-        barStyle="dark-content"
-        animated
-      />
-      <MainApp />
+      <StatusBar backgroundColor={colors.background.yellow} barStyle="dark-content" animated />
+      <MainAppWraper />
     </Provider>
   );
 };
