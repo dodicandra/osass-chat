@@ -39,6 +39,8 @@ export const sendNewChat = async (userUid: string | undefined, friendUid: string
     const race3 = dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey, createAt: moment().toISOString()});
 
     const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
+    const curentUser = (await dbRef.child(`user/${userUid}`).once('value')).val();
+
     const body = {
       to: userpushToken.token,
       // notification: {
@@ -46,7 +48,7 @@ export const sendNewChat = async (userUid: string | undefined, friendUid: string
       //   title: auth.currentUser?.displayName
       // },
       data: {
-        user: userpushToken.name,
+        user: curentUser.name,
         image: userpushToken.imgUrl,
         content: data.content
       }
@@ -103,6 +105,7 @@ export const updateChat = async (
     });
 
     const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
+    const curenUser = (await dbRef.child(`user/${userUid}`).once('value')).val();
 
     const body = {
       to: userpushToken.token,
@@ -111,7 +114,7 @@ export const updateChat = async (
       //   title: auth.currentUser?.displayName
       // },
       data: {
-        user: userpushToken.name,
+        user: curenUser?.name,
         image: userpushToken.imgUrl,
         content: data.content
       }

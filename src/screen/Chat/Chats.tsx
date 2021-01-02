@@ -1,12 +1,14 @@
-import {StackScreenProps} from '@react-navigation/stack';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+
 import {BubleChat, Header, InputChat} from 'components';
 import moment from 'moment';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setChatDataServices, setChatHistorySevices, getUserChat, sendNewChat, updateChat} from 'services';
-import {ChatDataTypes, clearChatActions, RootState, UsersDataTypes} from 'store';
+import {getUserChat, sendNewChat, setChatDataServices, setChatHistorySevices, updateChat} from 'services';
+import {clearChatActions, ChatDataTypes, RootState, UsersDataTypes} from 'store';
 import {colors, Fonts} from 'utils';
+
+import {StackScreenProps} from '@react-navigation/stack';
 
 type ChatProps = StackScreenProps<StackMainApp<UsersDataTypes>, 'Chat'>;
 
@@ -90,12 +92,7 @@ export const Chats: React.FC<ChatProps> = ({navigation, route}) => {
   const disabled = state.length > 0;
   return (
     <View style={styles.container}>
-      <Header
-        onPress={() => navigation.goBack()}
-        title={param?.name}
-        icon="ios-arrow-back"
-        imgProfile={{uri: param?.imgUrl}}
-      />
+      <Header onPress={() => navigation.goBack()} title={param?.name} icon="ios-arrow-back" imgProfile={{uri: param?.imgUrl}} />
       <ScrollView
         ref={scrollRef}
         onLayout={() => scrollRef.current?.scrollToEnd()}

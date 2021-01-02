@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
 import {colors, sortArr, Fonts} from 'utils';
-import {showNotif} from 'utils/notife';
+import {showNotifWix} from 'utils/notife';
 
 import fireMsg, {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 import {DrawerScreenProps} from '@react-navigation/drawer';
@@ -38,7 +38,7 @@ const HomeApp: React.FC<HomeProps> = ({navigation, History, User, getUserData, s
 
   useEffect(() => {
     const subs = fireMsg().onMessage(async (res: FirebaseMessagingTypes.RemoteMessage) => {
-      await showNotif(res);
+      showNotifWix(res);
     });
 
     return () => {

@@ -1,13 +1,14 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
+
+import {Loading, Splash} from 'components';
 import {Modal, StatusBar} from 'react-native';
 import {connect, Provider} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
-
-import {Loading, Splash} from 'components';
 import {Auth, DrawerScreen} from 'router';
-import {RootState, setToken, store, UserActionType} from 'store';
+import {setToken, store, RootState, UserActionType} from 'store';
 import {colors, getToLocal} from 'utils';
+
+import {NavigationContainer} from '@react-navigation/native';
 
 interface MainAppProps {
   UI: RootState['UI'];
