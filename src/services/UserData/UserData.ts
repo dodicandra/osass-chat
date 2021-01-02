@@ -1,10 +1,9 @@
+// ts-import-sorter: disable
+
 import {Action} from 'redux';
 import {ThunkAction} from 'redux-thunk';
-import RNblob from 'rn-fetch-blob';
-
 import {ImageTypes} from 'screen';
 import {
-  RootState,
   searchUsers,
   setLoading,
   setUser,
@@ -12,14 +11,13 @@ import {
   updateBioAction,
   updateUserImg,
   updateUserNameAction,
-  UserInterface,
-  UsersDataTypes
+  RootState,
+  UsersDataTypes,
+  UserInterface
 } from 'store';
 import {fire} from 'utils';
 
-export const uploadImageUser = (
-  data: ImageTypes
-): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
+export const uploadImageUser = (data: ImageTypes): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const dbRef = fire.database().ref();
 
@@ -27,11 +25,7 @@ export const uploadImageUser = (
 
     const fileRef = fire.storage().ref(`image/User${user?.uid}`);
 
-    const fs = RNblob.fs;
-    const stat = await fs.stat(data.uri as string);
-    const path = stat.path;
-
-    await fileRef.putFile(`${path}`);
+    await fileRef.putFile(`${data.uri}`);
     const imgUrl = await fileRef.getDownloadURL();
 
     await user?.updateProfile({photoURL: imgUrl});
@@ -45,9 +39,7 @@ export const uploadImageUser = (
   }
 };
 
-export const updateUserName = (data: string): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch
-) => {
+export const updateUserName = (data: string): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     dispatch(setLoading());
     const user = fire.auth().currentUser;
@@ -63,9 +55,7 @@ export const updateUserName = (data: string): ThunkAction<void, RootState, unkno
   }
 };
 
-export const updateBio = (data: string): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch
-) => {
+export const updateBio = (data: string): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     dispatch(setLoading());
     const user = fire.auth().currentUser;
@@ -85,9 +75,7 @@ export const updateBio = (data: string): ThunkAction<void, RootState, unknown, A
   }
 };
 
-export const getUserDataAction = (): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch
-) => {
+export const getUserDataAction = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     const user = fire.auth().currentUser;
     dispatch(

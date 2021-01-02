@@ -1,11 +1,12 @@
-import {Input, ModalCustome, Profile} from 'components';
 import React, {useEffect, useState} from 'react';
+
+import {Input, ModalCustome, Profile} from 'components';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import ImagePick from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker/src/index';
 import {useDispatch, useSelector} from 'react-redux';
 import {getUserBio, updateBio, updateUserName, uploadImageUser} from 'services';
 import {RootState} from 'store';
-import {colors, Fonts, Icons, useForm} from 'utils';
+import {colors, useForm, Fonts, Icons} from 'utils';
 
 export interface ImageTypes {
   uri?: string;
@@ -22,34 +23,32 @@ export const UserProfile = () => {
   const [visibleName, setVisibleName] = useState(false);
   const [visibleBio, setVisibleBio] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState<ImageTypes>({
-    uri: '',
-    filename: '',
-    path: ''
-  });
+  const [image, setImage] = useState<ImageTypes>({uri: '', filename: ''});
 
   useEffect(() => {
     dispatch(getUserBio());
   }, [dispatch]);
 
-  const upload = async () => {
-    ImagePick.launchImageLibrary(
-      {
-        quality: 1,
-        mediaType: 'photo',
-        allowsEditing: true
-      },
-      async (res) => {
-        if (!res.didCancel) {
-          const src: ImageTypes = {
-            uri: res.uri,
-            filename: res.fileName,
-            path: res.path
-          };
-          setImage(src);
+  const upload = () => {
+    try {
+      launchImageLibrary(
+        {
+          quality: 0.5,
+          mediaType: 'photo'
+        },
+        (res) => {
+          if (!res.didCancel) {
+            const src: ImageTypes = {
+              uri: res.uri,
+              filename: res.fileName
+            };
+            setImage(src);
+          }
         }
-      }
-    );
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const uploadFoto = async () => {
@@ -70,12 +69,12 @@ export const UserProfile = () => {
   };
 
   const updateName = async () => {
-    await dispatch(updateUserName(form.name));
+    dispatch(updateUserName(form.name));
     setVisibleName(false);
   };
 
   const updatebio = async () => {
-    await dispatch(updateBio(form.bio));
+    dispatch(updateBio(form.bio));
     setVisibleBio(false);
   };
 
@@ -83,15 +82,10 @@ export const UserProfile = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.profileContainer}>
         <View style={styles.wraper}>
-          <Profile
-            loading={loading}
-            source={{uri: image.uri ? image.uri : User.user?.imgUrl!}}
-            left={17}
-            size={95}
-          />
+          <Profile loading={loading} source={{uri: image.uri ? image.uri : User.user?.imgUrl!}} left={17} size={95} />
           <Text style={styles.title}>{User.user?.name}</Text>
         </View>
-        {image.uri!.length > 0 ? (
+        {image.uri && image.uri.length > 0 ? (
           <TouchableOpacity onPress={uploadFoto} style={styles.upload}>
             <Text style={styles.textUpload}>Upload</Text>
           </TouchableOpacity>

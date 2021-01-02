@@ -38,6 +38,8 @@
 		E3184FFF821148749F7DAA44 /* iconLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CC68FDDD1724C5E80F8182B /* iconLogin.png */; };
 		5DACA528E6D04273AD73C3C0 /* speaker-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E24019C55594C649E5031C2 /* speaker-3.jpg */; };
 		734FB483159D4BAD92833C89 /* user-ver.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FEDBF825B714445935A6F43 /* user-ver.png */; };
+		11F945419C274AEA8D1AEC9F /* Register-intro.png in Resources */ = {isa = PBXBuildFile; fileRef = 01B73FCCC2024E63BC3BBE67 /* Register-intro.png */; };
+		BC8136716DF148C8819902B3 /* userDefault001.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E2DD0CF40E44DDE8CD14EFA /* userDefault001.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		0CC68FDDD1724C5E80F8182B /* iconLogin.png */ = {isa = PBXFileReference; name = "iconLogin.png"; path = "../src/assets/img/iconLogin.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5E24019C55594C649E5031C2 /* speaker-3.jpg */ = {isa = PBXFileReference; name = "speaker-3.jpg"; path = "../src/assets/img/speaker-3.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3FEDBF825B714445935A6F43 /* user-ver.png */ = {isa = PBXFileReference; name = "user-ver.png"; path = "../src/assets/img/user-ver.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		01B73FCCC2024E63BC3BBE67 /* Register-intro.png */ = {isa = PBXFileReference; name = "Register-intro.png"; path = "../src/assets/img/Register-intro.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4E2DD0CF40E44DDE8CD14EFA /* userDefault001.png */ = {isa = PBXFileReference; name = "userDefault001.png"; path = "../src/assets/img/userDefault001.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +231,8 @@
 				0CC68FDDD1724C5E80F8182B /* iconLogin.png */,
 				5E24019C55594C649E5031C2 /* speaker-3.jpg */,
 				3FEDBF825B714445935A6F43 /* user-ver.png */,
+				01B73FCCC2024E63BC3BBE67 /* Register-intro.png */,
+				4E2DD0CF40E44DDE8CD14EFA /* userDefault001.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -392,6 +398,8 @@
 				E3184FFF821148749F7DAA44 /* iconLogin.png in Resources */,
 				5DACA528E6D04273AD73C3C0 /* speaker-3.jpg in Resources */,
 				734FB483159D4BAD92833C89 /* user-ver.png in Resources */,
+				11F945419C274AEA8D1AEC9F /* Register-intro.png in Resources */,
+				BC8136716DF148C8819902B3 /* userDefault001.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

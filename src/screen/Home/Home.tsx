@@ -1,12 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
 
 import {Header, List} from 'components';
-import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {RemoteMessage} from 'react-native-firebase/messaging';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Notification} from 'react-native-firebase/notifications';
 import {connect} from 'react-redux';
 import {getUserDataAction, setChatHistorySevices} from 'services';
 import {RootState} from 'store';
 import {colors, fire, sortArr, Fonts} from 'utils';
+import {showNotif} from 'utils/notife';
 
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -36,12 +37,13 @@ const HomeApp: React.FC<HomeProps> = ({navigation, History, User, getUserData, s
   }, [getData]);
 
   useEffect(() => {
-    const subs = fire.messaging().onMessage((res: RemoteMessage) => {
-      Alert.alert('message' + JSON.stringify(res.messageId));
-      console.log(res);
+    const subs = fire.notifications().onNotification(async (res: Notification) => {
+      await showNotif(res);
     });
 
-    return subs;
+    return () => {
+      subs();
+    };
   }, []);
 
   return (

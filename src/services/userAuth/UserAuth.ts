@@ -16,9 +16,7 @@ interface RegisterTypes {
 }
 
 //login user services
-export const signInService = (
-  data: SingInTypes
-): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
+export const signInService = (data: SingInTypes): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   try {
     dispatch(setLoading());
     const auth = await fire.auth().signInWithEmailAndPassword(data.email?.trim(), data.password?.trim());
@@ -55,14 +53,12 @@ export const signInService = (
 };
 
 // register user services
-export const registerService = (
-  data: RegisterTypes
-): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatach) => {
+export const registerService = (data: RegisterTypes): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatach
+) => {
   try {
     dispatach(setLoading());
-    const register = await fire
-      .auth()
-      .createUserWithEmailAndPassword(data.email.trim(), data.password.trim());
+    const register = await fire.auth().createUserWithEmailAndPassword(data.email.trim(), data.password.trim());
     if (register.user) {
       await register.user.updateProfile({
         displayName: data.username,

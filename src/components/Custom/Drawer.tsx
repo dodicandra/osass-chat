@@ -1,12 +1,13 @@
-import {DrawerContentComponentProps, DrawerItemList} from '@react-navigation/drawer';
-import {DrawerActions} from '@react-navigation/native';
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
 
 import {UserVer} from 'assets';
+import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {clearAllActions, clearToken} from 'store';
 import {fire, removeLocal} from 'utils';
+
+import {DrawerContentComponentProps, DrawerItemList} from '@react-navigation/drawer';
+import {DrawerActions} from '@react-navigation/native';
 
 import Button from '../Button/Button';
 
@@ -16,7 +17,7 @@ const Drawer: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
 
   const logOut = async () => {
-    fire.auth().signOut;
+    await fire.auth().signOut();
     await removeLocal('token');
     props.navigation.dispatch(DrawerActions.closeDrawer());
     dispatch(clearToken());

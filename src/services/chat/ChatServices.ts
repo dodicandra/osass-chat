@@ -25,23 +25,15 @@ export const getUserChat = async (friendId: string | undefined): Promise<ChatKey
   }
 };
 
-export const sendNewChat = async (
-  userUid: string | undefined,
-  friendUid: string | undefined,
-  data: ChatDataTypes
-) => {
+export const sendNewChat = async (userUid: string | undefined, friendUid: string | undefined, data: ChatDataTypes) => {
   try {
     const chatKey = dbRef.child('chats').push().key;
 
     const race1 = fire.database().ref(`chats/${chatKey}/${moment().unix()}`).update(data);
 
-    const race2 = dbRef
-      .child(`userchat/${userUid}/${friendUid}`)
-      .set({chatKey, createAt: moment().toISOString()});
+    const race2 = dbRef.child(`userchat/${userUid}/${friendUid}`).set({chatKey, createAt: moment().toISOString()});
 
-    const race3 = dbRef
-      .child(`userchat/${friendUid}/${userUid}`)
-      .set({chatKey, createAt: moment().toISOString()});
+    const race3 = dbRef.child(`userchat/${friendUid}/${userUid}`).set({chatKey, createAt: moment().toISOString()});
 
     const userpushToken = (await dbRef.child(`user/${friendUid}`).once('value')).val();
     const body = {
@@ -49,6 +41,10 @@ export const sendNewChat = async (
       notification: {
         body: data.content,
         title: auth.currentUser?.displayName
+      },
+      data: {
+        user: userpushToken.name,
+        image: userpushToken.imgUrl
       }
     };
 
@@ -109,6 +105,10 @@ export const updateChat = async (
       notification: {
         body: data.content,
         title: auth.currentUser?.displayName
+      },
+      data: {
+        user: userpushToken.name,
+        image: userpushToken.imgUrl
       }
     };
 
@@ -129,9 +129,7 @@ export const getUserChatContent = async (chatKey: string | undefined) => {
   }
 };
 
-export const setChatHistorySevices = (): ThunkAction<void, RootState, unknown, Action<string>> => async (
-  dispatch
-) => {
+export const setChatHistorySevices = (): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   new Promise((resolve, reject) => {
     const user = auth.currentUser;
 

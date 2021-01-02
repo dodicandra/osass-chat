@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {EffectCallback, useEffect, useState} from 'react';
+import {useEffect, useState, EffectCallback} from 'react';
+
 import {Keyboard, KeyboardEventName, Platform} from 'react-native';
-import {setToken, store, ChatHistoryTypes} from 'store';
-import {getToLocal} from './asycnStorage';
 import firebase from 'react-native-firebase';
+import {setToken, store, ChatHistoryTypes} from 'store';
+
+import {getToLocal} from './asycnStorage';
+
 const dispatch = store.dispatch;
 
 export const useKeyBoard = (callbackShow: EffectCallback, calbackHide: EffectCallback) => {
