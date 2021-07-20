@@ -25,7 +25,7 @@
     "axios": "^0.21.1",
     "moment": "^2.27.0",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.64.1",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-crop-picker": "^0.35.2",
     "react-native-image-picker": "^3.1.2",
